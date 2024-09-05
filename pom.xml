@@ -9,12 +9,10 @@
     <name>Id-Scan</name>
     <url>https://github.com/Titus-System/2semestre-ADS</url>
 
-    <organizations>
-        <organization>
-            <name>Titus Systems</name>
-            <url>https://github.com/Titus-System</url>
-        </organization>
-    </organizations>
+    <organization>
+        <name>Titus Systems</name>
+        <url>https://github.com/Titus-System</url>
+    </organization>
 
     <licenses>
         <license>
