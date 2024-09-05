@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.titus_systems.idscan</groupId>
+    <artifactId>idscan</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Id-Scan</name>
+    <url>https://github.com/Titus-System/2semestre-ADS</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>22</maven.compiler.release>
+    </properties>
+</project>
