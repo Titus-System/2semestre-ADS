@@ -1,17 +1,25 @@
 # 2semestre-ADS
 
 ## Java versão 17
-Linux:
+### Linux:
 ```
 sudo apt update
 sudo apt install openjdk-17-jdk
 ```
+### windows:
+https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 
 ## instale o maven:
+### Linux:
 ```
 sudo apt update
 sudo apt maven
 ```
+### Windows:
+https://maven.apache.org/download.cgi
+baixar o arquivo "apache-maven-3.9.9-bin.zip"
+siga as instruções: https://medium.com/@gauravshah97/how-to-install-maven-on-windows-39ff317e40cf
+
 
 ## Instalar ollama
 Linux:
