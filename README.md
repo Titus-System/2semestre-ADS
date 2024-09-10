@@ -53,7 +53,7 @@ ollama irá rodar em http://localhost:11434/
 
 ## clone o repositório e execute o projeto
 ```
-git clone https://github.com/pedro-fs-garcia/testOllama4j
+git clone https://github.com/Titus-System/2semestre-ADS.git
 cd 2semester-ADS
 mvn clean compile
 mvn exec:java
