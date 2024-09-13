@@ -1,4 +1,4 @@
-package com.titus_systems.ollama;
+package com.titus_systems.idscan.ollama;
 
 import io.github.ollama4j.OllamaAPI;
 
