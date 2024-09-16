@@ -21,6 +21,25 @@ baixar o arquivo "apache-maven-3.9.9-bin.zip"
 siga as instruções: https://medium.com/@gauravshah97/how-to-install-maven-on-windows-39ff317e40cf
 
 
+## Instalar Tesseract
+### Linux
+```
+sudo apt install tesseract-ocr
+sudo apt install tesseract-oct-por
+```
+datapath para Linux: "/usr/share/tesseract-ocr/4.00/tessdata"
+
+### Windows
+Baixar e executar o arquivo .exe: https://github.com/UB-Mannheim/tesseract/wiki
+
+#### adicionar Tesseract ao PATH:
+ - Pressione `Windows + R`, digite `sysdm.cpl` e pressione Enter
+ - Na aba Avançado, clique no botão Variáveis de Ambiente
+ - Na seção Variáveis do sistema, encontre a variável chamada `Path`, selecione-a e clique em Editar
+ - Clique em `Novo` e adicione o caminho completo para a pasta onde o Tesseract está instalado. O caminho geralmente será algo como: `C:\Program Files\Tesseract-OCR\`
+
+datapath for Windows: "C:\Program Files\Tesseract-OCR"
+
 ## Instalar ollama
 Linux:
 ```
