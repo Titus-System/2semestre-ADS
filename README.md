@@ -38,7 +38,7 @@ Baixar e executar o arquivo .exe: https://github.com/UB-Mannheim/tesseract/wiki
  - Na seção Variáveis do sistema, encontre a variável chamada `Path`, selecione-a e clique em Editar
  - Clique em `Novo` e adicione o caminho completo para a pasta onde o Tesseract está instalado. O caminho geralmente será algo como: `C:\Program Files\Tesseract-OCR\`
 
-datapath for Windows: "C:\Program Files\Tesseract-OCR"
+datapath for Windows: "C:\Program Files\Tesseract-OCR\tessdata"
 
 ## Instalar ollama
 Linux:
