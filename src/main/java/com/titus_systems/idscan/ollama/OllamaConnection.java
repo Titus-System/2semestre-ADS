@@ -62,12 +62,19 @@ public class OllamaConnection{
     public static String getTesseractAnswer(String imagePath) throws Exception{
         Tesseract tess = new Tesseract();
 
-        // datapath para linux
-        tess.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata");
-        tess.setLanguage("por");
-        // datapath para windows
-        // tess.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata");
-        // tess.setLanguage("por");
+        String osName = System.getProperty("os.name").toLowerCase();
+
+        if (osName.contains("win")){
+            // datapath para windows
+            tess.setDatapath("C:\\Program Files\\Tesseract-OCR\\tessdata");
+            tess.setLanguage("por");
+        } else if (osName.contains("nux") || osName.contains("nix")){
+            // datapath para linux
+            tess.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata");
+            tess.setLanguage("por");
+        } else {
+            throw new UnsupportedOperationException("Sistema operacional não suportado.");
+        }
         
         File imgFile = new File(imagePath);
 
