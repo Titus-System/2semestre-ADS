@@ -29,7 +29,7 @@ public class OllamaEngine extends OllamaAPI{
     }
 
     public String generateAsyncAnswerGemma2 (String prompt) throws Exception {
-        OllamaAsyncResultStreamer streamer = this.generateAsync(Gemma2bModelType.GEMMA2B, prompt, false);
+        OllamaAsyncResultStreamer streamer = this.generateAsync(CustomModelType.PHI3MINI, prompt, false);
         int pollIntervalMilliseconds = 1000;
 
         while (true) {

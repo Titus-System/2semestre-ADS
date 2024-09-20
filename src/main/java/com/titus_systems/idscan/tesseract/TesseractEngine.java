@@ -37,7 +37,7 @@ public class TesseractEngine extends Tesseract{
             return result;
         } catch (TesseractException e) {
             System.err.println(e.getMessage());
-            return "pobrema aqui";
+            return e.getMessage();
         }
     }
     
