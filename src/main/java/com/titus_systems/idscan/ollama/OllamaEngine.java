@@ -2,7 +2,6 @@ package com.titus_systems.idscan.ollama;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.OllamaAsyncResultStreamer;
-import io.github.ollama4j.types.OllamaModelType;
 import io.github.ollama4j.utils.OptionsBuilder;
 
 public class OllamaEngine extends OllamaAPI{
@@ -30,7 +29,7 @@ public class OllamaEngine extends OllamaAPI{
     }
 
     public String generateAsyncAnswerGemma2 (String prompt) throws Exception {
-        OllamaAsyncResultStreamer streamer = this.generateAsync(OllamaModelType.GEMMA2, prompt, false);
+        OllamaAsyncResultStreamer streamer = this.generateAsync(Gemma2bModelType.GEMMA2B, prompt, false);
         int pollIntervalMilliseconds = 1000;
 
         while (true) {
