@@ -10,9 +10,19 @@ public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Iniciando a aplicação...");
         
+        String modelName = "gemma2:2b";
         String imagePath = "/home/pedro/Imagens/2col.png";
-        processImage(imagePath);
+
+        Thread processImageThread = new Thread (() -> {
+            try {
+                processImage(modelName, imagePath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        // processImage(modelName, imagePath);
         
+        processImageThread.start();
         // iniciar a interface gráfica
         Main.main(args);
     }
@@ -22,19 +32,20 @@ public class App {
         return tess;
     }
 
-    public static OllamaEngine startOllamaEngine(){
-        OllamaEngine ollamaEngine = new OllamaEngine("gemma2", 0.8f);
+    public static OllamaEngine startOllamaEngine(String modelName){
+        OllamaEngine ollamaEngine = new OllamaEngine(modelName, 0.8f);
         return ollamaEngine;
     }
 
-    public static void processImage(String imagePath) throws Exception{
-        OllamaEngine ollamaEng = startOllamaEngine();
+    public static void processImage(String modelName, String imagePath) throws Exception{
+        OllamaEngine ollamaEng = startOllamaEngine(modelName);
         TesseractEngine tessEng = startTesseractEngine();
         
         String tesseractResponse = tessEng.extractTextFromimage(imagePath);
         
         PromptBuilder prompt = new PromptBuilder();
         prompt.addLine(tesseractResponse);
-        ollamaEng.generateAsyncAnswerGemma2(prompt.build());
+        ollamaEng.generateAsyncAnswerCustom(prompt.build());
+        // ollamaEng.generateSyncAnswerCustom(prompt.build());
     }
 }

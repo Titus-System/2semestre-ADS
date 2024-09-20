@@ -2,6 +2,7 @@ package com.titus_systems.idscan.ollama;
 
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.models.OllamaAsyncResultStreamer;
+import io.github.ollama4j.models.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
 
 public class OllamaEngine extends OllamaAPI{
@@ -28,8 +29,12 @@ public class OllamaEngine extends OllamaAPI{
         return this.model;
     }
 
-    public String generateAsyncAnswerGemma2 (String prompt) throws Exception {
-        OllamaAsyncResultStreamer streamer = this.generateAsync(CustomModelType.PHI3MINI, prompt, false);
+    public String generateAsyncAnswerCustom (String prompt) throws Exception {
+        OllamaAsyncResultStreamer streamer = this.generateAsync(CustomModelType.GEMMA2B, prompt, false);
+        if (this.model.equals("phi3:mini")){
+            streamer = this.generateAsync(CustomModelType.PHI3MINI, prompt, false);
+        }
+
         int pollIntervalMilliseconds = 1000;
 
         while (true) {
@@ -50,6 +55,11 @@ public class OllamaEngine extends OllamaAPI{
         System.out.println(completeResponse);
 
         return completeResponse;
+    }
+
+    public String generateSyncAnswerCustom(String promt) throws Exception{
+        OllamaResult result = this.generate(this.model, promt, false, this.options.build());
+        return result.getResponse();
     }
 
 }
