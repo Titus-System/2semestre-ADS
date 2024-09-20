@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
         primaryStage.setTitle("ID Scanner");
-        primaryStage.setScene(new Scene(root, 800, 600)); // Ajuste o tamanho conforme necessário
+        primaryStage.setScene(new Scene(root, 1150, 750)); // Ajuste o tamanho conforme necessário
         primaryStage.show();
     }
 

@@ -11,13 +11,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="659.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox id="sideMenu" prefHeight="659.0" prefWidth="222.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <StackPane prefHeight="755.0" prefWidth="227.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4faff" height="667.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="227.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a6e73" height="752.0" stroke="#6a6e73" strokeType="INSIDE" strokeWidth="0.0" style="fx-background-color: white;" width="231.0" />
                   <Button id="uploadButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(16, 185, 129, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="221.0" />
@@ -44,47 +44,70 @@
          <children>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4f4f4" height="665.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="708.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="364.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="0.0" style="-fx-stroke-dash-array: 5 5;" width="399.0">
-                     <effect>
-                        <DropShadow />
-                     </effect>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4d607c" height="752.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="922.0" />
+                  <Label style="-fx-text-fill: white;" text="Upload" textFill="WHITE">
                      <StackPane.margin>
-                        <Insets right="110.0" />
-                     </StackPane.margin>
-                  </Rectangle>
-                  <Label style="-fx-text-fill: black;" text="Upload">
-                     <StackPane.margin>
-                        <Insets bottom="490.0" right="520.0" />
+                        <Insets bottom="565.0" right="700.0" />
                      </StackPane.margin>
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21ffb100" height="260.0" stroke="#00ff8c" strokeType="INSIDE" strokeWidth="2.0" style="-fx-stroke-dash-array: 5 12;" width="269.0">
-                     <StackPane.margin>
-                        <Insets right="110.0" />
-                     </StackPane.margin></Rectangle>
-                  <StackPane prefHeight="681.0" prefWidth="708.0" style="-fx-background-color: transparent;">
+                  <StackPane prefHeight="638.0" prefWidth="902.0">
                      <children>
-                        <Label style="-fx-text-fill: grey;" text="Drag and drop">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="486.0" stroke="BLACK" strokeLineCap="ROUND" strokeWidth="0.0" style="-fx-stroke-dash-array: 5 5;" width="572.0">
+                           <effect>
+                              <DropShadow />
+                           </effect>
                            <StackPane.margin>
-                              <Insets bottom="15.0" />
+                              <Insets right="90.0" />
                            </StackPane.margin>
-                        </Label>
-                        <Label style="-fx-text-fill: grey;" text="Or">
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21ffb100" height="405.0" stroke="#00ff8c" strokeType="INSIDE" strokeWidth="2.0" style="-fx-stroke-dash-array: 5 12;" width="492.0">
                            <StackPane.margin>
-                              <Insets top="34.0" />
+                              <Insets right="90.0" />
                            </StackPane.margin>
-                        </Label>
-                        <Button mnemonicParsing="false" style="-fx-background-color: rgba(16, 185, 129, 1);" text="Browse">
+                        </Rectangle>
+                        <StackPane prefHeight="681.0" prefWidth="708.0" style="-fx-background-color: transparent;">
+                           <children>
+                              <Label style="-fx-text-fill: grey;" text="Or">
+                                 <StackPane.margin>
+                                    <Insets top="34.0" />
+                                 </StackPane.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" style="-fx-background-color: rgba(16, 185, 129, 1);" text="Browse">
+                                 <StackPane.margin>
+                                    <Insets top="130.0" />
+                                 </StackPane.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
+                              <Label style="-fx-text-fill: grey;" text="Drag and drop">
+                                 <StackPane.margin>
+                                    <Insets bottom="30.0" />
+                                 </StackPane.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
                            <StackPane.margin>
-                              <Insets top="100.0" />
+                              <Insets bottom="45.0" right="90.0" />
                            </StackPane.margin>
-                        </Button>
+                        </StackPane>
                      </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="70.0" />
+                     </padding>
                      <StackPane.margin>
-                        <Insets bottom="45.0" right="110.0" />
+                        <Insets left="20.0" top="65.0" />
                      </StackPane.margin>
                   </StackPane>
                </children>
