@@ -45,7 +45,7 @@ public class App {
         
         PromptBuilder prompt = new PromptBuilder();
         prompt.addLine(tesseractResponse);
-        ollamaEng.generateAsyncAnswerCustom(prompt.build());
+        ollamaEng.generateAsyncAnswerFromPrompt(prompt.build());
         // ollamaEng.generateSyncAnswerCustom(prompt.build());
     }
 }

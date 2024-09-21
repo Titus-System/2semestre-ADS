@@ -8,15 +8,13 @@ import io.github.ollama4j.utils.OptionsBuilder;
 public class OllamaEngine extends OllamaAPI{
     
     private String model;
-    private OptionsBuilder options;
+    private float temperature;
 
     public OllamaEngine(String modelName, float temperature){
         super("http://localhost:11434/");
         this.setRequestTimeoutSeconds(180);
         this.model = modelName;
-        
-        this.options = new OptionsBuilder();
-        options.setTemperature(temperature);
+        this.temperature = temperature;
         
         System.out.println("ollama is running: " + this.ping());
     }
@@ -29,11 +27,21 @@ public class OllamaEngine extends OllamaAPI{
         return this.model;
     }
 
-    public String generateAsyncAnswerCustom (String prompt) throws Exception {
-        OllamaAsyncResultStreamer streamer = this.generateAsync(CustomModelType.GEMMA2B, prompt, false);
-        if (this.model.equals("phi3:mini")){
-            streamer = this.generateAsync(CustomModelType.PHI3MINI, prompt, false);
-        }
+    public void setTemperature(float temperature){
+        this.temperature = temperature;
+    }
+
+    public float getTemperature(){
+        return this.temperature;
+    }
+
+    public String generateAsyncAnswerFromPrompt (String prompt) throws Exception {
+        OllamaAsyncResultStreamer streamer = this.generateAsync(this.model, prompt, false);
+        // if (this.model.equals("phi3:mini")){
+        //     streamer = this.generateAsync(CustomModelType.PHI3MINI, prompt, false);
+        // } else if (this.model.equals("minicpm-v")){
+        //     streamer = this.generateAsync(CustomModelType.MINICPMV, prompt, false);
+        // }
 
         int pollIntervalMilliseconds = 1000;
 
@@ -57,8 +65,10 @@ public class OllamaEngine extends OllamaAPI{
         return completeResponse;
     }
 
-    public String generateSyncAnswerCustom(String promt) throws Exception{
-        OllamaResult result = this.generate(this.model, promt, false, this.options.build());
+    public String generateSyncAnswerFromPrompt(String prompt) throws Exception{
+        OptionsBuilder options = new OptionsBuilder();
+        options.setTemperature(this.temperature);
+        OllamaResult result = this.generate(this.model, prompt, false, options.build());
         return result.getResponse();
     }
 
