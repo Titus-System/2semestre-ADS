@@ -1,0 +1,88 @@
+@startuml plant_uml
+class App {
+    + main(args: String[]): void
+    + startOllamaEngine(modelName: String): OllamaEngine
+    + startTesseractEngine(): TesseractEngine
+    + processImage(modelName: String, imagePath: String): String
+}
+
+package gui {
+    class Main {
+        + start(primaryStage: Stage): void
+        + main(args: String[]): void
+    }
+
+    class MainController {
+        - filePath: TextField
+        + statusLabel: Label 
+        + handleUpload(): void
+    }
+
+    MainController --> Main : controls
+}
+
+package ollama {
+    class CustomModelType {
+        + typeName: String
+    }
+
+    class OllamaEngine {
+        - model: String
+        - temperature: float
+        + setModel(model: String): void
+        + getModel(): String
+        + setTemperature(temperature: float): void
+        + getTemperature(): float
+        + generateAsyncAnswerFromPrompt (prompt: String): String
+        + generateSyncAnswerFromPrompt (prompt: String): String
+        + generateAnswerFromImage (prompt: String, imagePath: String): String
+    }
+
+    OllamaEngine --> CustomModelType : uses
+}
+
+package tesseract {
+    class TesseractEngine {
+        + extractTextFromImage (imagePath: String): String
+    }
+}
+
+package database {
+    class DatabaseConnection {
+        - url: String
+        - user: String
+        - password: String
+        + loadDatabaseConfig() : void
+        + getConnection() : Connection
+    }
+
+    Class Pessoa {
+
+    }
+
+    class RG {
+
+    }
+
+    class CNH {
+
+    }
+
+    class CRNM {
+
+    }
+
+    DatabaseConnection --> Pessoa : access
+    DatabaseConnection --> RG : access
+    DatabaseConnection --> CNH : access
+    DatabaseConnection --> CRNM : access
+
+}
+
+App --> OllamaEngine : executes
+App --> TesseractEngine : executes
+App --> Main : executes
+App --> DatabaseConnection : connects
+
+@enduml
+
