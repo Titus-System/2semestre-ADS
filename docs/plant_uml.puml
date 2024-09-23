@@ -1,9 +1,6 @@
 @startuml plant_uml
 class App {
     + main(args: String[]): void
-    + startOllamaEngine(modelName: String): OllamaEngine
-    + startTesseractEngine(): TesseractEngine
-    + processImage(modelName: String, imagePath: String): String
 }
 
 package gui {
@@ -14,8 +11,8 @@ package gui {
 
     class MainController {
         - filePath: TextField
-        + statusLabel: Label 
-        + handleUpload(): void
+        - statusLabel: Label 
+        + handleUpload (): void
     }
 
     MainController --> Main : controls
@@ -29,15 +26,25 @@ package ollama {
     class OllamaEngine {
         - model: String
         - temperature: float
-        + setModel(model: String): void
-        + getModel(): String
-        + setTemperature(temperature: float): void
-        + getTemperature(): float
+        + setModel (model: String): void
+        + getModel (): String
+        + setTemperature (temperature: float): void
+        + getTemperature (): float
         + generateAsyncAnswerFromPrompt (prompt: String): String
         + generateSyncAnswerFromPrompt (prompt: String): String
         + generateAnswerFromImage (prompt: String, imagePath: String): String
     }
 
+    class ImageProcessor {
+        - ollamaEngine: OllamaEngine
+        - tessEngine: TesseractEngine
+        + processWithTesseract (imagePath: String, prompt: PrompBuilder)
+        + processWithVLM (imagePath: String, prompt: PromptBuilder)
+        + asyncProcessWithTesseract (imagePath: String, prompt: PromptBuilder, callback: Consumer<String>)
+        + asyncProcessWithVLM (imagePath: String, prompt: PromptBuilder, callback: Consumer<String>)
+    }
+
+    ImageProcessor --> OllamaEngine: start
     OllamaEngine --> CustomModelType : uses
 }
 
@@ -52,8 +59,8 @@ package database {
         - url: String
         - user: String
         - password: String
-        + loadDatabaseConfig() : void
-        + getConnection() : Connection
+        + loadDatabaseConfig () : void
+        + getConnection () : Connection
     }
 
     Class Pessoa {
@@ -79,10 +86,10 @@ package database {
 
 }
 
-App --> OllamaEngine : executes
-App --> TesseractEngine : executes
+MainController --> ImageProcessor: executes
+MainController --> DatabaseConnection: uses
+ImageProcessor --> TesseractEngine: start
 App --> Main : executes
-App --> DatabaseConnection : connects
 
 @enduml
 
