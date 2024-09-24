@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -63,14 +64,19 @@
                               <Insets right="90.0" />
                            </StackPane.margin>
                         </Rectangle>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21ffb100" height="405.0" stroke="#00ff8c" strokeType="INSIDE" strokeWidth="2.0" style="-fx-stroke-dash-array: 5 12;" width="492.0">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="405.0" stroke="#00ff8c" strokeType="INSIDE" strokeWidth="2.0" style="-fx-stroke-dash-array: 5 12;" width="492.0">
                            <StackPane.margin>
                               <Insets right="90.0" />
                            </StackPane.margin>
                         </Rectangle>
-                        <StackPane prefHeight="681.0" prefWidth="708.0" style="-fx-background-color: transparent;">
+                        <StackPane prefHeight="328.0" prefWidth="502.0" style="-fx-background-color: transparent;">
                            <children>
-                              <Label style="-fx-text-fill: grey;" text="Or">
+                              <ImageView fx:id="selecao" fitHeight="403.0" fitWidth="489.0" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
+                                 <StackPane.margin>
+                                    <Insets top="42.0" />
+                                 </StackPane.margin>
+                              </ImageView>
+                              <Label mouseTransparent="true" style="-fx-text-fill: grey;" text="Or">
                                  <StackPane.margin>
                                     <Insets top="34.0" />
                                  </StackPane.margin>
@@ -86,7 +92,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Button>
-                              <Label style="-fx-text-fill: grey;" text="Drag and drop">
+                              <Label mouseTransparent="true" style="-fx-text-fill: grey;" text="Drag and drop">
                                  <StackPane.margin>
                                     <Insets bottom="30.0" />
                                  </StackPane.margin>

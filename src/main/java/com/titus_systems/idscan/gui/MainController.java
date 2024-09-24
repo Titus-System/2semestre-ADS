@@ -8,8 +8,12 @@ import io.github.ollama4j.utils.PromptBuilder;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -17,10 +21,21 @@ import javafx.stage.Stage;
 public class MainController {
 
     @FXML
+    private ImageView selecao;
+
+    @FXML
     private TextField filePath;
 
     @FXML
     private Label statusLabel;
+
+    @FXML
+    private Button ButtonUpload;
+
+    @FXML
+    public void initialize() {
+        ButtonUpload.setPickOnBounds(true);
+    }
 
     @FXML
     public void handleUpload() {
@@ -57,5 +72,25 @@ public class MainController {
         } else {
             statusLabel.setText("Nenhum arquivo selecionado");
         }
+    }
+
+    @FXML
+    // Tornando possível arrastar arquivos para a interface
+    private void handleDragOver(DragEvent event){
+        if (event.getDragboard().hasFiles()){
+        event.acceptTransferModes(TransferMode.ANY);
+        }
+        event.consume();
+    }
+
+    @FXML
+    // Tornando possível que a interface receba os arquivos arrastados até ela
+    private void handleDrop(DragEvent event) {
+        if (event.getDragboard().hasFiles()) {
+            File file = event.getDragboard().getFiles().get(0);
+            statusLabel.setText("Arquivo carregado: " + file.getName());
+        }
+        event.setDropCompleted(true); 
+        event.consume();
     }
 }
