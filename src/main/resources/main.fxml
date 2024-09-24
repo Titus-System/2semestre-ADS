@@ -11,14 +11,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.MainController">
    <left>
-      <VBox id="sideMenu" prefHeight="659.0" prefWidth="222.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="sideMenu" prefHeight="659.0" prefWidth="222.0" BorderPane.alignment="CENTER">
          <children>
             <StackPane prefHeight="755.0" prefWidth="227.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a6e73" height="752.0" stroke="#6a6e73" strokeType="INSIDE" strokeWidth="0.0" style="fx-background-color: white;" width="231.0" />
-                  <Button id="uploadButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(16, 185, 129, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
+                  <Button fx:id="uploadButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(16, 185, 129, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="221.0" />
                      </StackPane.margin>
@@ -26,7 +26,7 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button id="dataSearchButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: white;" text="Data Search" textAlignment="CENTER">
+                  <Button fx:id="dataSearchButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: white;" text="Data Search" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="300.0" />
                      </StackPane.margin>
@@ -78,7 +78,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" style="-fx-background-color: rgba(16, 185, 129, 1);" text="Browse">
+                              <Button fx:id="ButtonUpload" mnemonicParsing="false" onAction="#handleUpload" style="-fx-background-color: rgba(16, 185, 129, 1);" text="Browse">
                                  <StackPane.margin>
                                     <Insets top="130.0" />
                                  </StackPane.margin>
@@ -93,6 +93,11 @@
                                  <font>
                                     <Font size="18.0" />
                                  </font>
+                              </Label>
+                              <Label fx:id="statusLabel" text="Label">
+                                 <StackPane.margin>
+                                    <Insets top="490.0" />
+                                 </StackPane.margin>
                               </Label>
                            </children>
                            <StackPane.margin>
