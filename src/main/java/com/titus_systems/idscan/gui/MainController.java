@@ -78,7 +78,7 @@ public class MainController {
     // Tornando possível arrastar arquivos para a interface
     private void handleDragOver(DragEvent event){
         if (event.getDragboard().hasFiles()){
-        event.acceptTransferModes(TransferMode.ANY);
+        event.acceptTransferModes(TransferMode.COPY);
         }
         event.consume();
     }
