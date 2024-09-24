@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -23,8 +22,8 @@ public class MainController {
     @FXML
     private ImageView selecao;
 
-    @FXML
-    private TextField filePath;
+    // @FXML
+    // private TextField filePath;
 
     @FXML
     private Label statusLabel;
@@ -45,14 +44,15 @@ public class MainController {
         File file = fileChooser.showOpenDialog(new Stage());
 
         if (file != null) {
-            filePath.setText(file.getAbsolutePath());
             statusLabel.setText("Arquivo carregado: " + file.getName());
+            System.out.println("Status Label: " + this.statusLabel);
+            System.out.println("File Path: " + file.getAbsolutePath());
 
             // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
             ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
             PromptBuilder prompt = new PromptBuilder();
-            prompt.add("what is this image?");
-
+            prompt.add("the following text was extracted from an image. Interpret the text and tell me what it is about");
+            prompt.add("\n");
             imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
                 System.out.println("Resultado: " + result);
                 Platform.runLater(() -> {
