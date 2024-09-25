@@ -100,7 +100,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="statusLabel" text="Label">
+                              <Label fx:id="statusLabel" text="Nenhum arquivo selecionado">
                                  <StackPane.margin>
                                     <Insets top="490.0" />
                                  </StackPane.margin>

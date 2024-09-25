@@ -23,8 +23,8 @@ public class MainController {
     @FXML
     private ImageView selecao;
 
-    @FXML
-    private TextField filePath;
+    // @FXML
+    // private TextField filePath;
 
     @FXML
     private Label statusLabel;
@@ -35,6 +35,8 @@ public class MainController {
     @FXML
     public void initialize() {
         ButtonUpload.setPickOnBounds(true);
+        selecao.setOnDragOver(event -> handleDragOver(event));
+        selecao.setOnDragDropped(event -> handleDrop(event));
     }
 
     @FXML
@@ -45,7 +47,6 @@ public class MainController {
         File file = fileChooser.showOpenDialog(new Stage());
 
         if (file != null) {
-            filePath.setText(file.getAbsolutePath());
             statusLabel.setText("Arquivo carregado: " + file.getName());
 
             // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
@@ -89,6 +90,10 @@ public class MainController {
         if (event.getDragboard().hasFiles()) {
             File file = event.getDragboard().getFiles().get(0);
             statusLabel.setText("Arquivo carregado: " + file.getName());
+            event.setDropCompleted(true);
+    } else {
+        event.setDropCompleted(false);
+        statusLabel.setText("Nenhum arquivo selecionado");
         }
         event.setDropCompleted(true); 
         event.consume();
