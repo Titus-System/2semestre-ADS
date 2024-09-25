@@ -62,7 +62,10 @@ public class MainController {
                     Stage newStage = new Stage();
                     VBox vbox = new VBox();
                     Label label = new Label("Resultado: " + result);
+                    label.setWrapText(true); 
+                    label.setMaxWidth(600);
                     vbox.getChildren().add(label);
+
 
                     Scene scene = new Scene(vbox, 700, 900);
                     newStage.setScene(scene);
