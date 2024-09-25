@@ -10,7 +10,6 @@ import com.titus_systems.idscan.tesseract.TesseractEngine;
 import io.github.ollama4j.models.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
 import io.github.ollama4j.utils.PromptBuilder;
-import javafx.concurrent.Task;
 
 
 public class ImageProcessor {
@@ -71,50 +70,19 @@ public class ImageProcessor {
         processImageThread.start();
     }
 
-    public void asyncProcessWithVLM(String imagePath, PromptBuilder prompt, Consumer<Void> callback) {
+    public void asyncProcessWithVLM(String imagePath, PromptBuilder prompt, Consumer<String> callback) {
         System.out.println("Iniciando processamento assíncrono...");
         Thread processImageThread = new Thread (() -> {
             try {
                 System.out.println("Processando a imagem...");
                 String asyncResult = processWithVLM(imagePath, prompt);
                 System.out.println(asyncResult);
+
+                callback.accept(asyncResult);
             } catch (Exception e) {
                 System.out.println("Erro no método call: " + e.getMessage());
             }
         });
         processImageThread.start();
-
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    updateMessage("Processando a imagem...");
-                    String asyncResult = processWithVLM(imagePath, prompt);
-                    System.out.println(asyncResult);
-                } catch (Exception e) {
-                    System.out.println("Erro no método call: " + e.getMessage());
-                    throw e; // Rethrow para que a task seja marcada como falha
-                }
-                return null;
-            }
-        };
-
-        task.setOnSucceeded(event -> {
-            System.out.println("Processamento concluído");
-            callback.accept(null); // Use null se não houver um resultado específico
-        });
-    
-        task.setOnFailed(event -> {
-            Throwable e = task.getException();
-            System.out.println("Falha no processamento: " + e.getMessage());
-            // Atualize a interface do usuário com uma mensagem de erro
-        });
-    
-        //execução da task em uma nova thread --> isso que gera a assincronicidade
-        System.out.println("estado da task antes de iniciar: " + task.getState());
-        Thread taskThread = new Thread(task);
-        taskThread.start();
-        System.out.println("estado da task depois de iniciar: " + task.getState());
-        System.out.println("estado da trhread: " + taskThread.getState());
     }
 }
