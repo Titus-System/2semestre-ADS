@@ -14,11 +14,10 @@
 
 <BorderPane prefHeight="750.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.MainController">
    <left>
-      <VBox fx:id="sideMenu" prefHeight="659.0" prefWidth="222.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="sideMenu" prefHeight="750.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="755.0" prefWidth="227.0">
+            <StackPane prefHeight="752.0" prefWidth="233.0" style="-fx-background-color: #6a6e73;" VBox.vgrow="ALWAYS">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a6e73" height="752.0" stroke="#6a6e73" strokeType="INSIDE" strokeWidth="0.0" style="fx-background-color: white;" width="231.0" />
                   <Button fx:id="uploadButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(16, 185, 129, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="221.0" />
@@ -43,9 +42,8 @@
    <center>
       <VBox prefHeight="662.0" prefWidth="508.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #4d607c;" VBox.vgrow="ALWAYS">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4d607c" height="752.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="922.0" />
                   <Label style="-fx-text-fill: white;" text="Upload" textFill="WHITE">
                      <StackPane.margin>
                         <Insets bottom="565.0" right="700.0" />
