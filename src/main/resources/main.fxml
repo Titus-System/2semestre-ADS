@@ -18,18 +18,21 @@
          <children>
             <StackPane prefHeight="752.0" prefWidth="233.0" style="-fx-background-color: #6a6e73;" VBox.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="uploadButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(16, 185, 129, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
+                  <Button fx:id="uploadButton" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(16, 185, 129, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
                      <StackPane.margin>
-                        <Insets bottom="221.0" />
+                        <Insets bottom="180.0" />
                      </StackPane.margin>
                      <font>
-                        <Font size="16.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="dataSearchButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: white;" text="Data Search" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="300.0" />
                      </StackPane.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
                   </Button>
                </children>
             </StackPane>
@@ -40,11 +43,11 @@
       </VBox>
    </left>
    <center>
-      <VBox prefHeight="662.0" prefWidth="508.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="750.0" prefWidth="815.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #4d607c;" VBox.vgrow="ALWAYS">
+            <StackPane fx:id="uploadStack" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #4d607c;" VBox.vgrow="ALWAYS">
                <children>
-                  <Label style="-fx-text-fill: white;" text="Upload" textFill="WHITE">
+                  <Label fx:id="uploadLabel" style="-fx-text-fill: white;" text="Upload" textFill="WHITE">
                      <StackPane.margin>
                         <Insets bottom="565.0" right="700.0" />
                      </StackPane.margin>
@@ -62,16 +65,16 @@
                               <Insets right="90.0" />
                            </StackPane.margin>
                         </Rectangle>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="405.0" stroke="#00ff8c" strokeType="INSIDE" strokeWidth="2.0" style="-fx-stroke-dash-array: 5 12;" width="492.0">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="370.0" stroke="#00ff8c" strokeType="INSIDE" strokeWidth="2.0" style="-fx-stroke-dash-array: 5 12;" width="446.0">
                            <StackPane.margin>
                               <Insets right="90.0" />
                            </StackPane.margin>
                         </Rectangle>
                         <StackPane prefHeight="328.0" prefWidth="502.0" style="-fx-background-color: transparent;">
                            <children>
-                              <ImageView fx:id="selecao" fitHeight="403.0" fitWidth="489.0" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="selecao" fitHeight="371.0" fitWidth="448.0" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
                                  <StackPane.margin>
-                                    <Insets top="42.0" />
+                                    <Insets top="43.0" />
                                  </StackPane.margin>
                               </ImageView>
                               <Label mouseTransparent="true" style="-fx-text-fill: grey;" text="Or">
@@ -100,7 +103,7 @@
                               </Label>
                               <Label fx:id="statusLabel" text="Nenhum arquivo selecionado">
                                  <StackPane.margin>
-                                    <Insets top="490.0" />
+                                    <Insets top="475.0" />
                                  </StackPane.margin>
                               </Label>
                            </children>
@@ -122,6 +125,9 @@
                </children>
             </StackPane>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
    </center>
 </BorderPane>
