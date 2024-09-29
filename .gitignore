@@ -1,3 +1,7 @@
 .vscode/
 *.class
+*.log
 target/
+respostaPrompt.json
+resposta.json
+respostaImagem.json

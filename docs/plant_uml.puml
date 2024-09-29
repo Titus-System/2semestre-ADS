@@ -1,0 +1,99 @@
+@startuml plant_uml
+class App {
+    + main(args: String[]): void
+}
+
+package gui {
+    class Main {
+        + start(primaryStage: Stage): void
+        + main(args: String[]): void
+    }
+
+    class MainController {
+        - selecao: ImageView
+        - filePath: TextField
+        - statusLabel: Label 
+        - buttonUpload: Button
+        + handleUpload (): void
+        + handleDragOver (event: DragEvent): void
+        + handleDrop (event: DragEvent): void
+    }
+
+    MainController --> Main : controls
+}
+
+package ollama {
+    class CustomModelType {
+        + typeName: String
+    }
+
+    class OllamaEngine {
+        - model: String
+        - temperature: float
+        + setModel (model: String): void
+        + getModel (): String
+        + setTemperature (temperature: float): void
+        + getTemperature (): float
+        + generateAsyncAnswerFromPrompt (prompt: String): String
+        + generateSyncAnswerFromPrompt (prompt: String): String
+        + generateAnswerFromImage (prompt: String, imagePath: String): String
+    }
+
+    class ImageProcessor {
+        - ollamaEngine: OllamaEngine
+        - tessEngine: TesseractEngine
+        + processWithTesseract (imagePath: String, prompt: PrompBuilder)
+        + processWithVLM (imagePath: String, prompt: PromptBuilder)
+        + asyncProcessWithTesseract (imagePath: String, prompt: PromptBuilder, callback: Consumer<String>)
+        + asyncProcessWithVLM (imagePath: String, prompt: PromptBuilder, callback: Consumer<String>)
+    }
+
+    ImageProcessor --> OllamaEngine: start
+    OllamaEngine --> CustomModelType : uses
+}
+
+package tesseract {
+    class TesseractEngine {
+        + extractTextFromImage (imagePath: String): String
+    }
+}
+
+package database {
+    class DatabaseConnection {
+        - url: String
+        - user: String
+        - password: String
+        + loadDatabaseConfig () : void
+        + getConnection () : Connection
+    }
+
+    Class Pessoa {
+
+    }
+
+    class RG {
+
+    }
+
+    class CNH {
+
+    }
+
+    class CRNM {
+
+    }
+
+    DatabaseConnection --> Pessoa : access
+    DatabaseConnection --> RG : access
+    DatabaseConnection --> CNH : access
+    DatabaseConnection --> CRNM : access
+
+}
+
+MainController --> ImageProcessor: executes
+MainController --> DatabaseConnection: uses
+ImageProcessor --> TesseractEngine: start
+App --> Main : executes
+
+@enduml
+
