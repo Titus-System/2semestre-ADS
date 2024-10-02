@@ -44,6 +44,7 @@ public class MainController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecione a imagem do documento");
         File file = fileChooser.showOpenDialog(new Stage());
+        String question = "Return the name of the id card holder and the informations present in the document as specified";
 
         if (file != null) {
             statusLabel.setText("Arquivo carregado: " + file.getName());
@@ -53,9 +54,18 @@ public class MainController {
             // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
             ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
             PromptBuilder prompt = new PromptBuilder();
-            prompt.add("the following text was extracted from an image. Interpret the text and tell me what it is about");
-            prompt.add("\n");
-            imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
+            prompt.addLine("The following text was extracted with an OCR tool from an ID card from the Federal Republic of BRazil. It contains information such as name, date of birth, CPF, and RG.");
+            prompt.addLine("Assume all this data is presented in brazilian portuguese and present it back in the same language, wwithout translation of any kind.");
+            prompt.addLine("The name of the holder is identified by NOME");
+            prompt.addLine("the date of bith is identified in the line bellow DATA NASCIMENTO");
+            prompt.addLine("RG is identified as REGISTRO GERAL. It is a 10 digit number in the format nn.nnn.nnn-n");
+            prompt.addLine("CPF is a 11 digit number composed of two parts separated by a slash. The first part has 9 digits and the second has 2 digits. in the format nnnnnnnnn/nn");
+            prompt.addLine("The day the document was created is labeles DATA DE EXPEDIÇÃO");
+            prompt.addLine("The city where the holder of the document was born is one line bellow REGISTRO CIVIL.");
+            prompt.addLine("The data TITULO DE ELEITOR is a 15 digit number.");
+            prompt.addLine("Do not be creative with the answer, provide only information contained in the text. Keep your answers as short as possible, providing only the needed information.");
+            prompt.addSeparator();
+            imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, question, result -> {
                 System.out.println("Resultado: " + result);
                 Platform.runLater(() -> {
                     // Criar e mostrar uma nova janela

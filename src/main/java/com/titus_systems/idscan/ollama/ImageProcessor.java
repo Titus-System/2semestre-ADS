@@ -21,9 +21,11 @@ public class ImageProcessor {
         this.tessEngine = new TesseractEngine();
     }
 
-    public String processWithTesseract(String imagePath, PromptBuilder prompt) throws Exception {
+    public String processWithTesseract(String imagePath, PromptBuilder prompt, String question) throws Exception {
         String tesseractResult = this.tessEngine.extractTextFromimage(imagePath);
         prompt.addLine(tesseractResult);
+        prompt.addSeparator();
+        prompt.add(question);
         String ollamaResult = this.ollamaEngine.generateAsyncAnswerFromPrompt(prompt.build());
         return ollamaResult;
     }
@@ -53,12 +55,12 @@ public class ImageProcessor {
         return ollamaResponse;
     }
 
-    public void asyncProcessWithTesseract(String imagePath, PromptBuilder prompt, Consumer<String> callback){
+    public void asyncProcessWithTesseract(String imagePath, PromptBuilder prompt, String question, Consumer<String> callback){
         System.out.println("Iniciando processamento assíncrono...");
         Thread processImageThread = new Thread (() -> {
             try {
                 System.out.println("Processando a imagem...");
-                String asyncResult = processWithTesseract(imagePath, prompt);
+                String asyncResult = processWithTesseract(imagePath, prompt, question);
                 System.out.println(asyncResult);
 
                 // Passa o resultado para o callback
