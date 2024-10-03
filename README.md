@@ -126,13 +126,13 @@ Ao abrir o aplicativo, você terá as seguintes opções:
 # *Sobre a Equipe* 
 |Integrantes                |  Cargo      |   GIT HUB                         |  Linkedin                                                    |
 |---------------------------|-------------|-----------------------------------|--------------------------------------------------------------|
-| Pedro Felipe Sousa Garcia |Product owner| https://github.com/pedro-fs-garcia|[](https://www.linkedin.com/in/pedro-fs-garcia)               |
-| Ágatha Wei Alves          |Scrum Master | https://github.com/Agathawei070   |[](https://www.linkedin.com/in/agatha-wei)                    |
-| Julia Coêlho Santiago     |Dev Team     |                                   |[](https://www.linkedin.com/in/juliacoelhosantiago)           |
-| Julia Soares Pereira      |Dev Team     | https://github.com/juliasoares17  |[](https://www.linkedin.com/in/julia-soares-pereira-9ab79830b)|
-| Alice Azambuja Alves      |Dev Team     |                                   |                                                              |
-| Karina Rodrigues Ribeiro  |Dev Team     |                                   |                                                              |
-| Eduardo Fonseca Ribeiro   |Dev Team     | https://github.com/eduardo-Rib    |[](https://www.linkedin.com/in/eduardo-ribeiro-4b78002b2)     |
-| Guilherme Henrique Cassula|Dev Team     | https://github.com/Guih0412       |[](https://www.linkedin.com/in/guilherme-henrique-36b3a0220)  |
+| Pedro Felipe Sousa Garcia |Product owner| https://github.com/pedro-fs-garcia|https://www.linkedin.com/in/pedro-fs-garcia                   |
+| Ágatha Wei Alves          |Scrum Master | https://github.com/Agathawei070   |https://www.linkedin.com/in/agatha-wei                        |
+| Julia Coêlho Santiago     |Dev Team     | https://github.com/juliasantiaggo |https://www.linkedin.com/in/juliacoelhosantiago               |
+| Julia Soares Pereira      |Dev Team     | https://github.com/juliasoares17  |https://www.linkedin.com/in/julia-soares-pereira-9ab79830b    |
+| Alice Azambuja Alves      |Dev Team     | https://github.com/Tiny-Mushroom  |https://www.linkedin.com/in/alice-alves-84075130a             |
+| Karina Rodrigues Ribeiro  |Dev Team     | https://github.com/karinaribeiro2 |https://www.linkedin.com/in/karina-rodrigues-ribeiro-327562216|
+| Eduardo Fonseca Ribeiro   |Dev Team     | https://github.com/eduardo-Rib    |https://www.linkedin.com/in/eduardo-ribeiro-4b78002b2         |
+| Guilherme Henrique Cassula|Dev Team     | https://github.com/Guih0412       |https://www.linkedin.com/in/guilherme-henrique-36b3a0220      |
 
 
