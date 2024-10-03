@@ -9,7 +9,6 @@ import com.titus_systems.idscan.tesseract.TesseractEngine;
 
 import io.github.ollama4j.models.OllamaResult;
 import io.github.ollama4j.utils.OptionsBuilder;
-import io.github.ollama4j.utils.PromptBuilder;
 
 
 public class ImageProcessor {
@@ -21,16 +20,14 @@ public class ImageProcessor {
         this.tessEngine = new TesseractEngine();
     }
 
-    public String processWithTesseract(String imagePath, PromptBuilder prompt, String question) throws Exception {
+    public String processWithTesseract(String imagePath, IdPrompt prompt) throws Exception {
         String tesseractResult = this.tessEngine.extractTextFromimage(imagePath);
-        prompt.addLine(tesseractResult);
-        prompt.addSeparator();
-        prompt.add(question);
-        String ollamaResult = this.ollamaEngine.generateAsyncAnswerFromPrompt(prompt.build());
+        prompt.buildWithTesseract(tesseractResult);
+        String ollamaResult = this.ollamaEngine.generateAsyncAnswerFromPrompt(prompt.getPrompt().build());
         return ollamaResult;
     }
 
-    public String processWithVLM (String imagePath, PromptBuilder prompt) throws Exception{
+    public String processWithVLM (String imagePath, IdPrompt prompt) throws Exception{
         System.out.println("Iniciando processamento com VLM: " + this.ollamaEngine.getModel());
         OptionsBuilder options = new OptionsBuilder();
         options.setTemperature(this.ollamaEngine.getTemperature());
@@ -44,23 +41,41 @@ public class ImageProcessor {
         List<File> imageFiles = new LinkedList<>();
         imageFiles.add(imgFile);
 
+        prompt.build();
+
         System.out.println("chamando generateWithImageFiles...");
         OllamaResult ollamaResult = this.ollamaEngine.generateWithImageFiles(this.ollamaEngine.getModel(), 
-                                                                            prompt.build(), 
+                                                                            prompt.getPrompt().build(), 
                                                                             imageFiles, 
                                                                             options.build());
 
         String ollamaResponse = ollamaResult.getResponse();
-        System.out.println("Resposta obida do Ollama: " + ollamaResponse);
+        System.out.println("prompt: \n" + prompt.getPrompt().build());
+        System.out.println("Resposta obida do Ollama: \n" + ollamaResponse);
         return ollamaResponse;
     }
 
-    public void asyncProcessWithTesseract(String imagePath, PromptBuilder prompt, String question, Consumer<String> callback){
+    public String processWithTesseractAndVLM(String imagePath, IdPrompt prompt) throws Exception{
+        System.out.println("Iniciando processamento com Tesseract e VLM: " + this.ollamaEngine.getModel());
+        System.out.println("Iniciando processamento com tesseract...");
+
+        String tessAnswer = this.tessEngine.extractTextFromimage(imagePath);
+        prompt.addLine("the following image is an id card from brazil. The following text was extracted from this same image");
+        prompt.askWithTesseract(tessAnswer);
+        prompt.askForMainInfo();
+        prompt.askFormat();
+        
+        System.out.println("Iniciando processamento com Ollama...");
+        String ollamaAnswer = this.processWithVLM(imagePath, prompt);
+        return ollamaAnswer;
+    }
+
+    public void asyncProcessWithTesseractAndVLM(String imagePath, IdPrompt prompt, Consumer<String> callback){
         System.out.println("Iniciando processamento assíncrono...");
         Thread processImageThread = new Thread (() -> {
             try {
                 System.out.println("Processando a imagem...");
-                String asyncResult = processWithTesseract(imagePath, prompt, question);
+                String asyncResult = processWithTesseractAndVLM(imagePath, prompt);
                 System.out.println(asyncResult);
 
                 // Passa o resultado para o callback
@@ -72,7 +87,24 @@ public class ImageProcessor {
         processImageThread.start();
     }
 
-    public void asyncProcessWithVLM(String imagePath, PromptBuilder prompt, Consumer<String> callback) {
+    public void asyncProcessWithTesseract(String imagePath, IdPrompt prompt, Consumer<String> callback){
+        System.out.println("Iniciando processamento assíncrono...");
+        Thread processImageThread = new Thread (() -> {
+            try {
+                System.out.println("Processando a imagem...");
+                String asyncResult = processWithTesseract(imagePath, prompt);
+                System.out.println(asyncResult);
+
+                // Passa o resultado para o callback
+                callback.accept(asyncResult);
+            } catch (Exception e) {
+                System.out.println("Erro no método call: " + e.getMessage());
+            }
+        });
+        processImageThread.start();
+    }
+
+    public void asyncProcessWithVLM(String imagePath, IdPrompt prompt, Consumer<String> callback) {
         System.out.println("Iniciando processamento assíncrono...");
         Thread processImageThread = new Thread (() -> {
             try {
