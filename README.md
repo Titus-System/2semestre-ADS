@@ -126,7 +126,7 @@ Ao abrir o aplicativo, você terá as seguintes opções:
 # *Sobre a Equipe* 
 |Integrantes                |  Cargo      |   GIT HUB                         |  Linkedin                                                    |
 |---------------------------|-------------|-----------------------------------|--------------------------------------------------------------|
-| Pedro Felipe Sousa Garcia |Product owner| https://github.com/pedro-fs-garcia|https://www.linkedin.com/in/pedro-fs-garcia                   |
+| Pedro Felipe Sousa Garcia |Product owner| [(image.png)](https://github.com/pedro-fs-garcia)|https://www.linkedin.com/in/pedro-fs-garcia                   |
 | Ágatha Wei Alves          |Scrum Master | https://github.com/Agathawei070   |https://www.linkedin.com/in/agatha-wei                        |
 | Julia Coêlho Santiago     |Dev Team     | https://github.com/juliasantiaggo |https://www.linkedin.com/in/juliacoelhosantiago               |
 | Julia Soares Pereira      |Dev Team     | https://github.com/juliasoares17  |https://www.linkedin.com/in/julia-soares-pereira-9ab79830b    |
