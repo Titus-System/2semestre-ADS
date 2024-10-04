@@ -51,7 +51,7 @@ public class ImageProcessor {
         List<File> imageFiles = new LinkedList<>();
         imageFiles.add(imgFile);
 
-        prompt.build();
+        prompt.buildWithVLM();
 
         System.out.println("chamando generateWithImageFiles...");
         OllamaResult ollamaResult = this.ollamaEngine.generateWithImageFiles(this.ollamaEngine.getModel(), 

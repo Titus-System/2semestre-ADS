@@ -20,7 +20,8 @@ public class IdPrompt {
         this.prompt.addLine(line);
     }
 
-    public void build(){        
+    public void buildWithVLM(){
+        this.askWithVLM();
         if (this.full){
             this.askForAll();
         }else{
@@ -38,6 +39,17 @@ public class IdPrompt {
         }
         this.askFormat();
     }
+
+    public void buildWithTesseractAndVLM(String tessResponse){
+        this.askWithTesseractAndVLM(tessResponse);
+        if (this.full){
+            this.askForAll();
+        }else{
+            this.askForMainInfo();
+        }
+        this.askFormat();
+    }
+
 
     public void askForMainInfo(){
         this.askForEstado();
@@ -63,12 +75,25 @@ public class IdPrompt {
         this.askForRH();
     }
 
+    public void askWithVLM(){
+        prompt.addLine("The image is an id card from Brazil. The document contains personal information such as full name, date of birth, and government-issued numbers. The format can vary slightly depending on the state and issuing authority. Get the information from the document as asked.");
+    }
+
     public void askWithTesseract(String tessResponse){
-        prompt.addLine("The following text was extracted from a brazilian id card with the OCR tool Tesseract. Get the information from the document as asked.");
+        prompt.addLine("The following text was extracted from a brazilian id card with the OCR tool Tesseract. The document contains personal information such as full name, date of birth, and government-issued numbers. The format can vary slightly depending on the state and issuing authority. Get the information from the document as asked.");
         prompt.addSeparator();
         prompt.add(tessResponse);
         prompt.addSeparator();
-        prompt.addLine("the text above was extracted with an ocr tool, so some of the sentences and words may be misspelled or broken in parts. Take that into consideration and avoid null answers.");
+        prompt.addLine("the text above was extracted with an ocr tool, so some information might be broken or incomplete due to OCR errors. Try to infer the correct value by interpreting the partial text around it.");
+    }
+
+    public void askWithTesseractAndVLM(String tessResponse){
+        prompt.addLine("The following text was extracted from the following image of a brazilian id card with the OCR tool Tesseract. The document contains personal information such as full name, date of birth, and government-issued numbers. The format can vary slightly depending on the state and issuing authority. Get the information from the document as asked.");
+        prompt.addLine("You should examine both the text bellow and the image to find the requested informations.");
+        prompt.addSeparator();
+        prompt.add(tessResponse);
+        prompt.addSeparator();
+        prompt.addLine("the text above was extracted with an ocr tool, so some information might be broken or incomplete due to OCR errors. Try to infer the correct value by interpreting the partial text around it.");
     }
 
     public void askFormat(){
@@ -84,7 +109,7 @@ public class IdPrompt {
     }
     
     public void askForRG(){
-        prompt.addLine("REGISTRO GERAL is a 9 digits number in the format 'nn.nnn.nnn-n'.");
+        prompt.addLine("REGISTRO GERAL is a 9 digits number in the format 'nn.nnn.nnn-n'. Look for sequences of numbers that match this pattern.");
         prompt.addLine("the number for REGISTRO GERAL is located in the back of the document, placed on the top left side, right after the label REGISTRO GERAL.");
         prompt.addLine("get the REGISTRO GERAL of the document.");
     }
@@ -95,7 +120,7 @@ public class IdPrompt {
     }
 
     public void askForCPF(){
-        prompt.addLine("CPF is a 11 digit number in the format 'nnnnnnnnn/nn' placed after the label CPF.");
+        prompt.addLine("CPF is a 11 digit number in the format 'nnnnnnnnn/nn'. For example, '12345678900'. It is placed after the label CPF and is likely surrounded by other numbers or text. Look for sequences of numbers that match this pattern.");
         prompt.addLine("get the CPF of the document");
     }
 
@@ -112,7 +137,7 @@ public class IdPrompt {
     }
 
     public void askForTituloEleitor(){
-        prompt.addLine("TELEITOR is a 15 digit number in the format nnnnnnnnnnnnnnn.");
+        prompt.addLine("TELEITOR is a 15 digit number in the format nnnnnnnnnnnnnnn.  Look for sequences of numbers that match this pattern.");
         prompt.addLine("the number for TELEITOR is in the line bellow the labels T.ELEITOR SERIE UF.");
         prompt.addLine("get the TELEITOR attribute of the document.");
     }
@@ -128,7 +153,7 @@ public class IdPrompt {
     }
 
     public void askForCNH(){
-        prompt.addLine("CNH is a 10 digit number placed in the line bellow the label CNH.");
+        prompt.addLine("CNH is a 10 digit number most likely placed in the line bellow the label CNH.  Look for sequences of numbers that match this pattern.");
         prompt.addLine("get the CNH number of the document");
     }
 
@@ -138,9 +163,9 @@ public class IdPrompt {
     }
 
     public void askForFiliacao(){
-        prompt.addLine("FILIACAO is composed by two names under the label FILIACAO.");
+        prompt.addLine("NOME PAI E NOME MAE is composed by two names under the label FILIACAO.");
         prompt.addLine("this is the fathers name and the mothers name.");
-        prompt.addLine("get the fathers name as NOME PAI and the mothers name as NOME MAE of the document.");
+        prompt.addLine("get the fathers name as NOME PAI (male name) and the mothers name as NOME MAE (female name) of the document.");
     }
 
     public void askForDataNascimento(){
