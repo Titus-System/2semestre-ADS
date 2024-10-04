@@ -46,33 +46,7 @@ public class MainController {
         File file = fileChooser.showOpenDialog(new Stage());
 
         if (file != null) {
-            statusLabel.setText("Arquivo carregado: " + file.getName());
-            System.out.println("Status Label: " + this.statusLabel);
-            System.out.println("File Path: " + file.getAbsolutePath());
-
-            // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
-            ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
-            IdPrompt prompt = new IdPrompt(true);
-
-            imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
-                System.out.println("Resultado: \n" + result);
-                imgProcessor.setLastResponse(result);
-                Platform.runLater(() -> {
-                    // Criar e mostrar uma nova janela
-                    Stage newStage = new Stage();
-                    VBox vbox = new VBox();
-                    Label label = new Label("Resultado: \n" + result);
-                    label.setWrapText(true); 
-                    label.setMaxWidth(600);
-                    vbox.getChildren().add(label);
-
-
-                    Scene scene = new Scene(vbox, 700, 900);
-                    newStage.setScene(scene);
-                    newStage.setTitle("Resultado do Processamento");
-                    newStage.show();
-                });
-            });
+            this.startImageProcessor(file);
 
         } else {
             statusLabel.setText("Nenhum arquivo selecionado");
@@ -95,11 +69,46 @@ public class MainController {
             File file = event.getDragboard().getFiles().get(0);
             statusLabel.setText("Arquivo carregado: " + file.getName());
             event.setDropCompleted(true);
-    } else {
-        event.setDropCompleted(false);
-        statusLabel.setText("Nenhum arquivo selecionado");
+            this.startImageProcessor(file);
+        } else {
+            event.setDropCompleted(false);
+            statusLabel.setText("Nenhum arquivo selecionado");
+            }
+            event.setDropCompleted(true); 
+            event.consume();
         }
-        event.setDropCompleted(true); 
-        event.consume();
+
+    private void startImageProcessor(File file){
+        statusLabel.setText("Arquivo carregado: " + file.getName());
+        System.out.println("Status Label: " + this.statusLabel);
+        System.out.println("File Path: " + file.getAbsolutePath());
+
+        // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
+        ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
+        IdPrompt prompt = new IdPrompt(true);
+
+        imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
+            System.out.println("Resultado: \n" + result);
+            imgProcessor.setLastResponse(result);
+
+            Platform.runLater(() -> {
+                //codigo que executa após o processamento da imagem ser concluído.
+                //Aqui deve ser colocada a lógica para exibição e confirmação das informações e posterior salvamento no banco de dados
+
+                // Criar e mostrar uma nova janela
+                Stage newStage = new Stage();
+                VBox vbox = new VBox();
+                Label label = new Label("Resultado: \n" + result);
+                label.setWrapText(true); 
+                label.setMaxWidth(600);
+                vbox.getChildren().add(label);
+
+
+                Scene scene = new Scene(vbox, 700, 900);
+                newStage.setScene(scene);
+                newStage.setTitle("Resultado do Processamento");
+                newStage.show();
+            });
+        });
     }
 }
