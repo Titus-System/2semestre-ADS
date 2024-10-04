@@ -8,7 +8,7 @@ public class IdPrompt {
     private boolean full;
 
     public IdPrompt (boolean complete){
-        prompt = new PromptBuilder();
+        this.prompt = new PromptBuilder();
         this.full = complete;
     }
 
@@ -17,7 +17,7 @@ public class IdPrompt {
     }
 
     public void addLine(String line){
-        prompt.addLine(line);
+        this.prompt.addLine(line);
     }
 
     public void build(){        
@@ -40,6 +40,7 @@ public class IdPrompt {
     }
 
     public void askForMainInfo(){
+        this.askForEstado();
         this.askForNome();
         this.askForDataNascimento();
         this.askForNaturalidade();
@@ -57,6 +58,9 @@ public class IdPrompt {
         this.askForNisPisPasep();
         this.askForRegistroCivil();
         this.askForVia();
+        this.askForCertMilitar();
+        this.askForCTPS();
+        this.askForRH();
     }
 
     public void askWithTesseract(String tessResponse){
@@ -64,12 +68,14 @@ public class IdPrompt {
         prompt.addSeparator();
         prompt.add(tessResponse);
         prompt.addSeparator();
+        prompt.addLine("the text above was extracted with an ocr tool, so some of the sentences and words may be misspelled or broken in parts. Take that into consideration and avoid null answers.");
     }
 
     public void askFormat(){
-        prompt.addLine("the information asked should be returned in json format, composed by the attribute and its value foundin the document.");
-        prompt.addLine("return only the json answer. Do not make comments of any kind.");
-        prompt.addLine("in case the information requested is not found, the value should be stated as 'null'.");
+        prompt.addLine("the information asked should be returned in json format, composed by the attribute and its value found in the document.");
+        prompt.addLine("The keys in the json are: ESTADO, NOME, DATA NASCIMENTO, NATURALIDADE, CPF, REGISTRO GERAL, NOME PAI, NOME MAE, VIA, DATA DE EXPEDICAO, REGISTRO CIVIL, TELEITOR, NIS/PIS/PASEP, IDENTIDADE PROFISSIONAL, CNH, FILIACAO, DATA NASCIMENTO, ORGAO EXPEDIDOR, DATA DE EXPEDICAO, CERT MILITAR, CTPS, RH.");
+        prompt.addLine("the answer must contain all the keys as described. In case the information requested is not found, the value should be stated as 'null'.");
+        prompt.addLine("return only the json answer. Do not make comments of any kind or give any explanations or descriptions.");
     }
     
     public void askForNome(){
@@ -89,14 +95,14 @@ public class IdPrompt {
     }
 
     public void askForCPF(){
-        prompt.addLine("CPF is a 11 digit number in the format 'nnnnnnnnn/nn'.");
+        prompt.addLine("CPF is a 11 digit number in the format 'nnnnnnnnn/nn' placed after the label CPF.");
         prompt.addLine("get the CPF of the document");
     }
 
     public void askForDataExpedicao(){
-        prompt.addLine("DATA DE EXPEDIÇÂO is a date in the format 'nn/nn/nnnn'.");
+        prompt.addLine("DATA DE EXPEDICAO is a date in the format 'nn/nn/nnnn'.");
         prompt.addLine("the date for DATA DE EXPEDIÇÂO is placed right after the label DATA DE EXPEDIÇÂO.");
-        prompt.addLine("get the DATA DE EXPEDIÇÂO of the document.");
+        prompt.addLine("get the DATA DE EXPEDICAO of the document.");
     }
 
     public void askForRegistroCivil(){
@@ -106,9 +112,9 @@ public class IdPrompt {
     }
 
     public void askForTituloEleitor(){
-        prompt.addLine("TITULO DE ELEITOR is a 15 digit number in the format nnnnnnnnnnnnnnn.");
-        prompt.addLine("the number for TITULO DE ELEITOR is in the line bellow the labels SERIE UF.");
-        prompt.addLine("get the TITULO DE ELEITOR attribute of the document.");
+        prompt.addLine("TELEITOR is a 15 digit number in the format nnnnnnnnnnnnnnn.");
+        prompt.addLine("the number for TELEITOR is in the line bellow the labels T.ELEITOR SERIE UF.");
+        prompt.addLine("get the TELEITOR attribute of the document.");
     }
 
     public void askForNisPisPasep(){
@@ -132,8 +138,9 @@ public class IdPrompt {
     }
 
     public void askForFiliacao(){
-        prompt.addLine("FILIAÇÃO is composed by two names under the label FILIAÇÃO.");
-        prompt.addLine("get the FILIAÇÃO of the document.");
+        prompt.addLine("FILIACAO is composed by two names under the label FILIACAO.");
+        prompt.addLine("this is the fathers name and the mothers name.");
+        prompt.addLine("get the fathers name as NOME PAI and the mothers name as NOME MAE of the document.");
     }
 
     public void askForDataNascimento(){
@@ -146,12 +153,32 @@ public class IdPrompt {
         prompt.addLine("get the ORGAO EXPEDIDOR of the document");
     }
 
+    public void askForCertMilitar(){
+        prompt.addLine("CERT MILITAR is a 12 digit number placed in the line bellow the label CERT. MILITAR.");
+        prompt.addLine("get the CERT MILITAR of the document.");
+    }
+
+    public void askForRH(){
+        prompt.addLine("RH is an indication os positive or negative. It is placed in the line bellow FATOR RH, right after the value for ORGAO EXPEDIDOR.");
+        prompt.addLine("get the RH attribute of the document.");
+    }
+
+    public void askForCTPS(){
+        prompt.addLine("CTPS is a number placed under the line with the label CTPS, right after the TITULO ELEITOR value.");
+        prompt.addLine("get the CTPS of the document.");
+    }
+
+    public void askForEstado(){
+        prompt.addLine("ESTADO is the name of the state the document was created. The state name is plkaced after the label ESTADO DE.");
+        prompt.addLine("get the ESTADO attribute of the document.");
+    }
+
     public void setFull(boolean bool){
-        full = bool;
+        this.full = bool;
     }
 
     public boolean getFull(){
-        return full;
+        return this.full;
     }
 
 }

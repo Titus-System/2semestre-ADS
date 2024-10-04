@@ -1,6 +1,7 @@
 package com.titus_systems.idscan.ollama;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -14,10 +15,19 @@ import io.github.ollama4j.utils.OptionsBuilder;
 public class ImageProcessor {
     private final OllamaEngine ollamaEngine;
     private final TesseractEngine tessEngine;
+    private String lastResponse;
 
     public ImageProcessor(String ollamaModelName) {
         this.ollamaEngine = new OllamaEngine(ollamaModelName, 0.8f);
         this.tessEngine = new TesseractEngine();
+    }
+
+    public void setLastResponse(String response){
+        this.lastResponse = response;
+    }
+
+    public String getLastResponse(){
+        return this.lastResponse;
     }
 
     public String processWithTesseract(String imagePath, IdPrompt prompt) throws Exception {
@@ -118,5 +128,35 @@ public class ImageProcessor {
             }
         });
         processImageThread.start();
+    }
+
+    public HashMap<String, String> convertResponseToHashMap(String response){
+        // este método pressupõe que a resposta do modelo virá em uma String imitando o formato json {"key":"value", "key": "value"}
+        // em que "null" significa que o modelo não pode extrair aquela informação
+        // ```json
+        // {
+        // "ESTADO": "São Paulo",
+        // "NOME": "Pedro Garcia",
+        // "DATA NASCIMENTO": "29/05/1997",
+        // "NATURALIDADE": "São José dos Campos - SP",
+        // "CPF": "null",
+        // "REGISTRO GERAL": "null",
+        // "NOME PAI": null,
+        // "NOME MAE": null,
+        // "CNH": null,
+        // "TELEITOR": null,
+        // "NIS/PIS/PASEP": null,
+        // "IDENTIDADE PROFISSIONAL": null,
+        // "CERT MILITAR": null,
+        // "CTPS": null,
+        // "RH": null,
+        // "VIA": "2via",
+        // "DATA DE EXPEDICAO": "null",
+        // "REGISTRO CIVIL": "null",
+        // }
+        // ```
+        HashMap<String,String> convertedResponse = new HashMap<>();
+        
+        return convertedResponse;
     }
 }

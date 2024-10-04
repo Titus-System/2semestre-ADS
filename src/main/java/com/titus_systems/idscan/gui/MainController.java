@@ -52,10 +52,11 @@ public class MainController {
 
             // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
             ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
-            IdPrompt prompt = new IdPrompt(false);
+            IdPrompt prompt = new IdPrompt(true);
 
             imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
                 System.out.println("Resultado: \n" + result);
+                imgProcessor.setLastResponse(result);
                 Platform.runLater(() -> {
                     // Criar e mostrar uma nova janela
                     Stage newStage = new Stage();
