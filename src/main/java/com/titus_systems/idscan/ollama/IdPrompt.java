@@ -73,6 +73,7 @@ public class IdPrompt {
         this.askForCertMilitar();
         this.askForCTPS();
         this.askForRH();
+        this.askForOrgaoExp();
     }
 
     public void askWithVLM(){
@@ -126,7 +127,7 @@ public class IdPrompt {
 
     public void askForDataExpedicao(){
         prompt.addLine("DATA DE EXPEDICAO is a date in the format 'nn/nn/nnnn'.");
-        prompt.addLine("the date for DATA DE EXPEDIÇÂO is placed right after the label DATA DE EXPEDIÇÂO.");
+        prompt.addLine("the date for DATA DE EXPEDICAO is placed right after the label DATA DE EXPEDIÇÃO, which can also be written DATADEEXPEDIÇÃO.");
         prompt.addLine("get the DATA DE EXPEDICAO of the document.");
     }
 
@@ -138,7 +139,7 @@ public class IdPrompt {
 
     public void askForTituloEleitor(){
         prompt.addLine("TELEITOR is a 15 digit number in the format nnnnnnnnnnnnnnn.  Look for sequences of numbers that match this pattern.");
-        prompt.addLine("the number for TELEITOR is in the line bellow the labels T.ELEITOR SERIE UF.");
+        prompt.addLine("the number for TELEITOR is in the line bellow one or more of the labels 'T.ELEITOR' 'SERIE UF'.");
         prompt.addLine("get the TELEITOR attribute of the document.");
     }
 
@@ -163,8 +164,8 @@ public class IdPrompt {
     }
 
     public void askForFiliacao(){
-        prompt.addLine("NOME PAI E NOME MAE is composed by two names under the label FILIACAO.");
-        prompt.addLine("this is the fathers name and the mothers name.");
+        prompt.addLine("NOME PAI E NOME MAE is composed by two names under the title FILIAÇÃO.");
+        prompt.addLine("NOME PAI is the first name bellow the title FILIACAO. NOME MAE is the second name bellow the title FILIAÇÃO.");
         prompt.addLine("get the fathers name as NOME PAI (male name) and the mothers name as NOME MAE (female name) of the document.");
     }
 

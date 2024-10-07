@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -42,25 +43,13 @@ public class TesseractEngine extends Tesseract{
 
 
     public String extractTextFromimage(String imagePath) throws Exception{
-        BufferedImage image = loadImage(imagePath);
-        System.out.println("Iniciando pre processamento da imagem...");
-        image = this.toGreyScale(image);
-        image = this.binarizeImage(image, 150);
-        image = this.applyGaussianBlur(image);
+        BufferedImage image = startPreProcessing(imagePath);
 
         File f = new File("MyFile.png");
         ImageIO.write(image, "PNG", f);
-        // float dpi = this.getPngDpi(f);
-        // if (dpi > 0 && dpi < 300){
-        //     image = this.convertTo300DPI(image, dpi);
-        //     f.delete();
-        //     f = new File("MyFile.png");
-        //     ImageIO.write(image, "PNG", f);
-        // }
-
-        // File imgFile = new File(imagePath);
 
         try{
+            System.out.println("Iniciando extração de texto com Tesseract...");
             String result = this.doOCR(f);
             // f.delete();
             System.out.println(result);
@@ -71,7 +60,7 @@ public class TesseractEngine extends Tesseract{
         }
     }
 
-    public static BufferedImage loadImage(String imagePath) {
+    public BufferedImage loadImage(String imagePath) {
         BufferedImage image = null;
         try {
             File file = new File(imagePath);
@@ -81,6 +70,18 @@ public class TesseractEngine extends Tesseract{
         }
         return image;
     }
+
+    public BufferedImage startPreProcessing (String imagePath) {
+        BufferedImage image = loadImage(imagePath);
+        this.setPageSegMode(1);
+        System.out.println("Iniciando pre processamento da imagem...");
+        image = this.toGreyScale(image);
+        image = this.adjustContrast(image, 1.4f);
+        image = this.applyGaussianBlur(image);
+        image = this.sharpenImage(image);
+        // image = this.binarizeImage(image, 160);
+        return image;
+    } 
 
     public BufferedImage toGreyScale(BufferedImage original){
         System.out.println("Transformando imagem em preto e branco...");
@@ -104,6 +105,16 @@ public class TesseractEngine extends Tesseract{
         return grayscaleImage;
     }
     
+    public BufferedImage adjustContrast(BufferedImage original, float contrastFactor) {
+        // Um valor maior que 1 aumentará o contraste, enquanto valores entre 0 e 1 diminuirão o contraste. Por exemplo, um valor de 1.2 aumentará o contraste em 20%.
+        // O bias (deslocamento) normalmente é 0, mas você pode ajustá-lo para efeitos mais refinados
+        float bias = 0f;
+        RescaleOp op = new RescaleOp(contrastFactor, bias, null);
+        BufferedImage contrastedImage = new BufferedImage(original.getWidth(), original.getHeight(), original.getType());
+        op.filter(original, contrastedImage);
+        return contrastedImage;
+    }
+
     public BufferedImage binarizeImage(BufferedImage original, int threshold) {
         System.out.println("Iniciando binarização da imagem...");
         int width = Math.abs(original.getWidth());
@@ -136,6 +147,23 @@ public class TesseractEngine extends Tesseract{
         Kernel kernel = new Kernel(3, 3, matrix);
         ConvolveOp op = new ConvolveOp(kernel);
         return op.filter(original, null);
+    }
+
+    public BufferedImage sharpenImage(BufferedImage original) {
+        float[] sharpenKernel = {
+            0.f, -1.f,  0.f,
+            -1.f,  5.f, -1.f,
+            0.f, -1.f,  0.f
+        };
+
+        Kernel kernel = new Kernel(3, 3, sharpenKernel);
+        ConvolveOp convolveOp = new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
+
+        BufferedImage sharpenedImage = new BufferedImage(
+            original.getWidth(), original.getHeight(), original.getType());
+
+        convolveOp.filter(original, sharpenedImage);
+        return sharpenedImage;
     }
 
     public BufferedImage convertTo300DPI(BufferedImage original, float dpi) {
