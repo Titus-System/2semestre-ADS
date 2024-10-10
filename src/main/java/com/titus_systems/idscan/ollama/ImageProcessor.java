@@ -1,10 +1,12 @@
 package com.titus_systems.idscan.ollama;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
+import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import com.titus_systems.idscan.tesseract.TesseractEngine;
 
@@ -131,32 +133,19 @@ public class ImageProcessor {
     }
 
     public HashMap<String, String> convertResponseToHashMap(String response){
-        // este método pressupõe que a resposta do modelo virá em uma String imitando o formato json {"key":"value", "key": "value"}
-        // em que "null" significa que o modelo não pode extrair aquela informação
-        // ```json
-        // {
-        // "ESTADO": "São Paulo",
-        // "NOME": "Pedro Garcia",
-        // "DATA NASCIMENTO": "29/05/1997",
-        // "NATURALIDADE": "São José dos Campos - SP",
-        // "CPF": "null",
-        // "REGISTRO GERAL": "null",
-        // "NOME PAI": null,
-        // "NOME MAE": null,
-        // "CNH": null,
-        // "TELEITOR": null,
-        // "NIS/PIS/PASEP": null,
-        // "IDENTIDADE PROFISSIONAL": null,
-        // "CERT MILITAR": null,
-        // "CTPS": null,
-        // "RH": null,
-        // "VIA": "2via",
-        // "DATA DE EXPEDICAO": "null",
-        // "REGISTRO CIVIL": "null",
-        // }
-        // ```
         HashMap<String,String> convertedResponse = new HashMap<>();
-        
+
+        response = response.replaceAll("```json", "")
+                .replaceAll("```", "");
+        JSONObject jsonObject = new JSONObject(response);
+
+        Iterator<String> keys = jsonObject.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            String value = jsonObject.optString(key, null);
+            convertedResponse.put(key, value);
+        }
+
         return convertedResponse;
     }
 }
