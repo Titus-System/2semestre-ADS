@@ -1,12 +1,13 @@
 package com.titus_systems.idscan.ollama;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
+
 import org.json.JSONObject;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import com.titus_systems.idscan.tesseract.TesseractEngine;
 
@@ -132,12 +133,12 @@ public class ImageProcessor {
         processImageThread.start();
     }
 
-    public HashMap<String, String> convertResponseToHashMap(String response){
+    public HashMap<String, String> convertResponseToHashMap(){
         HashMap<String,String> convertedResponse = new HashMap<>();
 
-        response = response.replaceAll("```json", "")
+        this.lastResponse = this.lastResponse.replaceAll("```json", "")
                 .replaceAll("```", "");
-        JSONObject jsonObject = new JSONObject(response);
+        JSONObject jsonObject = new JSONObject(lastResponse);
 
         Iterator<String> keys = jsonObject.keys();
         while (keys.hasNext()) {

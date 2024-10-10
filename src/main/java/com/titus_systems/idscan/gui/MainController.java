@@ -1,7 +1,9 @@
 package com.titus_systems.idscan.gui;
 
 import java.io.File;
+import java.util.HashMap;
 
+import com.titus_systems.idscan.database.RG;
 import com.titus_systems.idscan.ollama.IdPrompt;
 import com.titus_systems.idscan.ollama.ImageProcessor;
 
@@ -94,6 +96,10 @@ public class MainController {
             Platform.runLater(() -> {
                 //codigo que executa após o processamento da imagem ser concluído.
                 //Aqui deve ser colocada a lógica para exibição e confirmação das informações e posterior salvamento no banco de dados
+
+                //Criação do objeto RG para armazenamento temporário das informações extraídas
+                HashMap<String,String> mappedResponse = imgProcessor.convertResponseToHashMap();
+                RG rgObject = new RG(mappedResponse);
 
                 // Criar e mostrar uma nova janela
                 Stage newStage = new Stage();
