@@ -96,7 +96,11 @@ public class RG {
 
     private void setAttribute(String key, String value) {
         key = key.toLowerCase().trim();
-        value = value.toLowerCase().trim();
+        if (value == null || value.equals("null")){
+            value = null;
+        }else{
+            value = value.toLowerCase().trim();
+        }
 
         Map<String, List<String>> attributeMap = new HashMap<>();
         attributeMap.put("nome", Arrays.asList("nome", "name"));
