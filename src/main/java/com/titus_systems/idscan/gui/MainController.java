@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -85,6 +86,19 @@ public class MainController {
         System.out.println("Status Label: " + this.statusLabel);
         System.out.println("File Path: " + file.getAbsolutePath());
 
+        // Cria um indicador de carregamento e adiciona à interface enquanto o processamento está em andamento
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        progressIndicator.setProgress(-1.0); // Modo indeterminado
+
+        // Exibe o indicador de carregamento em uma nova janela (ou em um painel existente, conforme necessário)
+        Stage loadingStage = new Stage();
+        VBox loadingBox = new VBox(progressIndicator);
+        loadingBox.setStyle("-fx-alignment: center; -fx-padding: 20;");
+        Scene loadingScene = new Scene(loadingBox, 200, 100);
+        loadingStage.setScene(loadingScene);
+        loadingStage.setTitle("Processando...");
+        loadingStage.show();
+
         // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
         ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
         IdPrompt prompt = new IdPrompt(true);
@@ -96,7 +110,10 @@ public class MainController {
             Platform.runLater(() -> {
                 //codigo que executa após o processamento da imagem ser concluído.
                 //Aqui deve ser colocada a lógica para exibição e confirmação das informações e posterior salvamento no banco de dados
-
+                
+                // Oculta o indicador de carregamento após o processamento
+                loadingStage.close();
+                
                 //Criação do objeto RG para armazenamento temporário das informações extraídas
                 HashMap<String,String> mappedResponse = imgProcessor.convertResponseToHashMap();
                 RG rgObject = new RG(mappedResponse);
