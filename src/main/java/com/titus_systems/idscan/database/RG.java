@@ -1,5 +1,8 @@
 package com.titus_systems.idscan.database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +70,29 @@ public class RG {
             this.setAttribute(key, value);
         }
     }
+
+    public void saveToDatabase(Connection connection) throws SQLException{
+        HashMap<String,String> attributes = this.getAllAttributes();
+        StringBuilder buildStatement = new StringBuilder();
+        buildStatement.append("INSERT INTO RG(");
+        String sql = "INSERT INTO RG(?) VALUES(?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        for (Map.Entry<String,String> entry: attributes.entrySet()){
+            String key = entry.getKey();
+            String value = entry.getValue();
+        }
+            
+        try { 
+           // String id_aux=Integer.toString(cliente.getId());
+            stmt.setString(1, this.getNome());
+            stmt.execute();
+            stmt.close();
+        }
+        catch (SQLException u) { 
+            throw new RuntimeException(u);
+        } 
+    }
+
 
     private void setAttribute(String key, String value) {
         key = key.toLowerCase().trim();
