@@ -1,6 +1,7 @@
 package com.titus_systems.idscan.gui;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.titus_systems.idscan.database.RG;
@@ -9,10 +10,13 @@ import com.titus_systems.idscan.ollama.ImageProcessor;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -21,6 +25,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainController {
+
+    private File selectedImageFile;
 
     @FXML
     private ImageView selecao;
@@ -41,19 +47,46 @@ public class MainController {
         selecao.setOnDragDropped(event -> handleDrop(event));
     }
 
+    public File getSelectedImageFile() {
+        return selectedImageFile;
+    }
+
     @FXML
     public void handleUpload() {
         // Abrir o seletor de arquivos
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecione a imagem do documento");
-        File file = fileChooser.showOpenDialog(new Stage());
+        selectedImageFile = fileChooser.showOpenDialog(new Stage());
+        System.out.println("Arquivo selecionado: " + selectedImageFile); 
 
-        if (file != null) {
-            this.startImageProcessor(file);
+        if (selectedImageFile != null) {
+            openConfirmationDialog();
+            //this.startImageProcessor(selectedImageFile);
 
         } else {
             statusLabel.setText("Nenhum arquivo selecionado");
         }
+    }
+
+    private void openConfirmationDialog(){
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/confirmação.fxml"));
+        Parent confirmationRoot = loader.load();
+
+        ConfirmaçãoController confirmacaoController = loader.getController();
+        Image image = new Image(selectedImageFile.toURI().toString());
+        confirmacaoController.setImage(image);
+        confirmacaoController.setMainController(this);
+
+        // Exibe a tela de confirmação
+        Stage confirmationStage = new Stage();
+        confirmationStage.setScene(new Scene(confirmationRoot));
+        confirmationStage.setTitle("Confirme a imagem");
+        confirmationStage.showAndWait(); // Espera o usuário confirmar
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
     @FXML
@@ -70,18 +103,18 @@ public class MainController {
     private void handleDrop(DragEvent event) {
         if (event.getDragboard().hasFiles()) {
             File file = event.getDragboard().getFiles().get(0);
+            selectedImageFile = file;
             statusLabel.setText("Arquivo carregado: " + file.getName());
             event.setDropCompleted(true);
-            this.startImageProcessor(file);
+            openConfirmationDialog();
         } else {
             event.setDropCompleted(false);
             statusLabel.setText("Nenhum arquivo selecionado");
-            }
-            event.setDropCompleted(true); 
+            } 
             event.consume();
         }
 
-    private void startImageProcessor(File file){
+    protected void startImageProcessor(File file){
         statusLabel.setText("Arquivo carregado: " + file.getName());
         System.out.println("Status Label: " + this.statusLabel);
         System.out.println("File Path: " + file.getAbsolutePath());
