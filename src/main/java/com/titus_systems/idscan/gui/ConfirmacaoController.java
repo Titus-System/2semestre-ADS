@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class ConfirmaçãoController{
+public class ConfirmacaoController{
 
     private MainController mainController; 
     

@@ -73,7 +73,7 @@ public class MainController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/confirmação.fxml"));
         Parent confirmationRoot = loader.load();
 
-        ConfirmaçãoController confirmacaoController = loader.getController();
+        ConfirmacaoController confirmacaoController = loader.getController();
         Image image = new Image(selectedImageFile.toURI().toString());
         confirmacaoController.setImage(image);
         confirmacaoController.setMainController(this);
