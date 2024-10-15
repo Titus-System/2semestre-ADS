@@ -8,7 +8,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="569.0" style="-fx-background-color: rgba(46, 60, 78, 1);" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.SucessoController">
    <children>
-      <Button fx:id="okBotão" mnemonicParsing="false" onAction="#fecharJanela" prefHeight="26.0" prefWidth="72.0" style="-fx-background-color: #00ff8c;" text="Ok">
+      <Button fx:id="okBotao" mnemonicParsing="false" onAction="#fecharJanela" prefHeight="26.0" prefWidth="72.0" style="-fx-background-color: #00ff8c;" text="Ok">
          <StackPane.margin>
             <Insets top="260.0" />
          </StackPane.margin>

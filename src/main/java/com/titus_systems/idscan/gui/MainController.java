@@ -54,7 +54,6 @@ public class MainController {
     @FXML
     public void handleUpload() {
         // Abrir o seletor de arquivos
-        System.out.println("handledrop chamado");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecione a imagem do documento");
         selectedImageFile = fileChooser.showOpenDialog(new Stage());

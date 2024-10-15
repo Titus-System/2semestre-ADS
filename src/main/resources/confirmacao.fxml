@@ -22,7 +22,7 @@
             <Insets right="140.0" top="345.0" />
          </StackPane.margin>
       </Button>
-      <ImageView fx:id="exibiçãoImagem" fitHeight="290.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="exibicaoImagem" fitHeight="290.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true">
          <StackPane.margin>
             <Insets bottom="75.0" />
          </StackPane.margin>
