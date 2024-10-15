@@ -54,6 +54,7 @@ public class MainController {
     @FXML
     public void handleUpload() {
         // Abrir o seletor de arquivos
+        System.out.println("handledrop chamado");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecione a imagem do documento");
         selectedImageFile = fileChooser.showOpenDialog(new Stage());
@@ -70,7 +71,7 @@ public class MainController {
 
     private void openConfirmationDialog(){
         try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/confirmação.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/confirmacao.fxml"));
         Parent confirmationRoot = loader.load();
 
         ConfirmacaoController confirmacaoController = loader.getController();
