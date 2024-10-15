@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="447.0" prefWidth="569.0" style="-fx-background-color: #4d607c;" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.ConfirmaçãoController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="569.0" style="-fx-background-color: #4d607c;" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.ConfirmacaoController">
    <children>
       <Label text="Confirme se deseja continuar com esta imagem:" textFill="WHITE">
          <StackPane.margin>
@@ -19,17 +19,17 @@
       </Label>
       <Button fx:id="cancelar" mnemonicParsing="false" onAction="#cancelarImagem" prefHeight="26.0" prefWidth="86.0" text="Cancelar">
          <StackPane.margin>
-            <Insets right="140.0" top="350.0" />
+            <Insets right="140.0" top="345.0" />
          </StackPane.margin>
       </Button>
-      <ImageView fx:id="exibiçãoImagem" fitHeight="307.0" fitWidth="384.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="exibiçãoImagem" fitHeight="290.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true">
          <StackPane.margin>
-            <Insets bottom="90.0" />
+            <Insets bottom="75.0" />
          </StackPane.margin>
       </ImageView>
       <Button fx:id="confirmar" mnemonicParsing="false" onAction="#confirmarImagem" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #00ff8c;" text="Confirmar">
          <StackPane.margin>
-            <Insets left="140.0" top="350.0" />
+            <Insets left="140.0" top="345.0" />
          </StackPane.margin>
       </Button>
    </children>
