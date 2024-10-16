@@ -10,9 +10,13 @@ package gui {
     }
 
     class MainController {
+        - selecao: ImageView
         - filePath: TextField
         - statusLabel: Label 
+        - buttonUpload: Button
         + handleUpload (): void
+        + handleDragOver (event: DragEvent): void
+        + handleDrop (event: DragEvent): void
     }
 
     MainController --> Main : controls
