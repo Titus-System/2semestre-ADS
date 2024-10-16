@@ -138,6 +138,9 @@ public class ImageProcessor {
 
         this.lastResponse = this.lastResponse.replaceAll("```json", "")
                 .replaceAll("```", "");
+        if (!this.lastResponse.startsWith("{")){
+            this.lastResponse = "{}";
+        }
         JSONObject jsonObject = new JSONObject(lastResponse);
 
         Iterator<String> keys = jsonObject.keys();

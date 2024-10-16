@@ -1,17 +1,13 @@
 package com.titus_systems.idscan;
 
-import com.titus_systems.idscan.database.DatabaseConnection;
 import com.titus_systems.idscan.gui.Main;
-
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Iniciando a aplicação...");
         
         // Criar instância da classe DatabaseConnection
-        DatabaseConnection dbConnection = new DatabaseConnection();
+        /*DatabaseConnection dbConnection = new DatabaseConnection();
         
         // Estabelecer conexão com o MySQL
         Connection connection = dbConnection.getConnection();
@@ -29,7 +25,7 @@ public class App {
         } finally {
             // Fechar a conexão ao final
             dbConnection.closeConnection();
-        }
+        }*/
        
         // Iniciar a interface gráfica
         Main.main(args);

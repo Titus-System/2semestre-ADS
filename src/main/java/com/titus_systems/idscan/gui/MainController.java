@@ -150,6 +150,10 @@ public class MainController {
                 //Criação do objeto RG para armazenamento temporário das informações extraídas
                 HashMap<String,String> mappedResponse = imgProcessor.convertResponseToHashMap();
                 RG rgObject = new RG(mappedResponse);
+                
+    
+                RgFormApp rgForm = new RgFormApp();
+                rgForm.start(new Stage());
 
                 // Criar e mostrar uma nova janela
                 Stage newStage = new Stage();
