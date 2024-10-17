@@ -1,7 +1,5 @@
 package com.titus_systems.idscan.gui;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,22 +32,9 @@ public class ConfirmacaoController{
 
     @FXML
     private void confirmarImagem() {
-try {
         mainController.startImageProcessor(mainController.getSelectedImageFile());
         Stage currentStage = (Stage) confirmar.getScene().getWindow();
-        currentStage.close();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sucesso.fxml"));
-        Parent root = fxmlLoader.load();
-
-        Stage stage = new Stage();
-        stage.setTitle("Sucesso");
-        stage.setScene(new Scene(root));
-        stage.show();
-    
-        
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+        currentStage.close();   
     }    
 
     @FXML

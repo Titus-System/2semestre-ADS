@@ -164,6 +164,18 @@ public class MainController {
                 newStage.setScene(scene);
                 newStage.setTitle("Resultado do Processamento");
                 newStage.show();
+
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sucesso.fxml"));
+                    Parent root = fxmlLoader.load();
+    
+                    Stage stage = new Stage();
+                    stage.setTitle("Sucesso");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
         });
     }
