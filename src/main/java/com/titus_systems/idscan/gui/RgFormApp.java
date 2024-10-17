@@ -1,15 +1,16 @@
 package com.titus_systems.idscan.gui;
 
+import java.util.HashMap;
+
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class RgFormApp extends Application {
 
@@ -20,7 +21,7 @@ public class RgFormApp extends Application {
         TextField nomeField = new TextField();
 
         Label dataNascimentoLabel = new Label("Data de Nascimento:");
-        DatePicker dataNascimentoPicker = new DatePicker();
+        TextField dataNascimentoPicker = new TextField();
 
         Label naturalidadeLabel = new Label("Naturalidade:");
         TextField naturalidadeField = new TextField();
@@ -50,7 +51,7 @@ public class RgFormApp extends Application {
         TextField estadoField = new TextField();
 
         Label dataExpedicaoLabel = new Label("Data de Expedição:");
-        DatePicker dataExpedicaoPicker = new DatePicker();
+        TextField dataExpedicaoPicker = new TextField();
 
         Label viaLabel = new Label("Via:");
         TextField viaField = new TextField();
@@ -95,7 +96,11 @@ public class RgFormApp extends Application {
         TextField registroGeralField = new TextField();
 
         // Preenchimento dos campos com dados de exemplo
-        preencherCampos(nomeField, dataNascimentoPicker, naturalidadeField, cpfField, tEleitorField);
+        preencherCampos(nomeField, dataNascimentoPicker, naturalidadeField, cpfField, 
+        tEleitorField, nacionalidadeField, nomePaiField, nomeMaeField, rgNumberField, 
+        orgaoExpedidorField, observacaoField, estadoField, dataExpedicaoPicker, viaField, ufField, 
+        serieField, cnhField, fatorRhField, nisPisPasepField, ctpsField, certMilitarField, dniField, 
+        identidadeProfissionalField, cnsField, registroCivilField, registroGeralField);
 
         // Botões para salvar ou cancelar
         Button saveButton = new Button("Salvar");
@@ -106,7 +111,7 @@ public class RgFormApp extends Application {
             // Coleta dos dados dos campos
             HashMap<String, String> rgData = new HashMap<>();
             rgData.put("Nome", nomeField.getText());
-            rgData.put("Data de Nascimento", (dataNascimentoPicker.getValue() != null) ? dataNascimentoPicker.getValue().toString() : "");
+            rgData.put("Data de Nascimento", dataNascimentoPicker.getText());
             rgData.put("Naturalidade", naturalidadeField.getText());
             rgData.put("CPF", cpfField.getText());
             rgData.put("Nacionalidade", nacionalidadeField.getText());
@@ -116,7 +121,7 @@ public class RgFormApp extends Application {
             rgData.put("Órgão Expedidor", orgaoExpedidorField.getText());
             rgData.put("Observação", observacaoField.getText());
             rgData.put("Estado", estadoField.getText());
-            rgData.put("Data de Expedição", (dataExpedicaoPicker.getValue() != null) ? dataExpedicaoPicker.getValue().toString() : "");
+            rgData.put("Data de Expedição", dataExpedicaoPicker.getText());
             rgData.put("Via", viaField.getText());
             rgData.put("UF", ufField.getText());
             rgData.put("Série", serieField.getText());
@@ -137,7 +142,34 @@ public class RgFormApp extends Application {
         });
 
         // Ação para cancelar
-        cancelButton.setOnAction(e -> limparCampos(nomeField, dataNascimentoPicker, naturalidadeField, cpfField, tEleitorField));
+        cancelButton.setOnAction(e -> {
+            rgNumberField.clear();
+            fatorRhField.clear();
+            orgaoExpedidorField.clear();
+            observacaoField.clear();
+            estadoField.clear();
+            nisPisPasepField.clear();
+            ctpsField.clear();
+            tEleitorField.clear();
+            dataExpedicaoPicker.clear();
+            certMilitarField.clear();
+            dniField.clear();
+            viaField.clear();
+            identidadeProfissionalField.clear();
+            cnsField.clear();
+            serieField.clear();
+            ufField.clear();
+            registroCivilField.clear();
+            registroGeralField.clear();
+            nomeField.clear();
+            dataNascimentoPicker.clear();
+            naturalidadeField.clear();
+            cpfField.clear();
+            nacionalidadeField.clear();
+            nomePaiField.clear();
+            nomeMaeField.clear();
+            cnhField.clear();
+        });
 
         // Layout do formulário usando GridPane
         GridPane gridPane = new GridPane();
@@ -155,10 +187,52 @@ public class RgFormApp extends Application {
         gridPane.add(naturalidadeField, 1, 2);
         gridPane.add(cpfLabel, 0, 3);
         gridPane.add(cpfField, 1, 3);
-        gridPane.add(tEleitorLabel, 0, 4);
-        gridPane.add(tEleitorField, 1, 4);
-        gridPane.add(saveButton, 0, 5);
-        gridPane.add(cancelButton, 1, 5);
+        gridPane.add(nacionalidadeLabel, 0, 4);
+        gridPane.add(nacionalidadeField, 1, 4);
+        gridPane.add(nomePaiLabel, 0, 5);
+        gridPane.add(nomePaiField, 1, 5);
+        gridPane.add(nomeMaeLabel, 0, 6);
+        gridPane.add(nomeMaeField, 1, 6);
+        gridPane.add(rgNumberLabel, 0, 7);
+        gridPane.add(rgNumberField, 1, 7);
+        gridPane.add(orgaoExpedidorLabel, 0, 8);
+        gridPane.add(orgaoExpedidorField, 1, 8);
+        gridPane.add(observacaoLabel, 0, 9);
+        gridPane.add(observacaoField, 1, 9);
+        gridPane.add(estadoLabel, 0, 10);
+        gridPane.add(estadoField, 1, 10);
+        gridPane.add(dataExpedicaoLabel, 0, 11);
+        gridPane.add(dataExpedicaoPicker, 1, 11);
+        gridPane.add(viaLabel, 0, 12);
+        gridPane.add(viaField, 1, 12);
+        gridPane.add(ufLabel, 0, 13);
+        gridPane.add(ufField, 1, 13);
+        gridPane.add(serieLabel, 0, 14);
+        gridPane.add(serieField, 1, 14);
+        gridPane.add(cnhLabel, 0, 15);
+        gridPane.add(cnhField, 1, 15);
+        gridPane.add(fatorRhLabel, 0, 16);
+        gridPane.add(fatorRhField, 1, 16);
+        gridPane.add(nisPisPasepLabel, 0, 17);
+        gridPane.add(nisPisPasepField, 1, 17);
+        gridPane.add(ctpsLabel, 0, 18);
+        gridPane.add(ctpsField, 1, 18);
+        gridPane.add(tEleitorLabel, 0, 19);
+        gridPane.add(tEleitorField, 1, 19);
+        gridPane.add(certMilitarLabel, 0, 20);
+        gridPane.add(certMilitarField, 1, 20);
+        gridPane.add(dniLabel, 0, 21);
+        gridPane.add(dniField, 1, 21);
+        gridPane.add(identidadeProfissionalLabel, 0, 22);
+        gridPane.add(identidadeProfissionalField, 1, 22);
+        gridPane.add(cnsLabel, 0, 23);
+        gridPane.add(cnsField, 1, 23);
+        gridPane.add(registroCivilLabel, 0, 24);
+        gridPane.add(registroCivilField, 1, 24);
+        gridPane.add(registroGeralLabel, 0, 25);
+        gridPane.add(registroGeralField, 1, 25);
+        gridPane.add(saveButton, 0, 26);
+        gridPane.add(cancelButton, 1, 26);
 
         // Configuração da cena e exibição
         Scene scene = new Scene(gridPane, 600, 400);
@@ -168,21 +242,42 @@ public class RgFormApp extends Application {
     }
 
     // Função para preencher campos com dados
-    private void preencherCampos(TextField nomeField, DatePicker dataNascimentoPicker, TextField naturalidadeField, TextField cpfField, TextField tEleitorField) {
-        nomeField.setText("KARINA RODRIGUES RIBEIRO");
-        dataNascimentoPicker.setValue(LocalDate.parse("17/11/2003", DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+    private void preencherCampos(
+        TextField nomeField, TextField dataNascimentoPicker, TextField naturalidadeField, 
+        TextField cpfField, TextField tEleitorField, TextField nacionalidadeField, 
+        TextField nomePaiField, TextField nomeMaeField, TextField rgNumberField, 
+        TextField orgaoExpedidorField, TextField observacaoField, TextField estadoField, 
+        TextField dataExpedicaoPicker, TextField viaField, TextField ufField, 
+        TextField serieField, TextField cnhField, TextField fatorRhField, 
+        TextField nisPisPasepField, TextField ctpsField, TextField certMilitarField, 
+        TextField dniField, TextField identidadeProfissionalField, TextField cnsField, 
+        TextField registroCivilField, TextField registroGeralField) {
+        nomeField.setText("Nome Completo");
+        dataNascimentoPicker.setText("Data Nascimento");
         naturalidadeField.setText("CIDADE DE NASCIMENTO");
         cpfField.setText("nnnnnnnnn/nn");
         tEleitorField.setText("nn.nnn");
-    }
-
-    // Função para limpar campos
-    private void limparCampos(TextField nomeField, DatePicker dataNascimentoPicker, TextField naturalidadeField, TextField cpfField, TextField tEleitorField) {
-        nomeField.clear();
-        dataNascimentoPicker.setValue(null);
-        naturalidadeField.clear();
-        cpfField.clear();
-        tEleitorField.clear();
+        nacionalidadeField.setText("Brasileira");
+        nomePaiField.setText("Nome do Pai Exemplo");
+        nomeMaeField.setText("Nome da Mãe Exemplo");
+        rgNumberField.setText("123456789");
+        orgaoExpedidorField.setText("SSP");
+        observacaoField.setText("Sem observações");
+        estadoField.setText("SP");
+        dataExpedicaoPicker.setText("Data Expedicao");
+        viaField.setText("1ª");
+        ufField.setText("SP");
+        serieField.setText("Série Exemplo");
+        cnhField.setText("1234567890");
+        fatorRhField.setText("O+");
+        nisPisPasepField.setText("123456789");
+        ctpsField.setText("CTPS Exemplo");
+        certMilitarField.setText("Certificado Militar Exemplo");
+        dniField.setText("DNI Exemplo");
+        identidadeProfissionalField.setText("Identidade Profissional Exemplo");
+        cnsField.setText("CNS Exemplo");
+        registroCivilField.setText("Registro Civil Exemplo");
+        registroGeralField.setText("RG Exemplo");  
     }
 
     public static void main(String[] args) {
