@@ -3,6 +3,7 @@ package com.titus_systems.idscan.gui;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.titus_systems.idscan.database.RG;
 import com.titus_systems.idscan.ollama.IdPrompt;
@@ -148,26 +149,34 @@ public class MainController {
                 loadingStage.close();
                 
                 //Criação do objeto RG para armazenamento temporário das informações extraídas
-                HashMap<String,String> mappedResponse = imgProcessor.convertResponseToHashMap();
-                RG rgObject = new RG(mappedResponse);
+                HashMap<String,String> mappedResponse = imgProcessor.convertResponseToHashMap(result);
                 
-    
-                RgFormApp rgForm = new RgFormApp();
+                StringBuilder stringBuilder = new StringBuilder();
+                for (Map.Entry<String, String> entry : mappedResponse.entrySet()) {
+                    stringBuilder.append("Chave: " + entry.getKey() + " | Valor: " + entry.getValue()+ "\n");
+                }
+                if(mappedResponse.size()<1){
+                    stringBuilder.append("hashmap vazio");
+                }
+                
+                
+                RG rgObject = new RG(mappedResponse);
+                RgFormApp rgForm = new RgFormApp(rgObject);
                 rgForm.start(new Stage());
 
-                // Criar e mostrar uma nova janela
-                Stage newStage = new Stage();
-                VBox vbox = new VBox();
-                Label label = new Label("Resultado: \n" + result);
-                label.setWrapText(true); 
-                label.setMaxWidth(600);
-                vbox.getChildren().add(label);
+                // // Criar e mostrar uma nova janela
+                // Stage newStage = new Stage();
+                // VBox vbox = new VBox();
+                // Label label = new Label("Resultado: \n" + result + "\n" + stringBuilder.toString());
+                // label.setWrapText(true);
+                // label.setMaxWidth(600);
+                // vbox.getChildren().add(label);
 
 
-                Scene scene = new Scene(vbox, 700, 900);
-                newStage.setScene(scene);
-                newStage.setTitle("Resultado do Processamento");
-                // Ocultar janela indesejada
+                // Scene scene = new Scene(vbox, 700, 900);
+                // newStage.setScene(scene);
+                // newStage.setTitle("Resultado do Processamento");
+                // // Ocultar janela indesejada
                 // newStage.show();
             });
         });

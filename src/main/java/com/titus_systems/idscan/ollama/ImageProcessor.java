@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.titus_systems.idscan.tesseract.TesseractEngine;
@@ -133,23 +134,37 @@ public class ImageProcessor {
         processImageThread.start();
     }
 
-    public HashMap<String, String> convertResponseToHashMap(){
-        HashMap<String,String> convertedResponse = new HashMap<>();
-
-        this.lastResponse = this.lastResponse.replaceAll("```json", "")
-                .replaceAll("```", "");
-        if (!this.lastResponse.startsWith("{")){
-            this.lastResponse = "{}";
+    public HashMap<String, String> convertResponseToHashMap(String response){
+        HashMap<String, String> convertedResponse = new HashMap<>();
+    
+        System.out.println("Response original: " + response);
+    
+        response = response.replace("```json", "")
+                           .replace("```", "")
+                           .trim();
+        
+        System.out.println("Response após substituições: " + response);
+    
+        if (!response.startsWith("{")) {
+            System.out.println("Response não começa com '{', JSON será substituído por {}.");
+            response = "{}";
         }
-        JSONObject jsonObject = new JSONObject(lastResponse);
-
-        Iterator<String> keys = jsonObject.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            String value = jsonObject.optString(key, null);
-            convertedResponse.put(key, value);
+    
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            Iterator<String> keys = jsonObject.keys();
+    
+            System.out.println("Iterando sobre as chaves:");
+            while (keys.hasNext()) {
+                String key = keys.next();
+                String value = jsonObject.optString(key, null);
+                System.out.println("Chave: " + key + ", Valor: " + value);  // Depuração
+                convertedResponse.put(key, value); 
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
+    
         return convertedResponse;
     }
 }

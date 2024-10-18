@@ -16,90 +16,89 @@ import javafx.stage.Stage;
 
 public class RgFormApp extends Application {
 
+    RG rgobject;
+
+    public RgFormApp(RG rgobject){
+        this.rgobject = rgobject;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         // Criação dos Labels e TextFields para cada campo de dados do RG
         Label nomeLabel = new Label("Nome:");
-        TextField nomeField = new TextField();
+        TextField nomeField = new TextField(rgobject.getNome());
 
         Label dataNascimentoLabel = new Label("Data de Nascimento:");
-        TextField dataNascimentoPicker = new TextField();
+        TextField dataNascimentoPicker = new TextField(rgobject.getdNasc());
 
         Label naturalidadeLabel = new Label("Naturalidade:");
-        TextField naturalidadeField = new TextField();
+        TextField naturalidadeField = new TextField(rgobject.getNaturalidade());
 
         Label cpfLabel = new Label("CPF:");
-        TextField cpfField = new TextField();
+        TextField cpfField = new TextField(rgobject.getCpf());
 
         Label nacionalidadeLabel = new Label("Nacionalidade:");
         TextField nacionalidadeField = new TextField();
 
         Label nomePaiLabel = new Label("Nome do Pai:");
-        TextField nomePaiField = new TextField();
+        TextField nomePaiField = new TextField(rgobject.getPai());
 
         Label nomeMaeLabel = new Label("Nome da Mãe:");
-        TextField nomeMaeField = new TextField();
+        TextField nomeMaeField = new TextField(rgobject.getMae());
 
         Label rgNumberLabel = new Label("Número do RG:");
-        TextField rgNumberField = new TextField();
+        TextField rgNumberField = new TextField(rgobject.getRg());
 
         Label orgaoExpedidorLabel = new Label("Órgão Expedidor:");
-        TextField orgaoExpedidorField = new TextField();
-
-        Label observacaoLabel = new Label("Observação:");
-        TextField observacaoField = new TextField();
+        TextField orgaoExpedidorField = new TextField(rgobject.getoExp());
 
         Label estadoLabel = new Label("Estado:");
-        TextField estadoField = new TextField();
+        TextField estadoField = new TextField(rgobject.getEstado());
 
         Label dataExpedicaoLabel = new Label("Data de Expedição:");
-        TextField dataExpedicaoPicker = new TextField();
+        TextField dataExpedicaoPicker = new TextField(rgobject.getdExp());
 
         Label viaLabel = new Label("Via:");
-        TextField viaField = new TextField();
+        TextField viaField = new TextField(rgobject.getVia());
 
         Label ufLabel = new Label("UF:");
-        TextField ufField = new TextField();
+        TextField ufField = new TextField(rgobject.getUf());
 
         Label serieLabel = new Label("Série:");
-        TextField serieField = new TextField();
+        TextField serieField = new TextField(rgobject.getSerie());
 
-        Label cnhLabel = new Label("ID CNH:");
-        TextField cnhField = new TextField();
+        Label cnhLabel = new Label("CNH:");
+        TextField cnhField = new TextField(rgobject.getCnh());
 
         Label fatorRhLabel = new Label("Fator Rh:");
-        TextField fatorRhField = new TextField();
+        TextField fatorRhField = new TextField(rgobject.getFatorRh());
 
         Label nisPisPasepLabel = new Label("NIS/PIS/PASEP:");
-        TextField nisPisPasepField = new TextField();
+        TextField nisPisPasepField = new TextField(rgobject.getNisPisPasep());
 
         Label ctpsLabel = new Label("CTPS:");
-        TextField ctpsField = new TextField();
+        TextField ctpsField = new TextField(rgobject.getCtps());
 
         Label tEleitorLabel = new Label("Título de Eleitor:");
-        TextField tEleitorField = new TextField();
+        TextField tEleitorField = new TextField(rgobject.gettEleitor());
 
         Label certMilitarLabel = new Label("Certificado Militar:");
-        TextField certMilitarField = new TextField();
+        TextField certMilitarField = new TextField(rgobject.getCertMiliar());
 
         Label dniLabel = new Label("DNI:");
-        TextField dniField = new TextField();
+        TextField dniField = new TextField(rgobject.getDni());
 
         Label identidadeProfissionalLabel = new Label("Identidade Profissional:");
-        TextField identidadeProfissionalField = new TextField();
+        TextField identidadeProfissionalField = new TextField(rgobject.getIdProf());
 
         Label cnsLabel = new Label("CNS:");
-        TextField cnsField = new TextField();
+        TextField cnsField = new TextField(rgobject.getCns());
 
         Label registroCivilLabel = new Label("Registro Civil:");
-        TextField registroCivilField = new TextField();
-
-        Label registroGeralLabel = new Label("Registro Geral:");
-        TextField registroGeralField = new TextField();
+        TextField registroCivilField = new TextField(rgobject.getRegCivil());
 
         // Preenchimento dos campos com dados de exemplo
-        RG rgTest = new RG();
-        preencherCampos(rgTest);
+        //this.preencherCampos();
 
         // Botões para salvar ou cancelar
         Button saveButton = new Button("Salvar");
@@ -118,7 +117,6 @@ public class RgFormApp extends Application {
             rgData.put("Nome da Mãe", nomeMaeField.getText());
             rgData.put("Número do RG", rgNumberField.getText());
             rgData.put("Órgão Expedidor", orgaoExpedidorField.getText());
-            rgData.put("Observação", observacaoField.getText());
             rgData.put("Estado", estadoField.getText());
             rgData.put("Data de Expedição", dataExpedicaoPicker.getText());
             rgData.put("Via", viaField.getText());
@@ -134,7 +132,6 @@ public class RgFormApp extends Application {
             rgData.put("Identidade Profissional", identidadeProfissionalField.getText());
             rgData.put("CNS", cnsField.getText());
             rgData.put("Registro Civil", registroCivilField.getText());
-            rgData.put("Registro Geral", registroGeralField.getText());
 
             // Exibir os dados ou processar conforme necessário
             System.out.println("Dados salvos: " + rgData);
@@ -145,7 +142,6 @@ public class RgFormApp extends Application {
             rgNumberField.clear();
             fatorRhField.clear();
             orgaoExpedidorField.clear();
-            observacaoField.clear();
             estadoField.clear();
             nisPisPasepField.clear();
             ctpsField.clear();
@@ -159,7 +155,6 @@ public class RgFormApp extends Application {
             serieField.clear();
             ufField.clear();
             registroCivilField.clear();
-            registroGeralField.clear();
             nomeField.clear();
             dataNascimentoPicker.clear();
             naturalidadeField.clear();
@@ -196,8 +191,6 @@ public class RgFormApp extends Application {
         gridPane.add(rgNumberField, 1, 7);
         gridPane.add(orgaoExpedidorLabel, 0, 8);
         gridPane.add(orgaoExpedidorField, 1, 8);
-        gridPane.add(observacaoLabel, 0, 9);
-        gridPane.add(observacaoField, 1, 9);
         gridPane.add(estadoLabel, 0, 10);
         gridPane.add(estadoField, 1, 10);
         gridPane.add(dataExpedicaoLabel, 0, 11);
@@ -228,8 +221,6 @@ public class RgFormApp extends Application {
         gridPane.add(cnsField, 1, 23);
         gridPane.add(registroCivilLabel, 0, 24);
         gridPane.add(registroCivilField, 1, 24);
-        gridPane.add(registroGeralLabel, 0, 25);
-        gridPane.add(registroGeralField, 1, 25);
         gridPane.add(saveButton, 0, 26);
         gridPane.add(cancelButton, 1, 26);
 
@@ -241,7 +232,7 @@ public class RgFormApp extends Application {
     }
 
      // Função para preencher campos com dados
-     private void preencherCampos(RG rgobject) {
+     private void preencherCampos() {
         String nomeField = rgobject.getNome();
         String dataNascimentoPicker = rgobject.getdNasc();
         String naturalidadeField = rgobject.getNaturalidade();
