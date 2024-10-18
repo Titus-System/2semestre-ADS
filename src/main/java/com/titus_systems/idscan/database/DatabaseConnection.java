@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-public class DatabaseConnection { //Conexão com o banco de dados MySQL
+public class DatabaseConnection { //Conexão com o banco de dados MySQL 
     private String URL = "jdbc:mysql://127.0.0.1:3306/";
-    private String USER = "root";
-    private String PASSWORD = "yourpassword";
+    private String USER = "root"; // Digite seu usuário MySQL
+    private String PASSWORD = "yourpassword"; // Digite sua senha do MySQL 
     private Connection connection;
 
     public DatabaseConnection(String url, String user, String password){
