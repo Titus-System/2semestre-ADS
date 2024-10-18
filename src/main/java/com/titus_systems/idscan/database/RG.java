@@ -81,26 +81,46 @@ public class RG {
         }
     }
 
-    public void saveToDatabase(Connection connection) throws SQLException{
+    public void saveToDatabase(Connection con) throws SQLException{
         HashMap<String,String> attributes = this.getAllAttributes();
-        StringBuilder buildStatement = new StringBuilder();
-        buildStatement.append("INSERT INTO RG(");
-        String sql = "INSERT INTO RG(?) VALUES(?)";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        for (Map.Entry<String,String> entry: attributes.entrySet()){
-            String key = entry.getKey();
-            String value = entry.getValue();
+        StringBuilder sql = new StringBuilder("INSERT INTO rg (");
+        StringBuilder placeholders = new StringBuilder("VALUES (");
+
+        int count = 0;
+
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+            if (count > 0) {
+                sql.append(", ");
+                placeholders.append(", ");
+            }
+
+            sql.append(entry.getKey());
+            placeholders.append("?");
+
+            count++;
         }
-            
+
+        sql.append(") ");
+        placeholders.append(")");
+        sql.append(placeholders);
+
+        PreparedStatement stmt = con.prepareStatement(sql.toString());
+
+        int index = 1;
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+            stmt.setString(index, entry.getValue());
+            index++;
+        }
+        
+        System.out.println(stmt);
+
         try { 
-           // String id_aux=Integer.toString(cliente.getId());
-            stmt.setString(1, this.getNome());
-            stmt.execute();
+            stmt.executeUpdate();
             stmt.close();
         }
-        catch (SQLException u) { 
-            throw new RuntimeException(u);
-        } 
+        catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
 
