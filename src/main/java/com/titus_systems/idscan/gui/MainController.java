@@ -167,7 +167,8 @@ public class MainController {
                 Scene scene = new Scene(vbox, 700, 900);
                 newStage.setScene(scene);
                 newStage.setTitle("Resultado do Processamento");
-                newStage.show();
+                // Ocultar janela indesejada
+                // newStage.show();
             });
         });
     }

@@ -2,6 +2,8 @@ package com.titus_systems.idscan.gui;
 
 import java.util.HashMap;
 
+import com.titus_systems.idscan.database.RG;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -96,11 +98,8 @@ public class RgFormApp extends Application {
         TextField registroGeralField = new TextField();
 
         // Preenchimento dos campos com dados de exemplo
-        preencherCampos(nomeField, dataNascimentoPicker, naturalidadeField, cpfField, 
-        tEleitorField, nacionalidadeField, nomePaiField, nomeMaeField, rgNumberField, 
-        orgaoExpedidorField, observacaoField, estadoField, dataExpedicaoPicker, viaField, ufField, 
-        serieField, cnhField, fatorRhField, nisPisPasepField, ctpsField, certMilitarField, dniField, 
-        identidadeProfissionalField, cnsField, registroCivilField, registroGeralField);
+        RG rgTest = new RG();
+        preencherCampos(rgTest);
 
         // Botões para salvar ou cancelar
         Button saveButton = new Button("Salvar");
@@ -241,43 +240,34 @@ public class RgFormApp extends Application {
         primaryStage.show();
     }
 
-    // Função para preencher campos com dados
-    private void preencherCampos(
-        TextField nomeField, TextField dataNascimentoPicker, TextField naturalidadeField, 
-        TextField cpfField, TextField tEleitorField, TextField nacionalidadeField, 
-        TextField nomePaiField, TextField nomeMaeField, TextField rgNumberField, 
-        TextField orgaoExpedidorField, TextField observacaoField, TextField estadoField, 
-        TextField dataExpedicaoPicker, TextField viaField, TextField ufField, 
-        TextField serieField, TextField cnhField, TextField fatorRhField, 
-        TextField nisPisPasepField, TextField ctpsField, TextField certMilitarField, 
-        TextField dniField, TextField identidadeProfissionalField, TextField cnsField, 
-        TextField registroCivilField, TextField registroGeralField) {
-        nomeField.setText("Nome Completo");
-        dataNascimentoPicker.setText("Data Nascimento");
-        naturalidadeField.setText("CIDADE DE NASCIMENTO");
-        cpfField.setText("nnnnnnnnn/nn");
-        tEleitorField.setText("nn.nnn");
-        nacionalidadeField.setText("Brasileira");
-        nomePaiField.setText("Nome do Pai Exemplo");
-        nomeMaeField.setText("Nome da Mãe Exemplo");
-        rgNumberField.setText("123456789");
-        orgaoExpedidorField.setText("SSP");
-        observacaoField.setText("Sem observações");
-        estadoField.setText("SP");
-        dataExpedicaoPicker.setText("Data Expedicao");
-        viaField.setText("1ª");
-        ufField.setText("SP");
-        serieField.setText("Série Exemplo");
-        cnhField.setText("1234567890");
-        fatorRhField.setText("O+");
-        nisPisPasepField.setText("123456789");
-        ctpsField.setText("CTPS Exemplo");
-        certMilitarField.setText("Certificado Militar Exemplo");
-        dniField.setText("DNI Exemplo");
-        identidadeProfissionalField.setText("Identidade Profissional Exemplo");
-        cnsField.setText("CNS Exemplo");
-        registroCivilField.setText("Registro Civil Exemplo");
-        registroGeralField.setText("RG Exemplo");  
+     // Função para preencher campos com dados
+     private void preencherCampos(RG rgobject) {
+        String nomeField = rgobject.getNome();
+        String dataNascimentoPicker = rgobject.getdNasc();
+        String naturalidadeField = rgobject.getNaturalidade();
+        String cpfField = rgobject.getCpf();
+        String tEleitorField = rgobject.gettEleitor();
+        String nacionalidadeField = rgobject.getNacionalidade();
+        String nomePaiField = rgobject.getPai();
+        String nomeMaeField = rgobject.getMae();
+        String rgNumberField = rgobject.getRg();
+        String orgaoExpedidorField = rgobject.getoExp();
+        String observacaoField = rgobject.getObservacao();
+        String estadoField = rgobject.getEstado();
+        String dataExpedicaoPicker = rgobject.getdExp();
+        String viaField = rgobject.getVia();
+        String ufField = rgobject.getUf();
+        String serieField = rgobject.getSerie();
+        String cnhField = rgobject.getCnh();
+        String fatorRhField = rgobject.getFatorRh();
+        String nisPisPasepField = rgobject.getNisPisPasep();
+        String ctpsField = rgobject.getCtps();
+        String certMilitarField = rgobject.getCertMiliar();
+        String dniField = rgobject.getDni();
+        String identidadeProfissionalField = rgobject.getIdProf();
+        String cnsField = rgobject.getCns();
+        String registroCivilField = rgobject.getRegCivil();
+        String registroGeralField = rgobject.getRegGeral();  
     }
 
     public static void main(String[] args) {
