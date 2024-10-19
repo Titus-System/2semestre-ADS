@@ -159,10 +159,11 @@ public class MainController {
                     stringBuilder.append("hashmap vazio");
                 }
                 
-                
                 RG rgObject = new RG(mappedResponse);
                 RgFormApp rgForm = new RgFormApp(rgObject);
                 rgForm.start(new Stage());
+
+                
 
                 // // Criar e mostrar uma nova janela
                 // Stage newStage = new Stage();

@@ -14,59 +14,47 @@ public class RG {
     private String pai = null;
     private String mae = null;
     private String naturalidade = null;
-    private String nacionalidade = null;
     private String dNasc = null;
     private String cnh = null;
     private String rg = null;
     private String fatorRh = null;
     private String oExp = null;
-    private String observacao = null;
     private String estado = null;
     private String nisPisPasep = null;
     private String ctps = null;
     private String tEleitor = null;
     private String dExp = null;
     private String certMiliar = null;
-    private String dni = null;
     private String via = null;
     private String idProf = null;
-    private String cns = null;
-    private String serie = null;
     private String uf = null;
     private String regCivil = null;
     private String regGeral = null;
 
     public RG(String nome, String cpf, String pai, String mae, String naturalidade,
-        String nacionalidade, String dNasc, String cnh, String rg, String fatorRh, String oExp, String observacao,
+        String dNasc, String cnh, String rg, String fatorRh, String oExp,
         String estado, String nisPisPasep, String ctps, String tEleitor,
-        String dExp, String certMiliar, String dni, String via, String idProf,
-        String serie, String uf, String regCivil) {
+        String dExp, String certMiliar, String via, String idProf, String uf, String regCivil) {
         this.nome = nome;
         this.cpf = cpf;
         this.pai = pai;
         this.mae = mae;
         this.naturalidade = naturalidade;
-        this.nacionalidade = nacionalidade;
         this.dNasc = dNasc;
         this.cnh = cnh;
         this.rg = rg;
         this.fatorRh = fatorRh;
         this.oExp = oExp;
-        this.observacao = observacao;
         this.estado = estado;
         this.nisPisPasep = nisPisPasep;
         this.ctps = ctps;
         this.tEleitor = tEleitor;
         this.dExp = dExp;
         this.certMiliar = certMiliar;
-        this.dni = dni;
         this.via = via;
         this.idProf = idProf;
-        this.cns = cns;
-        this.serie = serie;
         this.uf = uf;
         this.regCivil = regCivil;
-        this.regGeral = regGeral;
     }
 
     public RG () {
@@ -83,7 +71,7 @@ public class RG {
 
     public void saveToDatabase(Connection con) throws SQLException{
         HashMap<String,String> attributes = this.getAllAttributes();
-        StringBuilder sql = new StringBuilder("INSERT INTO rg (");
+        StringBuilder sql = new StringBuilder("INSERT INTO RG (");
         StringBuilder placeholders = new StringBuilder("VALUES (");
 
         int count = 0;
@@ -138,24 +126,19 @@ public class RG {
         attributeMap.put("nomePai", Arrays.asList("nome pai", "nomepai", "filiacao", "filiação"));
         attributeMap.put("nomeMae", Arrays.asList("nome mae", "nomemae", "filiacao", "filiação"));
         attributeMap.put("naturalidade", Arrays.asList("naturalidade", "nasc", "natural", "cidade"));
-        attributeMap.put("nacionalidade", Arrays.asList("nacionalidade", "pais"));
         attributeMap.put("dataNascimento", Arrays.asList("data nascimento","datanascimento", "data de nascimento", "nascimento", "birth", "date of birth"));
         attributeMap.put("cnh", Arrays.asList("cnh", "10 digits number", "10 digit number"));
         attributeMap.put("registroGeral", Arrays.asList("registro geral", "registrogeral", "rg", "reg geral", "9 digits number", "9 digit number"));
         attributeMap.put("fatorRh", Arrays.asList("fator rh", "rh", "fatorrh"));
         attributeMap.put("orgaoExpedidor", Arrays.asList("orgao expedidor","orgaoexpedidor", "oexp", "orgao exp"));
-        attributeMap.put("observacao", Arrays.asList("observacao"));
         attributeMap.put("estado", Arrays.asList("estado","stado", "state"));
         attributeMap.put("nisPisPasep", Arrays.asList("nis", "pis", "pasep", "nis/pis/pasep"));
         attributeMap.put("ctps", Arrays.asList("ctps", "carteira trabalho"));
         attributeMap.put("tEleitor", Arrays.asList("titulo eleitor", "teleitor", "t.eleitor", "t eleitor", "título eleitor"));
         attributeMap.put("dataExpedicao", Arrays.asList("data expedicao", "data de expedicao","data expedição", "data de expedição", "datadeexpedicao", "datadeexpedição"));
         attributeMap.put("certMiliar", Arrays.asList("cert militar","certmilitar", "military certificate"));
-        attributeMap.put("dni", Arrays.asList("dni"));
         attributeMap.put("via", Arrays.asList("via", "2via"));
         attributeMap.put("identidadeProfissional", Arrays.asList("identidade profissional", "identidadeprofissional"));
-        attributeMap.put("cns", Arrays.asList("cns"));
-        attributeMap.put("serie", Arrays.asList("serie", "série", "series"));
         attributeMap.put("uf", Arrays.asList("uf", "federal unit"));
         attributeMap.put("registroCivil", Arrays.asList("registro civil", "registrocivil", "civil registry"));
         attributeMap.put("registroGeral", Arrays.asList("registro geral", "registrogeral", "geral registry"));
@@ -178,9 +161,6 @@ public class RG {
                     case "naturalidade":
                         this.naturalidade = value;
                         break;
-                    case "nacionalidade":
-                        this.nacionalidade = value;
-                        break;
                     case "dataNascimento":
                         this.dNasc = value;
                         break;
@@ -196,9 +176,6 @@ public class RG {
                     case "orgaoExpedidor":
                         this.oExp = value;
                         break; 
-                    case "observacao":
-                        this.observacao = value;
-                        break;
                     case "estado":
                         this.estado = value;
                         break;
@@ -217,20 +194,11 @@ public class RG {
                     case "certMiliar":
                         this.certMiliar = value;
                         break;
-                    case "dni":
-                        this.dni = value;
-                        break;
                     case "via":
                         this.via = value;
                         break;
                     case "identidadeProfissional":
                         this.idProf = value;
-                        break;
-                    case "cns":
-                        this.cns = value;
-                        break;
-                    case "serie":
-                        this.serie = value;
                         break;
                     case "uf":
                         this.uf = value;
@@ -252,24 +220,19 @@ public class RG {
         allAttributes.put("nomePai", this.pai);
         allAttributes.put("nomeMae", this.mae);
         allAttributes.put("naturalidade", this.naturalidade);
-        allAttributes.put("nacionalidade", this.nacionalidade);
         allAttributes.put("dataNascimento", this.dNasc);
         allAttributes.put("cnh", this.cnh);
         allAttributes.put("registroGeral", this.rg);
         allAttributes.put("fatorRh", this.fatorRh);
         allAttributes.put("orgaoExpedidor", this.oExp);
-        allAttributes.put("observacao", this.observacao);
         allAttributes.put("estado", this.estado);
         allAttributes.put("nisPisPasep", this.nisPisPasep);
         allAttributes.put("ctps", this.ctps);
         allAttributes.put("tEleitor", this.tEleitor);
         allAttributes.put("dataExpedicao", this.dExp);
         allAttributes.put("certMilitar", this.certMiliar);
-        allAttributes.put("dni", this.dni);
         allAttributes.put("via", this.via);
         allAttributes.put("identidadeProfissional", this.idProf);
-        allAttributes.put("cns", this.cns);
-        allAttributes.put("serie", this.serie);
         allAttributes.put("uf", this.uf);
         allAttributes.put("registroCivil", this.regCivil);
         allAttributes.put("registroGeral", this.regGeral);
@@ -316,14 +279,6 @@ public class RG {
         this.naturalidade = naturalidade;
     }
 
-    public String getNacionalidade() {
-        return this.nacionalidade;
-    }
-
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
     public String getdNasc() {
         return this.dNasc;
     }
@@ -363,14 +318,6 @@ public class RG {
 
     public void setoExp(String oExp) {
         this.oExp = oExp;
-    }
-
-    public String getObservacao() {
-        return this.observacao;
-    }
-
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
     }
 
     public String getEstado() {
@@ -421,14 +368,6 @@ public class RG {
         this.certMiliar = certMiliar;
     }
 
-    public String getDni() {
-        return this.dni;
-    }
-
-    public void setPadding(String dni) {
-        this.dni = dni;
-    }
-
     public String getVia() {
         return this.via;
     }
@@ -443,22 +382,6 @@ public class RG {
 
     public void setIdProf(String idProf) {
         this.idProf = idProf;
-    }
-
-    public String getCns() {
-        return this.cns;
-    }
-
-    public void setCns(String cns) {
-        this.cns = cns;
-    }
-
-    public String getSerie() {
-        return this.serie;
-    }
-
-    public void setSerie(String serie) {
-        this.serie = serie;
     }
 
     public String getUf() {

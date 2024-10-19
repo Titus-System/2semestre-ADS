@@ -2,9 +2,9 @@ package com.titus_systems.idscan.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
 
 public class DatabaseConnection { //Conexão com o banco de dados MySQL 
     private String URL = "jdbc:mysql://127.0.0.1:3306/";
@@ -34,9 +34,15 @@ public class DatabaseConnection { //Conexão com o banco de dados MySQL
         return connection;
     }
 
-    public Connection getConnectionToDatabase(String dbName) throws SQLException {
+    public Connection getConnectionToDatabase(String dbName) {
         String fullUrl = URL + dbName;
-        return DriverManager.getConnection(fullUrl, USER, PASSWORD);
+        try {
+            return DriverManager.getConnection(fullUrl, USER, PASSWORD);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void  closeConnection() {
@@ -55,6 +61,7 @@ public class DatabaseConnection { //Conexão com o banco de dados MySQL
 
     // Verificar a existência do banco de dados
     public boolean checkIfDatabaseExists(String dbName) throws SQLException {
+        this.connection = this.getConnectionToDatabase(dbName);
         String query = "SHOW DATABASES LIKE '" + dbName + "'";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -82,6 +89,7 @@ public class DatabaseConnection { //Conexão com o banco de dados MySQL
             "nomeMae varchar(100)," +
             "nome varchar(100)," +
             "cpf varchar(45)," +
+            "cnh varchar(45)," + 
             "dataNascimento varchar(45)," +
             "fatorRh varchar(45)," +
             "orgaoExpedidor varchar(100)," +

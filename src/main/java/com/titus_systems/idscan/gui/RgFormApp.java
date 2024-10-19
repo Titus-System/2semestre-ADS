@@ -1,7 +1,10 @@
 package com.titus_systems.idscan.gui;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 
+import com.titus_systems.idscan.database.DatabaseConnection;
 import com.titus_systems.idscan.database.RG;
 
 import javafx.application.Application;
@@ -37,9 +40,6 @@ public class RgFormApp extends Application {
         Label cpfLabel = new Label("CPF:");
         TextField cpfField = new TextField(rgobject.getCpf());
 
-        Label nacionalidadeLabel = new Label("Nacionalidade:");
-        TextField nacionalidadeField = new TextField();
-
         Label nomePaiLabel = new Label("Nome do Pai:");
         TextField nomePaiField = new TextField(rgobject.getPai());
 
@@ -64,9 +64,6 @@ public class RgFormApp extends Application {
         Label ufLabel = new Label("UF:");
         TextField ufField = new TextField(rgobject.getUf());
 
-        Label serieLabel = new Label("Série:");
-        TextField serieField = new TextField(rgobject.getSerie());
-
         Label cnhLabel = new Label("CNH:");
         TextField cnhField = new TextField(rgobject.getCnh());
 
@@ -85,14 +82,8 @@ public class RgFormApp extends Application {
         Label certMilitarLabel = new Label("Certificado Militar:");
         TextField certMilitarField = new TextField(rgobject.getCertMiliar());
 
-        Label dniLabel = new Label("DNI:");
-        TextField dniField = new TextField(rgobject.getDni());
-
         Label identidadeProfissionalLabel = new Label("Identidade Profissional:");
         TextField identidadeProfissionalField = new TextField(rgobject.getIdProf());
-
-        Label cnsLabel = new Label("CNS:");
-        TextField cnsField = new TextField(rgobject.getCns());
 
         Label registroCivilLabel = new Label("Registro Civil:");
         TextField registroCivilField = new TextField(rgobject.getRegCivil());
@@ -108,33 +99,37 @@ public class RgFormApp extends Application {
         saveButton.setOnAction(e -> {
             // Coleta dos dados dos campos
             HashMap<String, String> rgData = new HashMap<>();
-            rgData.put("Nome", nomeField.getText());
-            rgData.put("Data de Nascimento", dataNascimentoPicker.getText());
-            rgData.put("Naturalidade", naturalidadeField.getText());
-            rgData.put("CPF", cpfField.getText());
-            rgData.put("Nacionalidade", nacionalidadeField.getText());
-            rgData.put("Nome do Pai", nomePaiField.getText());
-            rgData.put("Nome da Mãe", nomeMaeField.getText());
-            rgData.put("Número do RG", rgNumberField.getText());
-            rgData.put("Órgão Expedidor", orgaoExpedidorField.getText());
-            rgData.put("Estado", estadoField.getText());
-            rgData.put("Data de Expedição", dataExpedicaoPicker.getText());
-            rgData.put("Via", viaField.getText());
-            rgData.put("UF", ufField.getText());
-            rgData.put("Série", serieField.getText());
-            rgData.put("ID CNH", cnhField.getText());
-            rgData.put("Fator Rh", fatorRhField.getText());
-            rgData.put("NIS/PIS/PASEP", nisPisPasepField.getText());
-            rgData.put("CTPS", ctpsField.getText());
-            rgData.put("Título de Eleitor", tEleitorField.getText());
-            rgData.put("Certificado Militar", certMilitarField.getText());
-            rgData.put("DNI", dniField.getText());
-            rgData.put("Identidade Profissional", identidadeProfissionalField.getText());
-            rgData.put("CNS", cnsField.getText());
-            rgData.put("Registro Civil", registroCivilField.getText());
+            rgData.put("nome", nomeField.getText());
+            rgData.put("dataNascimento", dataNascimentoPicker.getText());
+            rgData.put("naturalidade", naturalidadeField.getText());
+            rgData.put("cpf", cpfField.getText());
+            rgData.put("nomePai", nomePaiField.getText());
+            rgData.put("nomeMae", nomeMaeField.getText());
+            rgData.put("registroGeral", rgNumberField.getText());
+            rgData.put("orgaoExpedidor", orgaoExpedidorField.getText());
+            rgData.put("estado", estadoField.getText());
+            rgData.put("dataExpedicao", dataExpedicaoPicker.getText());
+            rgData.put("via", viaField.getText());
+            rgData.put("uf", ufField.getText());
+            rgData.put("cnh", cnhField.getText());
+            rgData.put("fatorRh", fatorRhField.getText());
+            rgData.put("nisPisPasep", nisPisPasepField.getText());
+            rgData.put("ctps", ctpsField.getText());
+            rgData.put("tEleitor", tEleitorField.getText());
+            rgData.put("certMilitar", certMilitarField.getText());
+            rgData.put("identidadeProfissional", identidadeProfissionalField.getText());
+            rgData.put("registroCivil", registroCivilField.getText());
 
             // Exibir os dados ou processar conforme necessário
             System.out.println("Dados salvos: " + rgData);
+            this.rgobject = new RG(rgData);
+            Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
+            try {
+                rgobject.saveToDatabase(dbConnection);
+            } catch (SQLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         });
 
         // Ação para cancelar
@@ -148,18 +143,14 @@ public class RgFormApp extends Application {
             tEleitorField.clear();
             dataExpedicaoPicker.clear();
             certMilitarField.clear();
-            dniField.clear();
             viaField.clear();
             identidadeProfissionalField.clear();
-            cnsField.clear();
-            serieField.clear();
             ufField.clear();
             registroCivilField.clear();
             nomeField.clear();
             dataNascimentoPicker.clear();
             naturalidadeField.clear();
             cpfField.clear();
-            nacionalidadeField.clear();
             nomePaiField.clear();
             nomeMaeField.clear();
             cnhField.clear();
@@ -181,8 +172,6 @@ public class RgFormApp extends Application {
         gridPane.add(naturalidadeField, 1, 2);
         gridPane.add(cpfLabel, 0, 3);
         gridPane.add(cpfField, 1, 3);
-        gridPane.add(nacionalidadeLabel, 0, 4);
-        gridPane.add(nacionalidadeField, 1, 4);
         gridPane.add(nomePaiLabel, 0, 5);
         gridPane.add(nomePaiField, 1, 5);
         gridPane.add(nomeMaeLabel, 0, 6);
@@ -199,8 +188,6 @@ public class RgFormApp extends Application {
         gridPane.add(viaField, 1, 12);
         gridPane.add(ufLabel, 0, 13);
         gridPane.add(ufField, 1, 13);
-        gridPane.add(serieLabel, 0, 14);
-        gridPane.add(serieField, 1, 14);
         gridPane.add(cnhLabel, 0, 15);
         gridPane.add(cnhField, 1, 15);
         gridPane.add(fatorRhLabel, 0, 16);
@@ -213,12 +200,8 @@ public class RgFormApp extends Application {
         gridPane.add(tEleitorField, 1, 19);
         gridPane.add(certMilitarLabel, 0, 20);
         gridPane.add(certMilitarField, 1, 20);
-        gridPane.add(dniLabel, 0, 21);
-        gridPane.add(dniField, 1, 21);
         gridPane.add(identidadeProfissionalLabel, 0, 22);
         gridPane.add(identidadeProfissionalField, 1, 22);
-        gridPane.add(cnsLabel, 0, 23);
-        gridPane.add(cnsField, 1, 23);
         gridPane.add(registroCivilLabel, 0, 24);
         gridPane.add(registroCivilField, 1, 24);
         gridPane.add(saveButton, 0, 26);
@@ -238,25 +221,20 @@ public class RgFormApp extends Application {
         String naturalidadeField = rgobject.getNaturalidade();
         String cpfField = rgobject.getCpf();
         String tEleitorField = rgobject.gettEleitor();
-        String nacionalidadeField = rgobject.getNacionalidade();
         String nomePaiField = rgobject.getPai();
         String nomeMaeField = rgobject.getMae();
         String rgNumberField = rgobject.getRg();
         String orgaoExpedidorField = rgobject.getoExp();
-        String observacaoField = rgobject.getObservacao();
         String estadoField = rgobject.getEstado();
         String dataExpedicaoPicker = rgobject.getdExp();
         String viaField = rgobject.getVia();
         String ufField = rgobject.getUf();
-        String serieField = rgobject.getSerie();
         String cnhField = rgobject.getCnh();
         String fatorRhField = rgobject.getFatorRh();
         String nisPisPasepField = rgobject.getNisPisPasep();
         String ctpsField = rgobject.getCtps();
         String certMilitarField = rgobject.getCertMiliar();
-        String dniField = rgobject.getDni();
         String identidadeProfissionalField = rgobject.getIdProf();
-        String cnsField = rgobject.getCns();
         String registroCivilField = rgobject.getRegCivil();
         String registroGeralField = rgobject.getRegGeral();  
     }
