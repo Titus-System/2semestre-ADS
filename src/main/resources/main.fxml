@@ -85,7 +85,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="ButtonUpload" mnemonicParsing="false" onAction="#handleUpload" style="-fx-background-color: rgba(16, 185, 129, 1);" text="Browse">
+                              <Button fx:id="ButtonUpload" mnemonicParsing="false" onAction="#handleUpload" style="-fx-background-color: #00ff8c;" text="Browse">
                                  <StackPane.margin>
                                     <Insets top="130.0" />
                                  </StackPane.margin>
