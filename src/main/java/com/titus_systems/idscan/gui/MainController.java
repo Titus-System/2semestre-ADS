@@ -164,21 +164,6 @@ public class MainController {
                 rgForm.start(new Stage());
 
                 
-
-                // // Criar e mostrar uma nova janela
-                // Stage newStage = new Stage();
-                // VBox vbox = new VBox();
-                // Label label = new Label("Resultado: \n" + result + "\n" + stringBuilder.toString());
-                // label.setWrapText(true);
-                // label.setMaxWidth(600);
-                // vbox.getChildren().add(label);
-
-
-                // Scene scene = new Scene(vbox, 700, 900);
-                // newStage.setScene(scene);
-                // newStage.setTitle("Resultado do Processamento");
-                // // Ocultar janela indesejada
-                // newStage.show();
             });
         });
     }

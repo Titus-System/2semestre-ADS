@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -125,11 +126,13 @@ public class RgFormApp extends Application {
             this.rgobject = new RG(rgData);
             Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
             try {
+                System.out.println("numero do rg:"+ rgobject.getRg());
                 rgobject.saveToDatabase(dbConnection);
             } catch (SQLException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
+            Stage stage = (Stage) saveButton.getScene().getWindow();
+            stage.close();
         });
 
         // Ação para cancelar
@@ -163,80 +166,74 @@ public class RgFormApp extends Application {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
 
-        // Adicionando os elementos ao GridPane
+        // Adicionando os elementos ao GridPane em duas colunas
         gridPane.add(nomeLabel, 0, 0);
         gridPane.add(nomeField, 1, 0);
-        gridPane.add(dataNascimentoLabel, 0, 1);
-        gridPane.add(dataNascimentoPicker, 1, 1);
-        gridPane.add(naturalidadeLabel, 0, 2);
-        gridPane.add(naturalidadeField, 1, 2);
-        gridPane.add(cpfLabel, 0, 3);
-        gridPane.add(cpfField, 1, 3);
-        gridPane.add(nomePaiLabel, 0, 5);
-        gridPane.add(nomePaiField, 1, 5);
-        gridPane.add(nomeMaeLabel, 0, 6);
-        gridPane.add(nomeMaeField, 1, 6);
-        gridPane.add(rgNumberLabel, 0, 7);
-        gridPane.add(rgNumberField, 1, 7);
-        gridPane.add(orgaoExpedidorLabel, 0, 8);
-        gridPane.add(orgaoExpedidorField, 1, 8);
-        gridPane.add(estadoLabel, 0, 10);
-        gridPane.add(estadoField, 1, 10);
-        gridPane.add(dataExpedicaoLabel, 0, 11);
-        gridPane.add(dataExpedicaoPicker, 1, 11);
-        gridPane.add(viaLabel, 0, 12);
-        gridPane.add(viaField, 1, 12);
-        gridPane.add(ufLabel, 0, 13);
-        gridPane.add(ufField, 1, 13);
-        gridPane.add(cnhLabel, 0, 15);
-        gridPane.add(cnhField, 1, 15);
-        gridPane.add(fatorRhLabel, 0, 16);
-        gridPane.add(fatorRhField, 1, 16);
-        gridPane.add(nisPisPasepLabel, 0, 17);
-        gridPane.add(nisPisPasepField, 1, 17);
-        gridPane.add(ctpsLabel, 0, 18);
-        gridPane.add(ctpsField, 1, 18);
-        gridPane.add(tEleitorLabel, 0, 19);
-        gridPane.add(tEleitorField, 1, 19);
-        gridPane.add(certMilitarLabel, 0, 20);
-        gridPane.add(certMilitarField, 1, 20);
-        gridPane.add(identidadeProfissionalLabel, 0, 22);
-        gridPane.add(identidadeProfissionalField, 1, 22);
-        gridPane.add(registroCivilLabel, 0, 24);
-        gridPane.add(registroCivilField, 1, 24);
-        gridPane.add(saveButton, 0, 26);
-        gridPane.add(cancelButton, 1, 26);
+        gridPane.add(dataNascimentoLabel, 3, 0);
+        gridPane.add(dataNascimentoPicker, 4, 0);
+
+        gridPane.add(naturalidadeLabel, 0, 1);
+        gridPane.add(naturalidadeField, 1, 1);
+        gridPane.add(cpfLabel, 3, 1);
+        gridPane.add(cpfField, 4, 1);
+
+        gridPane.add(nomePaiLabel, 0, 2);
+        gridPane.add(nomePaiField, 1, 2);
+        gridPane.add(nomeMaeLabel, 3, 2);
+        gridPane.add(nomeMaeField, 4, 2);
+
+        gridPane.add(rgNumberLabel, 0, 3);
+        gridPane.add(rgNumberField, 1, 3);
+        gridPane.add(orgaoExpedidorLabel, 3, 3);
+        gridPane.add(orgaoExpedidorField, 4, 3);
+
+        gridPane.add(estadoLabel, 0, 4);
+        gridPane.add(estadoField, 1, 4);
+        gridPane.add(dataExpedicaoLabel, 3, 4);
+        gridPane.add(dataExpedicaoPicker, 4, 4);
+
+        gridPane.add(viaLabel, 0, 5);
+        gridPane.add(viaField, 1, 5);
+        gridPane.add(ufLabel, 3, 5);
+        gridPane.add(ufField, 4, 5);
+
+        gridPane.add(cnhLabel, 0, 6);
+        gridPane.add(cnhField, 1, 6);
+        gridPane.add(fatorRhLabel, 3, 6);
+        gridPane.add(fatorRhField, 4, 6);
+
+        gridPane.add(nisPisPasepLabel, 0, 7);
+        gridPane.add(nisPisPasepField, 1, 7);
+        gridPane.add(ctpsLabel, 3, 7);
+        gridPane.add(ctpsField, 4, 7);
+
+        gridPane.add(tEleitorLabel, 0, 8);
+        gridPane.add(tEleitorField, 1, 8);
+        gridPane.add(certMilitarLabel, 3, 8);
+        gridPane.add(certMilitarField, 4, 8);
+
+        gridPane.add(identidadeProfissionalLabel, 0, 9);
+        gridPane.add(identidadeProfissionalField, 1, 9);
+        gridPane.add(registroCivilLabel, 3, 9);
+        gridPane.add(registroCivilField, 4, 9);
+
+        // Botões
+        gridPane.add(saveButton, 0, 10);
+        gridPane.add(cancelButton, 1, 10);
+
+
+        ScrollPane scrollPane = new ScrollPane(gridPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
 
         // Configuração da cena e exibição
-        Scene scene = new Scene(gridPane, 600, 400);
+        Scene scene = new Scene(scrollPane, 900, 600);
         primaryStage.setTitle("Formulário de RG");
         primaryStage.setScene(scene);
+        primaryStage.toFront();
+        primaryStage.requestFocus();
         primaryStage.show();
-    }
 
-     // Função para preencher campos com dados
-     private void preencherCampos() {
-        String nomeField = rgobject.getNome();
-        String dataNascimentoPicker = rgobject.getdNasc();
-        String naturalidadeField = rgobject.getNaturalidade();
-        String cpfField = rgobject.getCpf();
-        String tEleitorField = rgobject.gettEleitor();
-        String nomePaiField = rgobject.getPai();
-        String nomeMaeField = rgobject.getMae();
-        String rgNumberField = rgobject.getRg();
-        String orgaoExpedidorField = rgobject.getoExp();
-        String estadoField = rgobject.getEstado();
-        String dataExpedicaoPicker = rgobject.getdExp();
-        String viaField = rgobject.getVia();
-        String ufField = rgobject.getUf();
-        String cnhField = rgobject.getCnh();
-        String fatorRhField = rgobject.getFatorRh();
-        String nisPisPasepField = rgobject.getNisPisPasep();
-        String ctpsField = rgobject.getCtps();
-        String certMilitarField = rgobject.getCertMiliar();
-        String identidadeProfissionalField = rgobject.getIdProf();
-        String registroCivilField = rgobject.getRegCivil();
-        String registroGeralField = rgobject.getRegGeral();  
     }
 
     public static void main(String[] args) {

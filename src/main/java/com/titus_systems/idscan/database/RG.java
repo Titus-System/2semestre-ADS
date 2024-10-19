@@ -29,7 +29,6 @@ public class RG {
     private String idProf = null;
     private String uf = null;
     private String regCivil = null;
-    private String regGeral = null;
 
     public RG(String nome, String cpf, String pai, String mae, String naturalidade,
         String dNasc, String cnh, String rg, String fatorRh, String oExp,
@@ -222,7 +221,7 @@ public class RG {
         allAttributes.put("naturalidade", this.naturalidade);
         allAttributes.put("dataNascimento", this.dNasc);
         allAttributes.put("cnh", this.cnh);
-        allAttributes.put("registroGeral", this.rg);
+        allAttributes.put("registroGeral", this.getRg());
         allAttributes.put("fatorRh", this.fatorRh);
         allAttributes.put("orgaoExpedidor", this.oExp);
         allAttributes.put("estado", this.estado);
@@ -235,7 +234,6 @@ public class RG {
         allAttributes.put("identidadeProfissional", this.idProf);
         allAttributes.put("uf", this.uf);
         allAttributes.put("registroCivil", this.regCivil);
-        allAttributes.put("registroGeral", this.regGeral);
         return allAttributes;
     }
 
@@ -398,13 +396,5 @@ public class RG {
 
     public void setRegCivil(String regCivil) {
         this.regCivil = regCivil;
-    }
-
-    public String getRegGeral() {
-        return this.regGeral;
-    }
-
-    public void setRegGeral(String regGeral) {
-        this.regGeral = regGeral;
     }
 }
