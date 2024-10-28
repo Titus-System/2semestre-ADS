@@ -115,10 +115,56 @@ public class MainController {
             event.consume();
         }
 
+        private boolean isImageFile(File file) {
+            String fileName = file.getName().toLowerCase();
+            return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
+        }
+
+    public void showFailureMessage(String mensagemErro){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/falha.fxml"));
+            Parent failureRoot = loader.load();
+            FalhaController falhaController = loader.getController();
+            falhaController.setDetalhes(mensagemErro);
+    
+            Stage failureStage = new Stage();
+            failureStage.setScene(new Scene(failureRoot));
+            failureStage.setTitle("Erro no processamento");
+            failureStage.show();
+    
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            System.out.println("Erro ao mostrar a tela de falha: " + e.getMessage());
+        }
+    }
+
+    public void showSuccessMessage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucesso.fxml"));
+            Parent successRoot = loader.load();
+            SucessoController sucessoController = loader.getController();
+    
+            Stage successStage = new Stage();
+            successStage.setScene(new Scene(successRoot));
+            successStage.setTitle("Processamento concluído");
+            successStage.show();
+    
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void startImageProcessor(File file){
         statusLabel.setText("Arquivo carregado: " + file.getName());
         System.out.println("Status Label: " + this.statusLabel);
         System.out.println("File Path: " + file.getAbsolutePath());
+
+        // Verifica se o arquivo é uma imagem
+        if (!isImageFile(file)) {
+            showFailureMessage("O arquivo selecionado não é um arquivo de imagem válido");
+            return; // Interrompe o processamento se não for uma imagem
+        }
 
         // Cria um indicador de carregamento e adiciona à interface enquanto o processamento está em andamento
         ProgressIndicator progressIndicator = new ProgressIndicator();
@@ -133,38 +179,60 @@ public class MainController {
         loadingStage.setTitle("Processando...");
         loadingStage.show();
 
-        // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
-        ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
-        IdPrompt prompt = new IdPrompt(true);
+        try {
+            // Verificar se o arquivo é carregável como uma imagem
+            Image testImage = new Image(file.toURI().toString(), false);
+            if (testImage.isError()) {
+                showFailureMessage("Imagem corrompida ou inválida");
+                throw new IOException("Imagem corrompida ou inválida.");
+            }
 
-        imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
-            System.out.println("Resultado: \n" + result);
-            imgProcessor.setLastResponse(result);
+            // Código para processar a imagem de forma assíncrona -> Precisa do caminho da imagem selecionada
+            ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
+            IdPrompt prompt = new IdPrompt(true);
 
-            Platform.runLater(() -> {
+            imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
+                System.out.println("Resultado: \n" + result);
+                imgProcessor.setLastResponse(result);
+
+                Platform.runLater(() -> {
                 //codigo que executa após o processamento da imagem ser concluído.
                 //Aqui deve ser colocada a lógica para exibição e confirmação das informações e posterior salvamento no banco de dados
                 
                 // Oculta o indicador de carregamento após o processamento
-                loadingStage.close();
+                    loadingStage.close();
                 
+                    try {
                 //Criação do objeto RG para armazenamento temporário das informações extraídas
-                HashMap<String,String> mappedResponse = imgProcessor.convertResponseToHashMap(result);
-                
-                StringBuilder stringBuilder = new StringBuilder();
-                for (Map.Entry<String, String> entry : mappedResponse.entrySet()) {
-                    stringBuilder.append("Chave: " + entry.getKey() + " | Valor: " + entry.getValue()+ "\n");
-                }
-                if(mappedResponse.size()<1){
-                    stringBuilder.append("hashmap vazio");
-                }
-                
-                RG rgObject = new RG(mappedResponse);
-                RgFormApp rgForm = new RgFormApp(rgObject);
-                rgForm.start(new Stage());
+                        HashMap<String,String> mappedResponse = imgProcessor.convertResponseToHashMap(result);
+                        if (mappedResponse == null || mappedResponse.isEmpty()) {
+                            showFailureMessage("Nenhum texto foi identificado na imagem.");
+                            return;
+                        }
 
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (Map.Entry<String, String> entry : mappedResponse.entrySet()) {
+                        stringBuilder.append("Chave: " + entry.getKey() + " | Valor: " + entry.getValue()+ "\n");
+                    }
+                    if(mappedResponse.size()<1){
+                        stringBuilder.append("hashmap vazio");
+                    }
+                
+                    RG rgObject = new RG(mappedResponse);
+                    RgFormApp rgForm = new RgFormApp(rgObject);
+                    rgForm.start(new Stage());
+
+                    showSuccessMessage();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showFailureMessage("Erro ao converter o conteúdo do OCR para o formato desejado.");
+                }
                 
             });
         });
+    } catch (IOException e) {
+        e.printStackTrace();
+        showFailureMessage("Erro durante o processamento OCR.");
     }
-}
+}}
