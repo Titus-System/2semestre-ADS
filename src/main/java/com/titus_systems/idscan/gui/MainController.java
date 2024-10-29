@@ -179,18 +179,6 @@ public class MainController {
         loadingStage.setTitle("Processando...");
         loadingStage.show();
 
-        // boolean corrupted = false;
-        // try {
-        //     // Verificar se o arquivo é carregável como uma imagem
-        //     Image testImage = new Image(file.toURI().toString(), false);
-        //     if (testImage.isError()) {
-        //         corrupted = true;
-        //     }
-        // } finally {
-        //     if (corrupted)
-        //     showFailureMessage("deu errado mané");
-        // }
-
         try {
             Image testImage = new Image(file.toURI().toString(), false);
             if (testImage.isError()) {
@@ -240,10 +228,10 @@ public class MainController {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    showFailureMessage("Erro ao converter o conteúdo do OCR para o formato desejado.");
+                    showFailureMessage("Erro ao processar os dados extraídos.");
                 }
 
             });
         });
-    }
+    } 
 }

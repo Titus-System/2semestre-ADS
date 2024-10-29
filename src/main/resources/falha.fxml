@@ -24,7 +24,7 @@
             <Insets bottom="147.0" />
          </StackPane.margin>
       </Label>
-      <Label fx:id="falhaDetalhes" contentDisplay="CENTER" prefHeight="78.0" prefWidth="302.0" text="Verifique se os dados coletados estão corretos antes de clicar em “Salvar”" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Label fx:id="falhaDetalhes" alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="302.0" text="Verifique se os dados coletados estão corretos antes de clicar em “Salvar”" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <StackPane.margin>
             <Insets top="50.0" />
          </StackPane.margin>
