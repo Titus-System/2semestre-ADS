@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 public class SucessoController {
 
     @FXML
-    private Button okBotao;
+    private Button okBotaoSucesso;
 
     @FXML
-    private void fecharJanela() {
-        Stage stage = (Stage) okBotao.getScene().getWindow();
+    private void fecharJanelaSucesso() {
+        Stage stage = (Stage) okBotaoSucesso.getScene().getWindow();
         stage.close();
     }
 }

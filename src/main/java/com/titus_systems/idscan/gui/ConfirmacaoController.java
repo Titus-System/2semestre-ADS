@@ -1,5 +1,7 @@
 package com.titus_systems.idscan.gui;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -28,7 +30,7 @@ public class ConfirmacaoController{
     }
 
     @FXML
-    private void confirmarImagem() {
+    private void confirmarImagem() throws IOException {
         mainController.startImageProcessor(mainController.getSelectedImageFile());
         Stage currentStage = (Stage) confirmar.getScene().getWindow();
         currentStage.close();   
