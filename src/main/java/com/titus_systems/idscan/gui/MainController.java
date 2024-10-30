@@ -23,6 +23,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainController {
@@ -40,6 +41,9 @@ public class MainController {
 
     @FXML
     private Button ButtonUpload;
+
+    @FXML
+    private ProgressIndicator processamentoCarregando;
 
     @FXML
     public void initialize() {
@@ -138,18 +142,20 @@ public class MainController {
         }
     }
 
-    public void showSuccessMessage() {
+    public Stage showSuccessMessage() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucesso.fxml"));
             Parent successRoot = loader.load();
 
             Stage successStage = new Stage();
             successStage.setScene(new Scene(successRoot));
-            successStage.setTitle("Processamento concluído");
+            successStage.setTitle("Processamento em andamento");
             successStage.show();
+            return successStage;
 
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -166,30 +172,30 @@ public class MainController {
 
         // Cria um indicador de carregamento e adiciona à interface enquanto o
         // processamento está em andamento
-        ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setProgress(-1.0); // Modo indeterminado
+        // ProgressIndicator progressIndicator = new ProgressIndicator();
+        // progressIndicator.setProgress(-1.0); // Modo indeterminado
 
         // Exibe o indicador de carregamento em uma nova janela (ou em um painel
         // existente, conforme necessário)
-        Stage loadingStage = new Stage();
-        VBox loadingBox = new VBox(progressIndicator);
-        loadingBox.setStyle("-fx-alignment: center; -fx-padding: 20;");
-        Scene loadingScene = new Scene(loadingBox, 200, 100);
-        loadingStage.setScene(loadingScene);
-        loadingStage.setTitle("Processando...");
-        loadingStage.show();
+        // Stage loadingStage = new Stage();
+        // VBox loadingBox = new VBox(progressIndicator);
+        // loadingBox.setStyle("-fx-alignment: center; -fx-padding: 20;");
+        // Scene loadingScene = new Scene(loadingBox, 200, 100);
+        // loadingStage.setScene(loadingScene);
+        // loadingStage.setTitle("Processando...");
+        // loadingStage.show();
 
         try {
             Image testImage = new Image(file.toURI().toString(), false);
             if (testImage.isError()) {
-                loadingStage.close();  // Fecha o indicador de carregamento
                 showFailureMessage("Imagem corrompida ou inválida");
                 return; // Interrompe o processamento ao detectar imagem inválida
             }
         } catch (Exception e) {
-            loadingStage.close();
             return;
         }
+
+        Stage successStage = showSuccessMessage();
 
         // Código para processar a imagem de forma assíncrona -> Precisa do caminho da
         // imagem selecionada
@@ -204,8 +210,9 @@ public class MainController {
                 // posterior salvamento no banco de dados
 
                 // Oculta o indicador de carregamento após o processamento
-                loadingStage.close();
-
+                if (successStage != null){
+                successStage.close();
+                }
                 try {
                     // Criação do objeto RG para armazenamento temporário das informações extraídas
                     HashMap<String, String> mappedResponse = imgProcessor.convertResponseToHashMap(result);
@@ -224,7 +231,6 @@ public class MainController {
                     RG rgObject = new RG(mappedResponse);
                     RgFormApp rgForm = new RgFormApp(rgObject);
                     rgForm.start(new Stage());
-                    showSuccessMessage();
 
                 } catch (Exception e) {
                     e.printStackTrace();
