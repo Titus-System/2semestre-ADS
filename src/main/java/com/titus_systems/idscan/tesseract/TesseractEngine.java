@@ -32,7 +32,7 @@ public class TesseractEngine extends Tesseract{
 
         } else if (osName.contains("nux") || osName.contains("nix")){
             // datapath para linux
-            this.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata");
+            this.setDatapath("/usr/share/tesseract-ocr/5/tessdata");
             this.setLanguage("por");
             System.out.println("Conexão com Tesseract aberta com sucesso");
             

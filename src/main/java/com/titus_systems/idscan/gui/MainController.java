@@ -24,6 +24,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 
 public class MainController {
 
@@ -115,10 +116,10 @@ public class MainController {
             event.consume();
         }
 
-    protected void startImageProcessor(File file){
-        statusLabel.setText("Arquivo carregado: " + file.getName());
+    protected void startImageProcessor(ArrayList<String> imagePaths){
+        statusLabel.setText("Arquivo carregado: " + imagePaths.toString());
         System.out.println("Status Label: " + this.statusLabel);
-        System.out.println("File Path: " + file.getAbsolutePath());
+        System.out.println("File Path: " + imagePaths.toString());
 
         // Cria um indicador de carregamento e adiciona à interface enquanto o processamento está em andamento
         ProgressIndicator progressIndicator = new ProgressIndicator();
@@ -137,7 +138,7 @@ public class MainController {
         ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
         IdPrompt prompt = new IdPrompt(true);
 
-        imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
+        imgProcessor.asyncProcessWithTesseract(imagePaths, prompt, result -> {
             System.out.println("Resultado: \n" + result);
             imgProcessor.setLastResponse(result);
 
