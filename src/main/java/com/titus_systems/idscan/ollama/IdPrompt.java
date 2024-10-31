@@ -105,13 +105,13 @@ public class IdPrompt {
     }
     
     public void askForNome(){
-        prompt.addLine("NOME is the name of the id holder. It is placed after the label 'NOME'.");
+        prompt.addLine("NOME is the name of the id holder. It is placed after the label 'NOME'. It can also be placed above the label FILIAÇÃO.");
         prompt.addLine("get the NOME attribute of the document.");
     }
     
     public void askForRG(){
-        prompt.addLine("REGISTRO GERAL is a 9 digits number in the format 'nn.nnn.nnn-n'. Look for sequences of numbers that match this pattern.");
         prompt.addLine("the number for REGISTRO GERAL is located in the back of the document, placed on the top left side, right after the label REGISTRO GERAL.");
+        prompt.addLine("REGISTRO GERAL is a 9 digits number in the format 'nn.nnn.nnn-n'. Look for sequences of numbers that match this pattern.");
         prompt.addLine("get the REGISTRO GERAL of the document.");
     }
 
@@ -121,7 +121,7 @@ public class IdPrompt {
     }
 
     public void askForCPF(){
-        prompt.addLine("CPF is a 11 digit number in the format 'nnnnnnnnn/nn'. For example, '12345678900'. It is placed after the label CPF and is likely surrounded by other numbers or text. Look for sequences of numbers that match this pattern.");
+        prompt.addLine("CPF is a 11 digit number in the format 'nnnnnnnnn/nn'. For example, '123456789/01'. It is placed after the label CPF and is likely surrounded by other numbers or text. Look for sequences of numbers that match this pattern.");
         prompt.addLine("get the CPF of the document");
     }
 
@@ -165,7 +165,7 @@ public class IdPrompt {
 
     public void askForFiliacao(){
         prompt.addLine("NOME PAI E NOME MAE is composed by two names under the title FILIAÇÃO.");
-        prompt.addLine("NOME PAI is the first name bellow the title FILIACAO. NOME MAE is the second name bellow the title FILIAÇÃO.");
+        prompt.addLine("NOME PAI is the first name bellow the title FILIACAO. NOME MAE is the second name bellow the title FILIAÇÃO. If only one name can be taken, presume that is the mother's name.");
         prompt.addLine("get the fathers name as NOME PAI (male name) and the mothers name as NOME MAE (female name) of the document.");
     }
 
@@ -175,7 +175,7 @@ public class IdPrompt {
     }
 
     public void askForOrgaoExp(){
-        prompt.addLine("ORGAO EXPEDIDOR is a 5 letter title placed in the line bellow the label 'ORGÃO EXPEDIDOR'.");
+        prompt.addLine("ORGAO EXPEDIDOR is a 5 letter title placed in the line bellow the label 'ORGÃO EXPEDIDOR'. Usually, it is called 'SSP' followed by the abbreviation of the ESTADO name.");
         prompt.addLine("get the ORGAO EXPEDIDOR of the document");
     }
 
