@@ -121,6 +121,57 @@ public class RG {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        } else if (this.rg != null || !this.rg.equals("null")) {
+            PreparedStatement query = con.prepareStatement("SELECT registroGeral FROM RG WHERE registroGeral='?'");
+            query.setString(1, this.rg);
+
+            try {
+                ResultSet result = query.executeQuery();
+                query.close();
+
+                if (result.getString("registroGeral").equals(this.rg)) {
+                    HashMap<String, String> attributes = this.getAllAttributes();
+                    StringBuilder sql = new StringBuilder("INSERT INTO RG (");
+                    StringBuilder placeholders = new StringBuilder("VALUES (");
+
+                    int count = 0;
+
+                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                        if (count > 0) {
+                            sql.append(", ");
+                            placeholders.append(", ");
+                        }
+
+                        sql.append(entry.getKey());
+                        placeholders.append("?");
+
+                        count++;
+                    }
+
+                    sql.append(") ");
+                    placeholders.append(") WHERE registroGeral='?'");
+                    sql.append(placeholders);
+
+                    PreparedStatement stmt = con.prepareStatement(sql.toString());
+
+                    int index = 1;
+                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                        stmt.setString(index, entry.getValue());
+                        index++;
+                    }
+
+                    stmt.setString(index, this.rg);
+
+                    try {
+                        stmt.executeUpdate();
+                        stmt.close();
+                    } catch (SQLException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -164,6 +215,8 @@ public class RG {
             throw new RuntimeException(exception);
         }
     }
+
+    private HashMap<String, String>
 
     private void setAttribute(String key, String value) {
         key = key.toLowerCase().trim();
