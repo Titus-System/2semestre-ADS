@@ -216,8 +216,6 @@ public class RG {
         }
     }
 
-    private HashMap<String, String>
-
     private void setAttribute(String key, String value) {
         key = key.toLowerCase().trim();
         if (value == null || value.equals("null")) {
