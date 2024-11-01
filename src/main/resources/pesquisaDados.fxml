@@ -73,7 +73,7 @@
                               <Insets right="110.0" top="20.0" />
                            </StackPane.margin>
                         </Rectangle>
-                        <Button fx:id="ButtonUpload" mnemonicParsing="false" prefHeight="40.0" prefWidth="101.0" style="-fx-background-color: #00ff8c;" text="Buscar">
+                        <Button fx:id="buttonBuscar" mnemonicParsing="false" onAction="#pesquisarDados" prefHeight="40.0" prefWidth="101.0" style="-fx-background-color: #00ff8c;" text="Buscar">
                            <StackPane.margin>
                               <Insets right="125.0" top="545.0" />
                            </StackPane.margin>
@@ -96,13 +96,13 @@
                            <children>
                               <VBox layoutX="-1.0" prefHeight="446.0" prefWidth="185.0" spacing="36.0">
                                  <children>
-                                    <TextField alignment="CENTER" promptText="Nome" />
-                                    <TextField alignment="CENTER" promptText="Data de Nascimento" />
-                                    <TextField alignment="CENTER" promptText="Naturalidade" />
-                                    <TextField alignment="CENTER" promptText="CPF" />
-                                    <TextField alignment="CENTER" promptText="Nome do Pai" />
-                                    <TextField alignment="CENTER" promptText="Nome da Mãe" />
-                                    <TextField alignment="CENTER" promptText="Número do RG" />
+                                    <TextField fx:id="campoNome" alignment="CENTER" promptText="Nome" />
+                                    <TextField fx:id="campoNascimento" alignment="CENTER" promptText="Data de Nascimento" />
+                                    <TextField fx:id="campoNaturalidade" alignment="CENTER" promptText="Naturalidade" />
+                                    <TextField fx:id="campoCPF" alignment="CENTER" promptText="CPF" />
+                                    <TextField fx:id="campoPai" alignment="CENTER" promptText="Nome do Pai" />
+                                    <TextField fx:id="campoMae" alignment="CENTER" promptText="Nome da Mãe" />
+                                    <TextField fx:id="campoRG" alignment="CENTER" promptText="Número do RG" />
                                  </children>
                                  <padding>
                                     <Insets bottom="13.0" left="15.0" right="15.0" top="17.0" />
@@ -110,16 +110,16 @@
                               </VBox>
                               <VBox layoutX="206.0" prefHeight="446.0" prefWidth="185.0" spacing="36.0">
                                  <children>
-                                    <TextField alignment="CENTER" promptText="Órgão Expedidor" />
-                                    <TextField alignment="CENTER" promptText="Estado" />
-                                    <TextField alignment="CENTER" promptText="Data de Expedição" />
-                                    <TextField alignment="CENTER" promptText="Via" />
-                                    <TextField alignment="CENTER" promptText="UF">
+                                    <TextField fx:id="campoExpedidor" alignment="CENTER" promptText="Órgão Expedidor" />
+                                    <TextField fx:id="campoEstado" alignment="CENTER" promptText="Estado" />
+                                    <TextField fx:id="campoExpedicao" alignment="CENTER" promptText="Data de Expedição" />
+                                    <TextField fx:id="campoVia" alignment="CENTER" promptText="Via" />
+                                    <TextField fx:id="campoUF" alignment="CENTER" promptText="UF">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin></TextField>
-                                    <TextField alignment="CENTER" promptText="CNH" />
-                                    <TextField alignment="CENTER" promptText="Fator RH" />
+                                    <TextField fx:id="campoCNH" alignment="CENTER" promptText="CNH" />
+                                    <TextField fx:id="campoRH" alignment="CENTER" promptText="Fator RH" />
                                  </children>
                                  <padding>
                                     <Insets bottom="13.0" left="15.0" right="15.0" top="17.0" />
@@ -127,12 +127,12 @@
                               </VBox>
                               <VBox layoutX="408.0" layoutY="1.0" prefHeight="446.0" prefWidth="185.0" spacing="36.0">
                                  <children>
-                                    <TextField alignment="CENTER" promptText="NIS/PIS/PASEP" />
-                                    <TextField alignment="CENTER" promptText="CTPS" />
-                                    <TextField alignment="CENTER" promptText="Título de Eleitor" />
-                                    <TextField alignment="CENTER" promptText="Certificado Militar" />
-                                    <TextField alignment="CENTER" promptText="Identidade Profissional" />
-                                    <TextField alignment="CENTER" promptText="Registro Civil" />
+                                    <TextField fx:id="campoNIS" alignment="CENTER" promptText="NIS/PIS/PASEP" />
+                                    <TextField fx:id="campoCTPS" alignment="CENTER" promptText="CTPS" />
+                                    <TextField fx:id="campoEleitor" alignment="CENTER" promptText="Título de Eleitor" />
+                                    <TextField fx:id="campoMilitar" alignment="CENTER" promptText="Certificado Militar" />
+                                    <TextField fx:id="campoProfissional" alignment="CENTER" promptText="Identidade Profissional" />
+                                    <TextField fx:id="campoCivil" alignment="CENTER" promptText="Registro Civil" />
                                  </children>
                                  <padding>
                                     <Insets bottom="13.0" left="15.0" right="15.0" top="17.0" />
