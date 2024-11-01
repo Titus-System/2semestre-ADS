@@ -1,6 +1,7 @@
 package com.titus_systems.idscan.ollama;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -34,9 +35,12 @@ public class ImageProcessor {
         return this.lastResponse;
     }
 
-    public String processWithTesseract(String imagePath, IdPrompt prompt) throws Exception {
-        String tesseractResult = this.tessEngine.extractTextFromimage(imagePath);
-        prompt.buildWithTesseract(tesseractResult);
+    public String processWithTesseract(ArrayList<String> imagePaths, IdPrompt prompt) throws Exception {
+        StringBuilder tesseractResult = new StringBuilder();
+        for(String i:imagePaths){
+            tesseractResult.append(this.tessEngine.extractTextFromimage(i));
+        }
+        prompt.buildWithTesseract(tesseractResult.toString());
         String ollamaResult = this.ollamaEngine.generateAsyncAnswerFromPrompt(prompt.getPrompt().build());
         return ollamaResult;
     }
@@ -101,12 +105,12 @@ public class ImageProcessor {
         processImageThread.start();
     }
 
-    public void asyncProcessWithTesseract(String imagePath, IdPrompt prompt, Consumer<String> callback){
+    public void asyncProcessWithTesseract(ArrayList<String> imagePaths, IdPrompt prompt, Consumer<String> callback){
         System.out.println("Iniciando processamento assíncrono...");
         Thread processImageThread = new Thread (() -> {
             try {
                 System.out.println("Processando a imagem...");
-                String asyncResult = processWithTesseract(imagePath, prompt);
+                String asyncResult = processWithTesseract(imagePaths, prompt);
                 System.out.println(asyncResult);
 
                 // Passa o resultado para o callback
