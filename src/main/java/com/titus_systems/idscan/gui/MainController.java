@@ -2,6 +2,7 @@ package com.titus_systems.idscan.gui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.util.ArrayList;
 
 public class MainController {
 
@@ -165,35 +163,23 @@ public class MainController {
         System.out.println("Status Label: " + this.statusLabel);
         System.out.println("File Path: " + imagePaths.toString());
 
-        // Verifica se o arquivo é uma imagem
-        if (!isImageFile(file)) {
-            showFailureMessage("O arquivo selecionado não é um arquivo de imagem válido");
-            return; // Interrompe o processamento se não for uma imagem
-        }
-
-        // Cria um indicador de carregamento e adiciona à interface enquanto o
-        // processamento está em andamento
-        // ProgressIndicator progressIndicator = new ProgressIndicator();
-        // progressIndicator.setProgress(-1.0); // Modo indeterminado
-
-        // Exibe o indicador de carregamento em uma nova janela (ou em um painel
-        // existente, conforme necessário)
-        // Stage loadingStage = new Stage();
-        // VBox loadingBox = new VBox(progressIndicator);
-        // loadingBox.setStyle("-fx-alignment: center; -fx-padding: 20;");
-        // Scene loadingScene = new Scene(loadingBox, 200, 100);
-        // loadingStage.setScene(loadingScene);
-        // loadingStage.setTitle("Processando...");
-        // loadingStage.show();
-
-        try {
-            Image testImage = new Image(file.toURI().toString(), false);
-            if (testImage.isError()) {
-                showFailureMessage("Imagem corrompida ou inválida");
-                return; // Interrompe o processamento ao detectar imagem inválida
+        for (String s: imagePaths){
+            File file = new File(s);
+            // Verifica se o arquivo é uma imagem
+            if (!isImageFile(file)) {
+                showFailureMessage("O arquivo selecionado não é um arquivo de imagem válido");
+                return; // Interrompe o processamento se não for uma imagem
             }
-        } catch (Exception e) {
-            return;
+    
+            try {
+                Image testImage = new Image(file.toURI().toString(), false);
+                if (testImage.isError()) {
+                    showFailureMessage("Imagem corrompida ou inválida");
+                    return; // Interrompe o processamento ao detectar imagem inválida
+                }
+            } catch (Exception e) {
+                return;
+            }
         }
 
         Stage successStage = showSuccessMessage();
