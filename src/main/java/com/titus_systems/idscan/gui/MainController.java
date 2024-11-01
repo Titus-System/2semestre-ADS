@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 
 public class MainController {
 
@@ -159,10 +160,10 @@ public class MainController {
         }
     }
 
-    protected void startImageProcessor(File file) throws IOException {
-        statusLabel.setText("Arquivo carregado: " + file.getName());
+    protected void startImageProcessor(ArrayList<String> imagePaths){
+        statusLabel.setText("Arquivo carregado: " + imagePaths.toString());
         System.out.println("Status Label: " + this.statusLabel);
-        System.out.println("File Path: " + file.getAbsolutePath());
+        System.out.println("File Path: " + imagePaths.toString());
 
         // Verifica se o arquivo é uma imagem
         if (!isImageFile(file)) {
@@ -201,7 +202,8 @@ public class MainController {
         // imagem selecionada
         ImageProcessor imgProcessor = new ImageProcessor("gemma2:2b");
         IdPrompt prompt = new IdPrompt(true);
-        imgProcessor.asyncProcessWithTesseract(file.getAbsolutePath(), prompt, result -> {
+
+        imgProcessor.asyncProcessWithTesseract(imagePaths, prompt, result -> {
             System.out.println("Resultado: \n" + result);
             imgProcessor.setLastResponse(result);
             Platform.runLater(() -> {

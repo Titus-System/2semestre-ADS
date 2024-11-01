@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 
 public class ConfirmacaoController{
 
@@ -30,8 +31,10 @@ public class ConfirmacaoController{
     }
 
     @FXML
-    private void confirmarImagem() throws IOException {
-        mainController.startImageProcessor(mainController.getSelectedImageFile());
+    private void confirmarImagem() {
+        ArrayList<String> imagePaths = new ArrayList<>();
+        imagePaths.add(mainController.getSelectedImageFile().getAbsolutePath());
+        mainController.startImageProcessor(imagePaths);
         Stage currentStage = (Stage) confirmar.getScene().getWindow();
         currentStage.close();   
     }    
