@@ -2,6 +2,7 @@ package com.titus_systems.idscan.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,9 +32,9 @@ public class RG {
     private String regCivil = null;
 
     public RG(String nome, String cpf, String pai, String mae, String naturalidade,
-        String dNasc, String cnh, String rg, String fatorRh, String oExp,
-        String estado, String nisPisPasep, String ctps, String tEleitor,
-        String dExp, String certMiliar, String via, String idProf, String uf, String regCivil) {
+            String dNasc, String cnh, String rg, String fatorRh, String oExp,
+            String estado, String nisPisPasep, String ctps, String tEleitor,
+            String dExp, String certMiliar, String via, String idProf, String uf, String regCivil) {
         this.nome = nome;
         this.cpf = cpf;
         this.pai = pai;
@@ -56,20 +57,126 @@ public class RG {
         this.regCivil = regCivil;
     }
 
-    public RG () {
+    public RG() {
 
     }
 
-    public RG (HashMap<String,String> extractedInfo){
-        for (Map.Entry<String,String> entry : extractedInfo.entrySet()){
+    public RG(HashMap<String, String> extractedInfo) {
+        for (Map.Entry<String, String> entry : extractedInfo.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             this.setAttribute(key, value);
         }
     }
 
-    public void saveToDatabase(Connection con) throws SQLException{
-        HashMap<String,String> attributes = this.getAllAttributes();
+    public void checkForDuplicates(Connection con) throws SQLException {
+        if (this.cpf != null || !this.cpf.equals("null")) {
+            PreparedStatement query = con.prepareStatement("SELECT cpf FROM RG WHERE cpf='?'");
+            query.setString(1, this.cpf);
+
+            try {
+                ResultSet result = query.executeQuery();
+                query.close();
+
+                if (result.getString("cpf").equals(this.cpf)) {
+                    HashMap<String, String> attributes = this.getAllAttributes();
+                    StringBuilder sql = new StringBuilder("INSERT INTO RG (");
+                    StringBuilder placeholders = new StringBuilder("VALUES (");
+
+                    int count = 0;
+
+                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                        if (count > 0) {
+                            sql.append(", ");
+                            placeholders.append(", ");
+                        }
+
+                        sql.append(entry.getKey());
+                        placeholders.append("?");
+
+                        count++;
+                    }
+
+                    sql.append(") ");
+                    placeholders.append(") WHERE cpf='?'");
+                    sql.append(placeholders);
+
+                    PreparedStatement stmt = con.prepareStatement(sql.toString());
+
+                    int index = 1;
+                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                        stmt.setString(index, entry.getValue());
+                        index++;
+                    }
+
+                    stmt.setString(index, this.cpf);
+
+                    try {
+                        stmt.executeUpdate();
+                        stmt.close();
+                    } catch (SQLException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (this.rg != null || !this.rg.equals("null")) {
+            PreparedStatement query = con.prepareStatement("SELECT registroGeral FROM RG WHERE registroGeral='?'");
+            query.setString(1, this.rg);
+
+            try {
+                ResultSet result = query.executeQuery();
+                query.close();
+
+                if (result.getString("registroGeral").equals(this.rg)) {
+                    HashMap<String, String> attributes = this.getAllAttributes();
+                    StringBuilder sql = new StringBuilder("INSERT INTO RG (");
+                    StringBuilder placeholders = new StringBuilder("VALUES (");
+
+                    int count = 0;
+
+                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                        if (count > 0) {
+                            sql.append(", ");
+                            placeholders.append(", ");
+                        }
+
+                        sql.append(entry.getKey());
+                        placeholders.append("?");
+
+                        count++;
+                    }
+
+                    sql.append(") ");
+                    placeholders.append(") WHERE registroGeral='?'");
+                    sql.append(placeholders);
+
+                    PreparedStatement stmt = con.prepareStatement(sql.toString());
+
+                    int index = 1;
+                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                        stmt.setString(index, entry.getValue());
+                        index++;
+                    }
+
+                    stmt.setString(index, this.rg);
+
+                    try {
+                        stmt.executeUpdate();
+                        stmt.close();
+                    } catch (SQLException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void saveToDatabase(Connection con) throws SQLException {
+        HashMap<String, String> attributes = this.getAllAttributes();
         StringBuilder sql = new StringBuilder("INSERT INTO RG (");
         StringBuilder placeholders = new StringBuilder("VALUES (");
 
@@ -98,24 +205,22 @@ public class RG {
             stmt.setString(index, entry.getValue());
             index++;
         }
-        
+
         System.out.println(stmt);
 
-        try { 
+        try {
             stmt.executeUpdate();
             stmt.close();
-        }
-        catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
     }
 
-
     private void setAttribute(String key, String value) {
         key = key.toLowerCase().trim();
-        if (value == null || value.equals("null")){
+        if (value == null || value.equals("null")) {
             value = null;
-        }else{
+        } else {
             value = value.toLowerCase().trim();
         }
 
@@ -125,23 +230,27 @@ public class RG {
         attributeMap.put("nomePai", Arrays.asList("nome pai", "nomepai", "filiacao", "filiação"));
         attributeMap.put("nomeMae", Arrays.asList("nome mae", "nomemae", "filiacao", "filiação"));
         attributeMap.put("naturalidade", Arrays.asList("naturalidade", "nasc", "natural", "cidade"));
-        attributeMap.put("dataNascimento", Arrays.asList("data nascimento","datanascimento", "data de nascimento", "nascimento", "birth", "date of birth"));
+        attributeMap.put("dataNascimento", Arrays.asList("data nascimento", "datanascimento", "data de nascimento",
+                "nascimento", "birth", "date of birth"));
         attributeMap.put("cnh", Arrays.asList("cnh", "10 digits number", "10 digit number"));
-        attributeMap.put("registroGeral", Arrays.asList("registro geral", "registrogeral", "rg", "reg geral", "9 digits number", "9 digit number"));
+        attributeMap.put("registroGeral", Arrays.asList("registro geral", "registrogeral", "rg", "reg geral",
+                "9 digits number", "9 digit number"));
         attributeMap.put("fatorRh", Arrays.asList("fator rh", "rh", "fatorrh"));
-        attributeMap.put("orgaoExpedidor", Arrays.asList("orgao expedidor","orgaoexpedidor", "oexp", "orgao exp"));
-        attributeMap.put("estado", Arrays.asList("estado","stado", "state"));
+        attributeMap.put("orgaoExpedidor", Arrays.asList("orgao expedidor", "orgaoexpedidor", "oexp", "orgao exp"));
+        attributeMap.put("estado", Arrays.asList("estado", "stado", "state"));
         attributeMap.put("nisPisPasep", Arrays.asList("nis", "pis", "pasep", "nis/pis/pasep"));
         attributeMap.put("ctps", Arrays.asList("ctps", "carteira trabalho"));
-        attributeMap.put("tEleitor", Arrays.asList("titulo eleitor", "teleitor", "t.eleitor", "t eleitor", "título eleitor"));
-        attributeMap.put("dataExpedicao", Arrays.asList("data expedicao", "data de expedicao","data expedição", "data de expedição", "datadeexpedicao", "datadeexpedição"));
-        attributeMap.put("certMiliar", Arrays.asList("cert militar","certmilitar", "military certificate"));
+        attributeMap.put("tEleitor",
+                Arrays.asList("titulo eleitor", "teleitor", "t.eleitor", "t eleitor", "título eleitor"));
+        attributeMap.put("dataExpedicao", Arrays.asList("data expedicao", "data de expedicao", "data expedição",
+                "data de expedição", "datadeexpedicao", "datadeexpedição"));
+        attributeMap.put("certMiliar", Arrays.asList("cert militar", "certmilitar", "military certificate"));
         attributeMap.put("via", Arrays.asList("via", "2via"));
         attributeMap.put("identidadeProfissional", Arrays.asList("identidade profissional", "identidadeprofissional"));
         attributeMap.put("uf", Arrays.asList("uf", "federal unit"));
         attributeMap.put("registroCivil", Arrays.asList("registro civil", "registrocivil", "civil registry"));
         attributeMap.put("registroGeral", Arrays.asList("registro geral", "registrogeral", "geral registry"));
-    
+
         for (Map.Entry<String, List<String>> entry : attributeMap.entrySet()) {
             if (entry.getValue().contains(key)) {
                 switch (entry.getKey()) {
@@ -174,7 +283,7 @@ public class RG {
                         break;
                     case "orgaoExpedidor":
                         this.oExp = value;
-                        break; 
+                        break;
                     case "estado":
                         this.estado = value;
                         break;
@@ -211,9 +320,9 @@ public class RG {
         }
     }
 
-    public HashMap<String,String> getAllAttributes(){
+    public HashMap<String, String> getAllAttributes() {
         // as chaves são os nomes das colunas no banco de dados
-        HashMap<String,String> allAttributes = new HashMap<>();
+        HashMap<String, String> allAttributes = new HashMap<>();
         allAttributes.put("nome", this.nome);
         allAttributes.put("cpf", this.cpf);
         allAttributes.put("nomePai", this.pai);
@@ -312,7 +421,6 @@ public class RG {
     public String getoExp() {
         return this.oExp;
     }
-
 
     public void setoExp(String oExp) {
         this.oExp = oExp;
