@@ -12,6 +12,7 @@ import com.titus_systems.idscan.ollama.ImageProcessor;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -40,14 +41,20 @@ public class MainController {
     private Label statusLabel;
 
     @FXML
-    private Button ButtonUpload;
+    private Button buttonBuscar;
+
+    @FXML
+    private Button uploadButton;
+
+    @FXML
+    private Button dataSearchButton;
 
     @FXML
     private ProgressIndicator processamentoCarregando;
 
     @FXML
     public void initialize() {
-        ButtonUpload.setPickOnBounds(true);
+        buttonBuscar.setPickOnBounds(true);
         selecao.setOnDragOver(event -> handleDragOver(event));
         selecao.setOnDragDropped(event -> handleDrop(event));
     }
@@ -56,6 +63,21 @@ public class MainController {
         return selectedImageFile;
     }
 
+    @FXML
+    private void consultaDados(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pesquisaDados.fxml"));
+            Parent consultaRoot = loader.load();
+            
+            Stage stage = (Stage) ((Node) dataSearchButton).getScene().getWindow();
+            stage.getScene().setRoot(consultaRoot);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao carregar a tela de consulta de dados: " + e.getMessage());
+        }
+    }
+    
     @FXML
     public void handleUpload() {
         // Abrir o seletor de arquivos
