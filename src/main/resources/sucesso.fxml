@@ -17,7 +17,7 @@
          </StackPane.margin></Label>
       <Label fx:id="verifiqueMensagem" alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="302.0" text="Aguarde pela conclusão do processamento..." textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <StackPane.margin>
-            <Insets top="230.0" />
+            <Insets top="220.0" />
          </StackPane.margin>
          <font>
             <Font size="15.0" />
