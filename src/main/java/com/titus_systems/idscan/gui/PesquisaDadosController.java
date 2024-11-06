@@ -17,6 +17,9 @@ public class PesquisaDadosController {
     private Button uploadButton;
 
     @FXML
+    private Button dataSearchButton;
+
+    @FXML
     private TextField campoNome;
 
     @FXML
@@ -92,7 +95,7 @@ public class PesquisaDadosController {
     private HashMap<String, String> dadosPesquisados = new HashMap<>();
 
     @FXML
-    private void pesquisarDados(){
+    public HashMap<String, String> pesquisarDados(){
         dadosPesquisados.put("nome", campoNome.getText());
         dadosPesquisados.put("Data de nascimento", campoNascimento.getText());
         dadosPesquisados.put("naturalidade", campoNaturalidade.getText());
@@ -114,12 +117,19 @@ public class PesquisaDadosController {
         dadosPesquisados.put("identidadeProfissional", campoProfissional.getText());
         dadosPesquisados.put("registroCivil", campoCivil.getText());
 
+        return dadosPesquisados;
         // dadosPesquisados.forEach((chave, valor) -> System.out.println(chave + ": " + valor));
     }
 
     public HashMap<String, String> getDadosPesquisados() {
         return dadosPesquisados;
-    }    
-
     }
+
+    public void execute(){
+        System.out.println("iniciando busca...");
+        HashMap<String,String> find =  this.pesquisarDados();
+        find.forEach((chave, valor) -> System.out.println(chave + ": " + valor));
+    }
+
+}
 

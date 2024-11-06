@@ -67,9 +67,13 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/pesquisaDados.fxml"));
             Parent consultaRoot = loader.load();
-            
+            PesquisaDadosController pesquisa = new PesquisaDadosController();
             Stage stage = (Stage) ((Node) dataSearchButton).getScene().getWindow();
             stage.getScene().setRoot(consultaRoot);
+            dataSearchButton.setOnAction(e -> {
+                HashMap<String,String> find =  pesquisa.pesquisarDados();
+                find.forEach((chave, valor) -> System.out.println(chave + ": " + valor));
+            });
             
         } catch (IOException e) {
             e.printStackTrace();
