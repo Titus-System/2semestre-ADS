@@ -117,7 +117,10 @@ public class RG {
                     } catch (SQLException exception) {
                         throw new RuntimeException(exception);
                     }
+                }else {
+                    this.saveToDatabase(con);
                 }
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -168,7 +171,10 @@ public class RG {
                     } catch (SQLException exception) {
                         throw new RuntimeException(exception);
                     }
+                } else {
+                    this.saveToDatabase(con);
                 }
+                
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
