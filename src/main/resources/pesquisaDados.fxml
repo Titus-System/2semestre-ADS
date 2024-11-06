@@ -31,7 +31,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="dataSearchButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: rgba(144, 144, 144, 1);" text="Consulta de Dados" textAlignment="CENTER">
+                  <Button fx:id="dataSearchButton" onAction="#getDadosPesquisados" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: rgba(144, 144, 144, 1);" text="Consulta de Dados" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="300.0" />
                      </StackPane.margin>
@@ -73,7 +73,7 @@
                               <Insets right="110.0" top="20.0" />
                            </StackPane.margin>
                         </Rectangle>
-                        <Button fx:id="buttonBuscar" mnemonicParsing="false" onAction="#pesquisarDados" prefHeight="40.0" prefWidth="101.0" style="-fx-background-color: #00ff8c;" text="Buscar">
+                        <Button fx:id="buttonBuscar" mnemonicParsing="false" onAction="#execute" prefHeight="40.0" prefWidth="101.0" style="-fx-background-color: #00ff8c;" text="Buscar">
                            <StackPane.margin>
                               <Insets right="125.0" top="545.0" />
                            </StackPane.margin>
