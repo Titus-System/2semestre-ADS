@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -220,6 +221,58 @@ public class RG {
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    public List<RG> pullFromDataBase (Connection con, HashMap<String,String> attributes) throws SQLException{
+        List<RG> usuarios = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM usuarios");
+
+        int count = 0;
+
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+            String column = entry.getKey();
+            String value = entry.getValue();
+
+            if (value != null && !value.isEmpty()) {
+                if (count == 0){
+                    sql.append(" WHERE ");
+                } else {
+                    sql.append(" AND ");
+                }
+                
+                sql.append(column).append(" = ?");
+                count++;
+            }
+        }
+
+        PreparedStatement stmt = con.prepareStatement(sql.toString());
+
+        if (count > 0){
+            count = 1;
+            for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                String value = entry.getValue();
+                if (value != null && !value.isEmpty()) {
+                    stmt.setString(count, value);
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(stmt);
+
+        try (ResultSet result = stmt.executeQuery()){ 
+                    
+            while (result.next()) {           
+                RG usuario = new RG(result.getString("nome"), result.getString("cpf"), result.getString("pai"), result.getString("mae"), result.getString("naturalidade"), result.getString("dNasc"), result.getString("cnh"), result.getString("rg"), result.getString("fatorRh"), result.getString("oExp"), result.getString("estado"), result.getString("nisPisPasep"), result.getString("ctps"), result.getString("tEleitor"), result.getString("dExp"), result.getString("certMiliar"), result.getString("via"), result.getString("idProf"), result.getString("uf"), result.getString("regCivil"));
+                usuarios.add(usuario);
+            }
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        } finally{
+            stmt.close();
+        }
+
+        return usuarios;
     }
 
     private void setAttribute(String key, String value) {
