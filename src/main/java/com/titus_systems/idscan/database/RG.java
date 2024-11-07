@@ -263,7 +263,7 @@ public class RG {
         try (ResultSet result = stmt.executeQuery()){ 
                     
             while (result.next()) {           
-                RG usuario = new RG(result.getString("nome"), result.getString("cpf"), result.getString("nomePai"), result.getString("nomeMae"), result.getString("naturalidade"), result.getString("dNasc"), result.getString("cnh"), result.getString("rg"), result.getString("fatorRh"), result.getString("oExp"), result.getString("estado"), result.getString("nisPisPasep"), result.getString("ctps"), result.getString("tEleitor"), result.getString("dExp"), result.getString("certMiliar"), result.getString("via"), result.getString("idProf"), result.getString("uf"), result.getString("regCivil"));
+                RG usuario = new RG(result.getString("nome"), result.getString("cpf"), result.getString("nomePai"), result.getString("nomeMae"), result.getString("naturalidade"), result.getString("dataNascimento"), result.getString("cnh"), result.getString("registroGeral"), result.getString("fatorRh"), result.getString("orgaoExpedidor"), result.getString("estado"), result.getString("nisPisPasep"), result.getString("ctps"), result.getString("tEleitor"), result.getString("dataExpedicao"), result.getString("certMilitar"), result.getString("via"), result.getString("identidadeProfissional"), result.getString("uf"), result.getString("registroCivil"));
                 usuarios.add(usuario);
             }
         } catch (SQLException exception) {
