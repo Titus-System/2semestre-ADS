@@ -1,7 +1,13 @@
 package com.titus_systems.idscan.gui;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
+
+import com.titus_systems.idscan.database.DatabaseConnection;
+import com.titus_systems.idscan.database.RG;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -101,7 +107,7 @@ public class PesquisaDadosController {
         dadosPesquisados.put("naturalidade", campoNaturalidade.getText());
         dadosPesquisados.put("cpf", campoCPF.getText());
         dadosPesquisados.put("nomePai", campoPai.getText());
-        dadosPesquisados.put("nomeMãe", campoMae.getText());
+        dadosPesquisados.put("nomeMae", campoMae.getText());
         dadosPesquisados.put("registroGeral", campoRG.getText());
         dadosPesquisados.put("orgaoExpedidor", campoExpedidor.getText());
         dadosPesquisados.put("estado", campoEstado.getText());
@@ -129,6 +135,18 @@ public class PesquisaDadosController {
         System.out.println("iniciando busca...");
         HashMap<String,String> find =  this.pesquisarDados();
         find.forEach((chave, valor) -> System.out.println(chave + ": " + valor));
+        Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
+        RG rg = new RG();
+        try {
+            List<RG> rgList = rg.pullFromDataBase(dbConnection, find);
+            for (RG r : rgList){
+                RgFormApp formScreen = new RgFormApp(r);
+                formScreen.start(new Stage());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

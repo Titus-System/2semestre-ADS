@@ -225,7 +225,7 @@ public class RG {
 
     public List<RG> pullFromDataBase (Connection con, HashMap<String,String> attributes) throws SQLException{
         List<RG> usuarios = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT * FROM usuarios");
+        StringBuilder sql = new StringBuilder("SELECT * FROM RG");
 
         int count = 0;
 
@@ -258,12 +258,12 @@ public class RG {
             }
         }
 
-        System.out.println(stmt);
+        System.out.println("statement: " + stmt);
 
         try (ResultSet result = stmt.executeQuery()){ 
                     
             while (result.next()) {           
-                RG usuario = new RG(result.getString("nome"), result.getString("cpf"), result.getString("pai"), result.getString("mae"), result.getString("naturalidade"), result.getString("dNasc"), result.getString("cnh"), result.getString("rg"), result.getString("fatorRh"), result.getString("oExp"), result.getString("estado"), result.getString("nisPisPasep"), result.getString("ctps"), result.getString("tEleitor"), result.getString("dExp"), result.getString("certMiliar"), result.getString("via"), result.getString("idProf"), result.getString("uf"), result.getString("regCivil"));
+                RG usuario = new RG(result.getString("nome"), result.getString("cpf"), result.getString("nomePai"), result.getString("nomeMae"), result.getString("naturalidade"), result.getString("dNasc"), result.getString("cnh"), result.getString("rg"), result.getString("fatorRh"), result.getString("oExp"), result.getString("estado"), result.getString("nisPisPasep"), result.getString("ctps"), result.getString("tEleitor"), result.getString("dExp"), result.getString("certMiliar"), result.getString("via"), result.getString("idProf"), result.getString("uf"), result.getString("regCivil"));
                 usuarios.add(usuario);
             }
         } catch (SQLException exception) {

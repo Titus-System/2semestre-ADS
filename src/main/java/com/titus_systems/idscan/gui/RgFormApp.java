@@ -150,7 +150,7 @@ public class RgFormApp extends Application {
             Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
             try {
                 System.out.println("numero do rg:"+ rgobject.getRg());
-                rgobject.saveToDatabase(dbConnection);
+                rgobject.checkForDuplicates(dbConnection);
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
