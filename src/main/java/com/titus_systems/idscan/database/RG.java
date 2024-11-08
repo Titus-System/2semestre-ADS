@@ -71,8 +71,8 @@ public class RG {
     }
 
     public void checkForDuplicates(Connection con) throws SQLException {
-        if (this.cpf != null || !this.cpf.equals("null")) {
-            PreparedStatement query = con.prepareStatement("SELECT cpf FROM RG WHERE cpf='?'");
+        if (this.cpf != null && !this.cpf.equals("null")) {
+            PreparedStatement query = con.prepareStatement("SELECT cpf FROM RG WHERE cpf=?");
             query.setString(1, this.cpf);
 
             try {
@@ -99,7 +99,7 @@ public class RG {
                     }
 
                     sql.append(") ");
-                    placeholders.append(") WHERE cpf='?'");
+                    placeholders.append(") WHERE cpf=?");
                     sql.append(placeholders);
 
                     PreparedStatement stmt = con.prepareStatement(sql.toString());
@@ -118,15 +118,12 @@ public class RG {
                     } catch (SQLException exception) {
                         throw new RuntimeException(exception);
                     }
-                }else {
-                    this.saveToDatabase(con);
                 }
-
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } else if (this.rg != null || !this.rg.equals("null")) {
-            PreparedStatement query = con.prepareStatement("SELECT registroGeral FROM RG WHERE registroGeral='?'");
+        } else if (this.rg != null && !this.rg.equals("null")) {
+            PreparedStatement query = con.prepareStatement("SELECT registroGeral FROM RG WHERE registroGeral=?");
             query.setString(1, this.rg);
 
             try {
@@ -153,7 +150,7 @@ public class RG {
                     }
 
                     sql.append(") ");
-                    placeholders.append(") WHERE registroGeral='?'");
+                    placeholders.append(") WHERE registroGeral=?");
                     sql.append(placeholders);
 
                     PreparedStatement stmt = con.prepareStatement(sql.toString());
@@ -172,10 +169,7 @@ public class RG {
                     } catch (SQLException exception) {
                         throw new RuntimeException(exception);
                     }
-                } else {
-                    this.saveToDatabase(con);
                 }
-                
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
