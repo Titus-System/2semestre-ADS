@@ -72,110 +72,166 @@ public class RG {
 
     public void checkForDuplicates(Connection con) throws SQLException {
         if (this.cpf != null && !this.cpf.equals("null")) {
-            PreparedStatement query = con.prepareStatement("SELECT cpf FROM RG WHERE cpf=?");
-            query.setString(1, this.cpf);
+            try (PreparedStatement query = con.prepareStatement("SELECT cpf FROM RG WHERE cpf=?")) {
+                query.setString(1, this.cpf);
 
-            try {
-                ResultSet result = query.executeQuery();
-                query.close();
+                try (ResultSet result = query.executeQuery()) {
+                    if (result.next() && result.getString("cpf").equals(this.cpf))
+                        updateRecord(con, "cpf", this.cpf);
 
-                if (result.getString("cpf").equals(this.cpf)) {
-                    HashMap<String, String> attributes = this.getAllAttributes();
-                    StringBuilder sql = new StringBuilder("INSERT INTO RG (");
-                    StringBuilder placeholders = new StringBuilder("VALUES (");
-
-                    int count = 0;
-
-                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
-                        if (count > 0) {
-                            sql.append(", ");
-                            placeholders.append(", ");
-                        }
-
-                        sql.append(entry.getKey());
-                        placeholders.append("?");
-
-                        count++;
-                    }
-
-                    sql.append(") ");
-                    placeholders.append(") WHERE cpf=?");
-                    sql.append(placeholders);
-
-                    PreparedStatement stmt = con.prepareStatement(sql.toString());
-
-                    int index = 1;
-                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
-                        stmt.setString(index, entry.getValue());
-                        index++;
-                    }
-
-                    stmt.setString(index, this.cpf);
-
-                    try {
-                        stmt.executeUpdate();
-                        stmt.close();
-                    } catch (SQLException exception) {
-                        throw new RuntimeException(exception);
-                    }
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
         } else if (this.rg != null && !this.rg.equals("null")) {
-            PreparedStatement query = con.prepareStatement("SELECT registroGeral FROM RG WHERE registroGeral=?");
-            query.setString(1, this.rg);
+            try (PreparedStatement query = con.prepareStatement("SELECT registroGeral FROM RG WHERE registrGeral=?")) {
+                query.setString(1, this.rg);
 
-            try {
-                ResultSet result = query.executeQuery();
-                query.close();
-
-                if (result.getString("registroGeral").equals(this.rg)) {
-                    HashMap<String, String> attributes = this.getAllAttributes();
-                    StringBuilder sql = new StringBuilder("INSERT INTO RG (");
-                    StringBuilder placeholders = new StringBuilder("VALUES (");
-
-                    int count = 0;
-
-                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
-                        if (count > 0) {
-                            sql.append(", ");
-                            placeholders.append(", ");
-                        }
-
-                        sql.append(entry.getKey());
-                        placeholders.append("?");
-
-                        count++;
-                    }
-
-                    sql.append(") ");
-                    placeholders.append(") WHERE registroGeral=?");
-                    sql.append(placeholders);
-
-                    PreparedStatement stmt = con.prepareStatement(sql.toString());
-
-                    int index = 1;
-                    for (Map.Entry<String, String> entry : attributes.entrySet()) {
-                        stmt.setString(index, entry.getValue());
-                        index++;
-                    }
-
-                    stmt.setString(index, this.rg);
-
-                    try {
-                        stmt.executeUpdate();
-                        stmt.close();
-                    } catch (SQLException exception) {
-                        throw new RuntimeException(exception);
-                    }
+                try (ResultSet result = query.executeQuery()) {
+                    if (result.next() && result.getString("registroGeral").equals(this.rg))
+                        updateRecord(con, "registroGeral", this.rg);
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
         }
     }
 
+    public void updateRecord(Connection con, String columnName, String columnValue) throws SQLException {
+        HashMap<String, String> attributes = this.getAllAttributes();
+        StringBuilder sql = new StringBuilder("UPDATE RG SET ");
+
+        int count = 0;
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+            if (entry.getValue() != null) {
+                if (count > 0)
+                    sql.append(", ");
+                sql.append(entry.getKey()).append("=?");
+                count++;
+            }
+        }
+
+        sql.append(" WHERE ").append(columnName).append("=?");
+
+        try (PreparedStatement stmt = con.prepareStatement(sql.toString())) {
+            int index = 1;
+            for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                if (entry.getValue() != null) {
+                    stmt.setString(index++, entry.getValue());
+                }
+            }
+            stmt.setString(index, columnValue);
+
+            stmt.executeUpdate();
+        }
+    }
+
+    /*
+     * public void checkForDuplicates(Connection con) throws SQLException {
+     * if (this.cpf != null && !this.cpf.equals("null")) {
+     * PreparedStatement query =
+     * con.prepareStatement("SELECT cpf FROM RG WHERE cpf=?");
+     * query.setString(1, this.cpf);
+     * 
+     * try {
+     * ResultSet result = query.executeQuery();
+     * query.close();
+     * 
+     * if (result.getString("cpf").equals(this.cpf)) {
+     * HashMap<String, String> attributes = this.getAllAttributes();
+     * StringBuilder sql = new StringBuilder("INSERT INTO RG (");
+     * StringBuilder placeholders = new StringBuilder("VALUES (");
+     * 
+     * int count = 0;
+     * 
+     * for (Map.Entry<String, String> entry : attributes.entrySet()) {
+     * if (count > 0) {
+     * sql.append(", ");
+     * placeholders.append(", ");
+     * }
+     * 
+     * sql.append(entry.getKey());
+     * placeholders.append("?");
+     * 
+     * count++;
+     * }
+     * 
+     * sql.append(") ");
+     * placeholders.append(") WHERE cpf=?");
+     * sql.append(placeholders);
+     * 
+     * PreparedStatement stmt = con.prepareStatement(sql.toString());
+     * 
+     * int index = 1;
+     * for (Map.Entry<String, String> entry : attributes.entrySet()) {
+     * stmt.setString(index, entry.getValue());
+     * index++;
+     * }
+     * 
+     * stmt.setString(index, this.cpf);
+     * 
+     * try {
+     * stmt.executeUpdate();
+     * stmt.close();
+     * } catch (SQLException exception) {
+     * throw new RuntimeException(exception);
+     * }
+     * }
+     * } catch (SQLException e) {
+     * throw new RuntimeException(e);
+     * }
+     * } else if (this.rg != null && !this.rg.equals("null")) {
+     * PreparedStatement query =
+     * con.prepareStatement("SELECT registroGeral FROM RG WHERE registroGeral=?");
+     * query.setString(1, this.rg);
+     * 
+     * try {
+     * ResultSet result = query.executeQuery();
+     * query.close();
+     * 
+     * if (result.getString("registroGeral").equals(this.rg)) {
+     * HashMap<String, String> attributes = this.getAllAttributes();
+     * StringBuilder sql = new StringBuilder("INSERT INTO RG (");
+     * StringBuilder placeholders = new StringBuilder("VALUES (");
+     * 
+     * int count = 0;
+     * 
+     * for (Map.Entry<String, String> entry : attributes.entrySet()) {
+     * if (count > 0) {
+     * sql.append(", ");
+     * placeholders.append(", ");
+     * }
+     * 
+     * sql.append(entry.getKey());
+     * placeholders.append("?");
+     * 
+     * count++;
+     * }
+     * 
+     * sql.append(") ");
+     * placeholders.append(") WHERE registroGeral=?");
+     * sql.append(placeholders);
+     * 
+     * PreparedStatement stmt = con.prepareStatement(sql.toString());
+     * 
+     * int index = 1;
+     * for (Map.Entry<String, String> entry : attributes.entrySet()) {
+     * stmt.setString(index, entry.getValue());
+     * index++;
+     * }
+     * 
+     * stmt.setString(index, this.rg);
+     * 
+     * try {
+     * stmt.executeUpdate();
+     * stmt.close();
+     * } catch (SQLException exception) {
+     * throw new RuntimeException(exception);
+     * }
+     * }
+     * } catch (SQLException e) {
+     * throw new RuntimeException(e);
+     * }
+     * }
+     * }
+     */
+    
     public void saveToDatabase(Connection con) throws SQLException {
         HashMap<String, String> attributes = this.getAllAttributes();
         StringBuilder sql = new StringBuilder("INSERT INTO RG (");
@@ -217,7 +273,7 @@ public class RG {
         }
     }
 
-    public List<RG> pullFromDataBase (Connection con, HashMap<String,String> attributes) throws SQLException{
+    public List<RG> pullFromDataBase(Connection con, HashMap<String, String> attributes) throws SQLException {
         List<RG> usuarios = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM RG");
 
@@ -228,12 +284,12 @@ public class RG {
             String value = entry.getValue();
 
             if (value != null && !value.isEmpty()) {
-                if (count == 0){
+                if (count == 0) {
                     sql.append(" WHERE ");
                 } else {
                     sql.append(" AND ");
                 }
-                
+
                 sql.append(column).append(" = ?");
                 count++;
             }
@@ -241,7 +297,7 @@ public class RG {
 
         PreparedStatement stmt = con.prepareStatement(sql.toString());
 
-        if (count > 0){
+        if (count > 0) {
             count = 1;
             for (Map.Entry<String, String> entry : attributes.entrySet()) {
                 String value = entry.getValue();
@@ -254,15 +310,22 @@ public class RG {
 
         System.out.println("statement: " + stmt);
 
-        try (ResultSet result = stmt.executeQuery()){ 
-                    
-            while (result.next()) {           
-                RG usuario = new RG(result.getString("nome"), result.getString("cpf"), result.getString("nomePai"), result.getString("nomeMae"), result.getString("naturalidade"), result.getString("dataNascimento"), result.getString("cnh"), result.getString("registroGeral"), result.getString("fatorRh"), result.getString("orgaoExpedidor"), result.getString("estado"), result.getString("nisPisPasep"), result.getString("ctps"), result.getString("tEleitor"), result.getString("dataExpedicao"), result.getString("certMilitar"), result.getString("via"), result.getString("identidadeProfissional"), result.getString("uf"), result.getString("registroCivil"));
+        try (ResultSet result = stmt.executeQuery()) {
+
+            while (result.next()) {
+                RG usuario = new RG(result.getString("nome"), result.getString("cpf"), result.getString("nomePai"),
+                        result.getString("nomeMae"), result.getString("naturalidade"),
+                        result.getString("dataNascimento"), result.getString("cnh"), result.getString("registroGeral"),
+                        result.getString("fatorRh"), result.getString("orgaoExpedidor"), result.getString("estado"),
+                        result.getString("nisPisPasep"), result.getString("ctps"), result.getString("tEleitor"),
+                        result.getString("dataExpedicao"), result.getString("certMilitar"), result.getString("via"),
+                        result.getString("identidadeProfissional"), result.getString("uf"),
+                        result.getString("registroCivil"));
                 usuarios.add(usuario);
             }
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
-        } finally{
+        } finally {
             stmt.close();
         }
 
