@@ -30,63 +30,83 @@ public class RgFormApp extends Application {
     public void start(Stage primaryStage) {
         // Criação dos Labels e TextFields para cada campo de dados do RG
         Label nomeLabel = new Label("Nome:");
+        nomeLabel.setStyle("-fx-text-fill: white;");
         TextField nomeField = new TextField(rgobject.getNome());
 
         Label dataNascimentoLabel = new Label("Data de Nascimento:");
+        dataNascimentoLabel.setStyle("-fx-text-fill: white;");
         TextField dataNascimentoPicker = new TextField(rgobject.getdNasc());
 
         Label naturalidadeLabel = new Label("Naturalidade:");
+        naturalidadeLabel.setStyle("-fx-text-fill: white;");
         TextField naturalidadeField = new TextField(rgobject.getNaturalidade());
 
         Label cpfLabel = new Label("CPF:");
+        cpfLabel.setStyle("-fx-text-fill: white;");
         TextField cpfField = new TextField(rgobject.getCpf());
 
         Label nomePaiLabel = new Label("Nome do Pai:");
+        nomePaiLabel.setStyle("-fx-text-fill: white;");
         TextField nomePaiField = new TextField(rgobject.getPai());
 
         Label nomeMaeLabel = new Label("Nome da Mãe:");
+        nomeMaeLabel.setStyle("-fx-text-fill: white;");
         TextField nomeMaeField = new TextField(rgobject.getMae());
 
         Label rgNumberLabel = new Label("Número do RG:");
+        rgNumberLabel.setStyle("-fx-text-fill: white;");
         TextField rgNumberField = new TextField(rgobject.getRg());
 
         Label orgaoExpedidorLabel = new Label("Órgão Expedidor:");
+        orgaoExpedidorLabel.setStyle("-fx-text-fill: white;");
         TextField orgaoExpedidorField = new TextField(rgobject.getoExp());
 
         Label estadoLabel = new Label("Estado:");
+        estadoLabel.setStyle("-fx-text-fill: white;");
         TextField estadoField = new TextField(rgobject.getEstado());
 
         Label dataExpedicaoLabel = new Label("Data de Expedição:");
+        dataExpedicaoLabel.setStyle("-fx-text-fill: white;");
         TextField dataExpedicaoPicker = new TextField(rgobject.getdExp());
 
         Label viaLabel = new Label("Via:");
+        viaLabel.setStyle("-fx-text-fill: white;");
         TextField viaField = new TextField(rgobject.getVia());
 
         Label ufLabel = new Label("UF:");
+        ufLabel.setStyle("-fx-text-fill: white;");
         TextField ufField = new TextField(rgobject.getUf());
 
         Label cnhLabel = new Label("CNH:");
+        cnhLabel.setStyle("-fx-text-fill: white;");
         TextField cnhField = new TextField(rgobject.getCnh());
 
         Label fatorRhLabel = new Label("Fator Rh:");
+        fatorRhLabel.setStyle("-fx-text-fill: white;");
         TextField fatorRhField = new TextField(rgobject.getFatorRh());
 
         Label nisPisPasepLabel = new Label("NIS/PIS/PASEP:");
+        nisPisPasepLabel.setStyle("-fx-text-fill: white;");
         TextField nisPisPasepField = new TextField(rgobject.getNisPisPasep());
 
         Label ctpsLabel = new Label("CTPS:");
+        ctpsLabel.setStyle("-fx-text-fill: white;");
         TextField ctpsField = new TextField(rgobject.getCtps());
 
         Label tEleitorLabel = new Label("Título de Eleitor:");
+        tEleitorLabel.setStyle("-fx-text-fill: white;");
         TextField tEleitorField = new TextField(rgobject.gettEleitor());
 
         Label certMilitarLabel = new Label("Certificado Militar:");
+        certMilitarLabel.setStyle("-fx-text-fill: white;");
         TextField certMilitarField = new TextField(rgobject.getCertMiliar());
 
         Label identidadeProfissionalLabel = new Label("Identidade Profissional:");
+        identidadeProfissionalLabel.setStyle("-fx-text-fill: white;");
         TextField identidadeProfissionalField = new TextField(rgobject.getIdProf());
 
         Label registroCivilLabel = new Label("Registro Civil:");
+        registroCivilLabel.setStyle("-fx-text-fill: white;");
         TextField registroCivilField = new TextField(rgobject.getRegCivil());
 
         // Preenchimento dos campos com dados de exemplo
@@ -94,7 +114,10 @@ public class RgFormApp extends Application {
 
         // Botões para salvar ou cancelar
         Button saveButton = new Button("Salvar");
+        saveButton.setStyle("-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;");
         Button cancelButton = new Button("Cancelar");
+        cancelButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold;");
+
 
         // Ação para salvar os dados
         saveButton.setOnAction(e -> {
@@ -127,7 +150,7 @@ public class RgFormApp extends Application {
             Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
             try {
                 System.out.println("numero do rg:"+ rgobject.getRg());
-                rgobject.saveToDatabase(dbConnection);
+                rgobject.checkForDuplicates(dbConnection);
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -165,6 +188,7 @@ public class RgFormApp extends Application {
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);
         gridPane.setVgap(10);
+        gridPane.setStyle("-fx-background-color: #4D607C;");
 
         // Adicionando os elementos ao GridPane em duas colunas
         gridPane.add(nomeLabel, 0, 0);
@@ -221,6 +245,14 @@ public class RgFormApp extends Application {
         gridPane.add(saveButton, 0, 10);
         gridPane.add(cancelButton, 1, 10);
 
+         // Configurar layout dos botões centralizados
+        GridPane buttonPane = new GridPane();
+        buttonPane.setAlignment(Pos.CENTER);
+        buttonPane.setHgap(10);
+        buttonPane.add(saveButton, 0, 0);
+        buttonPane.add(cancelButton, 1, 0);
+
+        gridPane.add(buttonPane, 0, 10, 5, 1); // Centralizar botões
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);

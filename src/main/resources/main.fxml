@@ -19,7 +19,7 @@
          <children>
             <StackPane prefHeight="752.0" prefWidth="233.0" style="-fx-background-color: #6a6e73;" VBox.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="uploadButton" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(16, 185, 129, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
+                  <Button fx:id="uploadButton" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(17, 140, 99, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="180.0" />
                      </StackPane.margin>
@@ -27,10 +27,10 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </Button>
-                  <Button fx:id="dataSearchButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: white;" text="Data Search" textAlignment="CENTER">
+                  <Button fx:id="dataSearchButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#consultaDados" prefHeight="30.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: white;" text="Consulta de Dados" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="300.0" />
                      </StackPane.margin>
@@ -56,7 +56,7 @@
                <children>
                   <Label fx:id="uploadLabel" style="-fx-text-fill: white;" text="Upload" textFill="WHITE">
                      <StackPane.margin>
-                        <Insets bottom="590.0" right="700.0" />
+                        <Insets bottom="590.0" left="42.0" right="700.0" />
                      </StackPane.margin>
                      <font>
                         <Font name="System Bold" size="32.0" />
@@ -84,15 +84,15 @@
                                     <Insets top="43.0" />
                                  </StackPane.margin>
                               </ImageView>
-                              <Label mouseTransparent="true" style="-fx-text-fill: grey;" text="Or">
+                              <Label mouseTransparent="true" style="-fx-text-fill: grey;" text="Ou">
                                  <StackPane.margin>
-                                    <Insets top="34.0" />
+                                    <Insets top="39.0" />
                                  </StackPane.margin>
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="ButtonUpload" mnemonicParsing="false" onAction="#handleUpload" style="-fx-background-color: #00ff8c;" text="Browse">
+                              <Button fx:id="buttonBuscar" mnemonicParsing="false" onAction="#handleUpload" style="-fx-background-color: #00ff8c;" text="Buscar">
                                  <StackPane.margin>
                                     <Insets top="130.0" />
                                  </StackPane.margin>
@@ -103,7 +103,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Label mouseTransparent="true" style="-fx-text-fill: grey;" text="Drag and drop">
+                              <Label mouseTransparent="true" style="-fx-text-fill: grey;" text="Arraste uma imagem">
                                  <StackPane.margin>
                                     <Insets bottom="30.0" />
                                  </StackPane.margin>

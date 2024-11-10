@@ -11,15 +11,106 @@ package gui {
 
     class MainController {
         - selecao: ImageView
-        - filePath: TextField
-        - statusLabel: Label 
-        - buttonUpload: Button
-        + handleUpload (): void
-        + handleDragOver (event: DragEvent): void
-        + handleDrop (event: DragEvent): void
+        - selectedImageFile: File
+        - statusLabel: Label
+        - buttonBuscar: Button
+        - uploadButton: Button
+        - dataSearchButton: Button
+        - processamentoCarregando: ProgressIndicator
+        + initialize(): void
+        + getSelectedImageFile(): File
+        + consultaDados(): void
+        + handleUpload(): void
+        + openConfirmationDialog(): void
+        + handleDragOver(event: DragEvent): void
+        + handleDrop(event: DragEvent): void
+        + isImageFile(file: File): boolean
+        + showFailureMessage(mensagemErro: String): void
+        + showSuccessMessage(): Stage
+        + startImageProcessor(imagePaths: ArrayList<String>): void
     }
 
+    class ConfirmacaoController {
+        - mainController: MainController
+        - exibicaoImagem: ImageView
+        - cancelar: Button
+        - confirmar: Button
+        + setImage(image: Image): void
+        + setMainController(mainController: MainController): void
+        + confirmarImagem(): void
+        + cancelarImagem(): void
+    }
+
+    class FalhaController {
+        - falhaDetalhes: Label
+        - okBotaoFalha: Button
+        + fecharJanelaFalha(): void
+        + setDetalhes(mensagemErro: String): void
+    }
+
+    class IndicadorDeCarregamento {
+        + start(primaryStage: Stage): void
+        + main(args: String[]): void
+    }
+
+    class PesquisaDadosController {
+        - uploadButton: Button
+        - dataSearchButton: Button
+        - campoNome: TextField
+        - campoNascimento: TextField
+        - campoNaturalidade: TextField
+        - campoCPF: TextField
+        - campoPai: TextField
+        - campoMae: TextField
+        - campoRG: TextField
+        - campoExpedidor: TextField
+        - campoEstado: TextField
+        - campoExpedicao: TextField
+        - campoVia: TextField
+        - campoUF: TextField
+        - campoCNH: TextField
+        - campoRH: TextField
+        - campoNIS: TextField
+        - campoCTPS: TextField
+        - campoEleitor: TextField
+        - campoMilitar: TextField
+        - campoProfissional: TextField
+        - campoCivil: TextField
+        - dadosPesquisados: HashMap<String, String>
+        + voltarParaUpload(): void
+        + pesquisarDados(): HashMap<String, String>
+        + getDadosPesquisados(): HashMap<String, String>
+        + execute(): void
+    }
+
+    class RgFormApp {
+        - rgobject: RG
+        + RgFormApp(rgobject: RG)
+        + start(primaryStage: Stage): void
+        + main(args: String[]): void
+    }
+
+    class SucessoController {
+        - okBotaoSucesso: Button
+        + fecharJanelaSucesso(): void
+    }
+
+    class VerificaFormatoSuportado {
+        + verificarValidade(caminhoArquivo: String): boolean
+        - isFormatoSuportado(arquivo: File): boolean
+        - getExtensaoArquivo(nomeArquivo: String): String
+    }
+
+
     MainController --> Main : controls
+    PesquisaDadosController <|-- MainController : instantiates
+    ConfirmacaoController <|-- MainController : instantiates
+    FalhaController <|-- MainController : instantiates
+    ImageProcessor <|-- MainController : instantiates
+    IdPrompt <|-- MainController : instantiates
+    RG <|-- MainController : instantiates
+    RgFormApp <|-- MainController : instantiates
+    ConfirmacaoController --> MainController : accesses
 }
 
 package ollama {
@@ -27,25 +118,72 @@ package ollama {
         + typeName: String
     }
 
+    class IdPrompt {
+        - prompt: PromptBuilder
+        - full: boolean
+        + IdPrompt(complete: boolean)
+        + getPrompt(): PromptBuilder
+        + addLine(line: String): void
+        + buildWithVLM(): void
+        + buildWithTesseract(tessResponse: String): void
+        + buildWithTesseractAndVLM(tessResponse: String): void
+        + askForMainInfo(): void
+        + askForAll(): void
+        + askWithVLM(): void
+        + askWithTesseract(tessResponse: String): void
+        + askWithTesseractAndVLM(tessResponse: String): void
+        + askFormat(): void
+        + askForNome(): void
+        + askForRG(): void
+        + askForVia(): void
+        + askForCPF(): void
+        + askForDataExpedicao(): void
+        + askForRegistroCivil(): void
+        + askForTituloEleitor(): void
+        + askForNisPisPasep(): void
+        + askForIdProfissional(): void
+        + askForCNH(): void
+        + askForNaturalidade(): void
+        + askForFiliacao(): void
+        + askForDataNascimento(): void
+        + askForOrgaoExp(): void
+        + askForCertMilitar(): void
+        + askForRH(): void
+        + askForCTPS(): void
+        + askForEstado(): void
+        + setFull(bool: boolean): void
+        + getFull(): boolean
+    }
+
     class OllamaEngine {
         - model: String
         - temperature: float
-        + setModel (model: String): void
-        + getModel (): String
-        + setTemperature (temperature: float): void
-        + getTemperature (): float
-        + generateAsyncAnswerFromPrompt (prompt: String): String
-        + generateSyncAnswerFromPrompt (prompt: String): String
-        + generateAnswerFromImage (prompt: String, imagePath: String): String
+        + OllamaEngine(modelName: String, temperature: float)
+        + setModel(modelName: String): void
+        + getModel(): String
+        + setTemperature(temperature: float): void
+        + getTemperature(): float
+        + generateAsyncAnswerFromPrompt(prompt: String): String
+        + generateSyncAnswerFromPrompt(prompt: String): String
     }
 
-    class ImageProcessor {
+    ImageProcessor --> OllamaEngine: start
+    OllamaEngine --> CustomModelType : uses
+
+   class ImageProcessor {
         - ollamaEngine: OllamaEngine
         - tessEngine: TesseractEngine
-        + processWithTesseract (imagePath: String, prompt: PrompBuilder)
-        + processWithVLM (imagePath: String, prompt: PromptBuilder)
-        + asyncProcessWithTesseract (imagePath: String, prompt: PromptBuilder, callback: Consumer<String>)
-        + asyncProcessWithVLM (imagePath: String, prompt: PromptBuilder, callback: Consumer<String>)
+        - lastResponse: String
+        + ImageProcessor(ollamaModelName: String)
+        + setLastResponse(response: String): void
+        + getLastResponse(): String
+        + processWithTesseract(imagePaths: ArrayList<String>, prompt: IdPrompt): String
+        + processWithVLM(imagePath: String, prompt: IdPrompt): String
+        + processWithTesseractAndVLM(imagePath: String, prompt: IdPrompt): String
+        + asyncProcessWithTesseractAndVLM(imagePath: String, prompt: IdPrompt, callback: Consumer<String>): void
+        + asyncProcessWithTesseract(imagePaths: ArrayList<String>, prompt: IdPrompt, callback: Consumer<String>): void
+        + asyncProcessWithVLM(imagePath: String, prompt: IdPrompt, callback: Consumer<String>): void
+        + convertResponseToHashMap(response: String): HashMap<String, String>
     }
 
     ImageProcessor --> OllamaEngine: start
@@ -54,40 +192,100 @@ package ollama {
 
 package tesseract {
     class TesseractEngine {
-        + extractTextFromImage (imagePath: String): String
-    }
+        - datapath: String
+        - language
+    }   
 }
 
 package database {
+
     class DatabaseConnection {
-        - url: String
-        - user: String
-        - password: String
-        + loadDatabaseConfig () : void
-        + getConnection () : Connection
-    }
-
-    Class Pessoa {
-
+        - URL: String
+        - USER: String
+        - PASSWORD: String
+        - connection: Connection
+        + DatabaseConnection(url: String, user: String, password: String)
+        + DatabaseConnection()
+        + getConnection(): Connection
+        + getConnectionToDatabase(dbName: String): Connection
+        + closeConnection(): void
+        + checkIfDatabaseExists(dbName: String): boolean
+        + createDatabase(dbName: String): void
+        + createTableIfNotExists(): void
+        + setURL(dbName: String): void
     }
 
     class RG {
-
+        - nome: String
+        - cpf: String
+        - pai: String
+        - mae: String
+        - naturalidade: String
+        - dNasc: String
+        - cnh: String
+        - rg: String
+        - fatorRh: String
+        - oExp: String
+        - estado: String
+        - nisPisPasep: String
+        - ctps: String
+        - tEleitor: String
+        - dExp: String
+        - certMiliar: String
+        - via: String
+        - idProf: String
+        - uf: String
+        - regCivil: String
+        + RG()
+        + RG(extractedInfo: HashMap<String, String>)
+        + checkForDuplicates(con: Connection): void
+        + saveToDatabase(con: Connection): void
+        + pullFromDataBase(con: Connection, attributes: HashMap<String, String>): List<RG>
+        + setAttribute(key: String, value: String): void
+        + getAllAttributes(): HashMap<String, String>
+        + getNome(): String
+        + setNome(nome: String): void
+        + getCpf(): String
+        + setCpf(cpf: String): void
+        + getPai(): String
+        + setPai(pai: String): void
+        + getMae(): String
+        + setMae(mae: String): void
+        + getNaturalidade(): String
+        + setNaturalidade(naturalidade: String): void
+        + getdNasc(): String
+        + setdNasc(dNasc: String): void
+        + getCnh(): String
+        + setCnh(cnh: String): void
+        + getRg(): String
+        + setRg(rg: String): void
+        + getFatorRh(): String
+        + setFatorRh(fatorRh: String): void
+        + getoExp(): String
+        + setoExp(oExp: String): void
+        + getEstado(): String
+        + setEstado(estado: String): void
+        + getNisPisPasep(): String
+        + setNisPisPasep(nisPisPasep: String): void
+        + getCtps(): String
+        + setCtps(ctps: String): void
+        + gettEleitor(): String
+        + settEleitor(tEleitor: String): void
+        + getdExp(): String
+        + setdExp(dExp: String): void
+        + getCertMiliar(): String
+        + setCertMiliar(certMiliar: String): void
+        + getVia(): String
+        + setVia(via: String): void
+        + getIdProf(): String
+        + setIdProf(idProf: String): void
+        + getUf(): String
+        + setUf(uf: String): void
+        + getRegCivil(): String
+        + setRegCivil(regCivil: String): void
     }
 
-    class CNH {
-
-    }
-
-    class CRNM {
-
-    }
-
-    DatabaseConnection --> Pessoa : access
     DatabaseConnection --> RG : access
-    DatabaseConnection --> CNH : access
-    DatabaseConnection --> CRNM : access
-
 }
 
 MainController --> ImageProcessor: executes
@@ -96,4 +294,3 @@ ImageProcessor --> TesseractEngine: start
 App --> Main : executes
 
 @enduml
-
