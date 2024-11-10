@@ -167,12 +167,8 @@ package ollama {
         + generateSyncAnswerFromPrompt(prompt: String): String
     }
 
-    class OllamaConnection {
-        + main(args: String[]): void
-        + getOllamaAnswer(prompt: String, filePath: String): String
-        + getTesseractAnswer(imagePath: String): String
-    }
-
+    ImageProcessor --> OllamaEngine: start
+    OllamaEngine --> CustomModelType : uses
 
    class ImageProcessor {
         - ollamaEngine: OllamaEngine
@@ -240,7 +236,6 @@ package database {
         - idProf: String
         - uf: String
         - regCivil: String
-        + RG(nome: String, cpf: String, pai: String, mae: String, naturalidade: String, dNasc: String, cnh: String, rg: String, fatorRh: String, oExp: String, estado: String, nisPisPasep: String, ctps: String, tEleitor: String, dExp: String, certMiliar: String, via: String, idProf: String, uf: String, regCivil: String)
         + RG()
         + RG(extractedInfo: HashMap<String, String>)
         + checkForDuplicates(con: Connection): void

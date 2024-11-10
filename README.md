@@ -39,8 +39,8 @@ Desenvolvimento de um aplicativo Java Desktop, utilizando modelos de Inteligênc
 | Kick Off            | 29/08/2024    | Finalizada    |
 | 01                  | 09/09/2024    | Finalizada    |
 | 02                  | 30/09/2024    | Finalizada |
-| 03                  | 21/10/2024    | Iniciada      |
-| 04                  | 11/11/2024    | Não iniciada      |
+| 03                  | 21/10/2024    | Finalizada      |
+| 04                  | 11/11/2024    | Iniciada      |
 | Feira de Soluções    | 12/12/2024    | Não iniciada      |
 
 ## *Sobre a Equipe*
