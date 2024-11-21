@@ -332,41 +332,6 @@ public class RG {
         return usuarios;
     }
 
-    public void removeFromDatabase(Connection con, RG rg) throws SQLException{
-        if (rg.getCpf() == null && rg.getRg() == null) {
-            throw new IllegalArgumentException("Pelo menos um dos atributos (CPF ou RG) deve ser fornecido.");
-        }
-        
-        StringBuilder sql = new StringBuilder("DELETE FROM RG");
-        String[] attributes = {rg.getCpf(), rg.getRg()};
-        
-        if (attributes[0] != null){
-            sql.append(" WHERE ").append("cpf").append(" = ?");
-        }
-        if (attributes[1] != null){
-            if (attributes[0] != null){
-                sql.append(" AND ").append("rg").append(" = ?"); 
-            }else{
-                sql.append(" WHERE ").append("rg").append(" = ?");
-            }
-        }
-
-        try (PreparedStatement stmt = con.prepareStatement(sql.toString())) {
-            int count = 1;
-            for (int i = 0; i < 2; i++) {
-                if (attributes[i] != null){
-                    stmt.setString(count, attributes[i]);
-                    count++;
-                }
-            }
-
-        System.out.println(stmt);
-            stmt.executeUpdate();
-        } catch (SQLException exception) {
-            throw new RuntimeException("Erro ao remover do banco de dados", exception);
-        }
-    }
-
     private void setAttribute(String key, String value) {
         key = key.toLowerCase().trim();
         if (value == null || value.equals("null")) {
