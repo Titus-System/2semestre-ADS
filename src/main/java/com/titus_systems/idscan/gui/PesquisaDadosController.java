@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -139,13 +140,35 @@ public class PesquisaDadosController {
         RG rg = new RG();
         try {
             List<RG> rgList = rg.pullFromDataBase(dbConnection, find);
+            if (rgList.size() < 1){
+                showFailureMessage("Nenhum registro encontrado para os parâmetros informados.");
+            }
             for (RG r : rgList){
-                RgFormApp formScreen = new RgFormApp(r);
+                RGConsulta formScreen = new RGConsulta(r);
                 formScreen.start(new Stage());
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public void showFailureMessage(String mensagemErro) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/falha.fxml"));
+            Parent failureRoot = loader.load();
+            FalhaController falhaController = loader.getController();
+            falhaController.setDetalhes(mensagemErro);
+
+            Stage failureStage = new Stage();
+            failureStage.setScene(new Scene(failureRoot));
+            failureStage.setTitle("Erro na consulta ao banco de dados");
+            failureStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao mostrar a tela de falha: " + e.getMessage());
         }
     }
 

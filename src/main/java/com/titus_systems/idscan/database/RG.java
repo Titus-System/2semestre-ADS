@@ -345,9 +345,9 @@ public class RG {
         }
         if (attributes[1] != null){
             if (attributes[0] != null){
-                sql.append(" AND ").append("rg").append(" = ?"); 
+                sql.append(" AND ").append("registroGeral").append(" = ?"); 
             }else{
-                sql.append(" WHERE ").append("rg").append(" = ?");
+                sql.append(" WHERE ").append("registroGeral").append(" = ?");
             }
         }
 
