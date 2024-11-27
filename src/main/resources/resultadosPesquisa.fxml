@@ -18,7 +18,7 @@
          </StackPane.margin>
       </Label>
       <Label fx:id="semResultadosLabel" text="Nenhum resultado foi encontrado." textFill="#4d607ab7" visible="false" />
-      <ListView fx:id="resultadosListView" maxHeight="485.0" maxWidth="550.0" prefHeight="466.0" prefWidth="550.0">
+      <ListView fx:id="resultadosListView" maxHeight="485.0" maxWidth="550.0" onMouseClicked="#handleItemSelection" prefHeight="466.0" prefWidth="550.0">
          <StackPane.margin>
             <Insets bottom="20.0" />
          </StackPane.margin></ListView>

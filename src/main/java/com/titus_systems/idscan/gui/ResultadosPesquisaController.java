@@ -16,7 +16,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 
 public class ResultadosPesquisaController {
 
@@ -74,6 +76,26 @@ public class ResultadosPesquisaController {
         } catch (SQLException e) {
         e.printStackTrace();
         System.out.println("Erro ao buscar os resultados: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleItemSelection(MouseEvent event) {
+        System.out.println("Item selecionado!");
+        // Pega o item selecionado
+        RG selectedRG = resultadosListView.getSelectionModel().getSelectedItem();
+
+        if (selectedRG != null) {
+            // Abre a nova tela de formulário com os dados do RG selecionado
+            try {
+                Stage currentStage = (Stage) resultadosListView.getScene().getWindow();
+                currentStage.close();
+                RgFormApp rgFormApp = new RgFormApp(selectedRG);
+                Stage newStage = new Stage();
+                rgFormApp.start(newStage);  
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
