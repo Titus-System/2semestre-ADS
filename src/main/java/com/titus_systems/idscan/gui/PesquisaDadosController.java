@@ -98,7 +98,7 @@ public class PesquisaDadosController {
     @FXML
     public HashMap<String, String> pesquisarDados(){
         dadosPesquisados.put("nome", campoNome.getText());
-        dadosPesquisados.put("Data de nascimento", campoNascimento.getText());
+        dadosPesquisados.put("dataNascimento", campoNascimento.getText());
         dadosPesquisados.put("naturalidade", campoNaturalidade.getText());
         dadosPesquisados.put("cpf", campoCPF.getText());
         dadosPesquisados.put("nomePai", campoPai.getText());
