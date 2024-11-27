@@ -2,62 +2,25 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="600.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="663.0" style="-fx-background-color: F2F2F2;" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.ResultadosPesquisaController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="413.0" stroke="#4d607c" strokeType="OUTSIDE" style="-fx-stroke-dash-array: 5 12; -fx-fill: EAEAEA;" width="501.0">
-         <StackPane.margin>
-            <Insets top="7.0" />
-         </StackPane.margin>
-      </Rectangle>
-      <Rectangle fx:id="blocoResultado" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="81.0" stroke="TRANSPARENT" strokeType="INSIDE" width="437.0">
-         <effect>
-            <DropShadow offsetX="-1.5" offsetY="4.0">
-               <color>
-                  <Color opacity="0.28343465924263" />
-               </color>
-            </DropShadow>
-         </effect>
-         <StackPane.margin>
-            <Insets bottom="280.0" />
-         </StackPane.margin>
-      </Rectangle>
       <Label text="Resultados encontrados:">
          <StackPane.margin>
-            <Insets bottom="446.0" />
-         </StackPane.margin>
-      </Label>
-      <Label fx:id="nomeResultado" prefHeight="54.0" prefWidth="211.0" text="Julia Soares Pereira" textFill="#4d607c">
-         <font>
-            <Font size="25.0" />
-         </font>
-         <StackPane.margin>
-            <Insets bottom="280.0" left="35.0" right="200.0" />
-         </StackPane.margin>
-      </Label>
-      <Label fx:id="cpfResultado" text="CPF: XXX.XXX.XXX-XX" textAlignment="RIGHT" textFill="#4d607c">
-         <font>
-            <Font size="13.0" />
-         </font>
-         <StackPane.margin>
-            <Insets bottom="297.0" left="200.0" />
-         </StackPane.margin>
-      </Label>
-      <Label fx:id="rgResultado" text="RG: XX.XXX.XXX-X" textFill="#4d607c">
-         <StackPane.margin>
-            <Insets bottom="280.0" left="200.0" top="23.0" />
+            <Insets bottom="532.0" />
          </StackPane.margin>
       </Label>
       <Label text="(Clique no resultado que deseja analisar)">
          <StackPane.margin>
-            <Insets top="461.0" />
+            <Insets top="520.0" />
          </StackPane.margin>
       </Label>
+      <Label fx:id="semResultadosLabel" text="Nenhum resultado foi encontrado." textFill="#4d607ab7" visible="false" />
+      <ListView fx:id="resultadosListView" maxHeight="485.0" maxWidth="550.0" prefHeight="466.0" prefWidth="550.0">
+         <StackPane.margin>
+            <Insets bottom="20.0" />
+         </StackPane.margin></ListView>
    </children>
 </StackPane>

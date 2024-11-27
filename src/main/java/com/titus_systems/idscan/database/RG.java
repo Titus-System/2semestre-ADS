@@ -290,7 +290,7 @@ public class RG {
                     sql.append(" AND ");
                 }
 
-                sql.append(column).append(" = ?");
+                sql.append(column).append(" LIKE ?");
                 count++;
             }
         }
@@ -302,7 +302,7 @@ public class RG {
             for (Map.Entry<String, String> entry : attributes.entrySet()) {
                 String value = entry.getValue();
                 if (value != null && !value.isEmpty()) {
-                    stmt.setString(count, value);
+                    stmt.setString(count, "%" + value + "%");
                     count++;
                 }
             }

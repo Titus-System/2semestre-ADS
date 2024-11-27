@@ -1,18 +1,13 @@
 package com.titus_systems.idscan.gui;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
-
-import com.titus_systems.idscan.database.DatabaseConnection;
-import com.titus_systems.idscan.database.RG;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -131,23 +126,30 @@ public class PesquisaDadosController {
         return dadosPesquisados;
     }
 
-    public void execute(){
-        System.out.println("iniciando busca...");
-        HashMap<String,String> find =  this.pesquisarDados();
-        find.forEach((chave, valor) -> System.out.println(chave + ": " + valor));
-        Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
-        RG rg = new RG();
-        try {
-            List<RG> rgList = rg.pullFromDataBase(dbConnection, find);
-            for (RG r : rgList){
-                RgFormApp formScreen = new RgFormApp(r);
-                formScreen.start(new Stage());
-            }
+    public void execute() { // Método que ocorre após clicar no botão "Buscar"
+    System.out.println("Iniciando busca...");
+    HashMap<String, String> criterios = pesquisarDados();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resultadosPesquisa.fxml"));
+        Parent resultadosRoot = loader.load();
+
+        // Obtém o controlador da próxima tela
+        ResultadosPesquisaController resultadosController = loader.getController();
+        resultadosController.buscarERenderizarResultados(criterios);
+
+        // Cria uma nova janela
+        Stage resultadosStage = new Stage();
+        resultadosStage.setTitle("Resultados da Pesquisa");
+        resultadosStage.setScene(new Scene(resultadosRoot)); 
+        //resultadosStage.initModality(Modality.APPLICATION_MODAL); //Bloqueia interação com a tela principal (opcional)
+        //resultadosStage.setResizable(false); 
+        resultadosStage.show();
+
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
 }
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="426.0" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.ListCellController">
+   <children>
+      <Label fx:id="nomeResultadoLabel" text="Julia Soares Pereira" textFill="#4d607a">
+         <font>
+            <Font size="25.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="25.0" top="11.0" />
+         </HBox.margin>
+      </Label>
+      <VBox alignment="CENTER" prefHeight="55.0" prefWidth="158.0">
+         <children>
+            <Label fx:id="cpfResultadoLabel" alignment="CENTER" contentDisplay="CENTER" text="CPF: XXX.XXX.XXX-XX" textFill="#4d607c" />
+            <Label fx:id="rgResultadoLabel" alignment="CENTER" contentDisplay="CENTER" text="RG: XX.XXX.XXX-X" textFill="#4d607c" />
+         </children>
+         <HBox.margin>
+            <Insets left="6.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>
