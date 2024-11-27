@@ -138,12 +138,9 @@ public class PesquisaDadosController {
         ResultadosPesquisaController resultadosController = loader.getController();
         resultadosController.buscarERenderizarResultados(criterios);
 
-        // Cria uma nova janela
         Stage resultadosStage = new Stage();
         resultadosStage.setTitle("Resultados da Pesquisa");
         resultadosStage.setScene(new Scene(resultadosRoot)); 
-        //resultadosStage.initModality(Modality.APPLICATION_MODAL); //Bloqueia interação com a tela principal (opcional)
-        //resultadosStage.setResizable(false); 
         resultadosStage.show();
 
     } catch (IOException e) {

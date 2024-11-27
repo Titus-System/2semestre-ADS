@@ -65,7 +65,6 @@ public class ResultadosPesquisaController {
             try (Connection con = new DatabaseConnection().getConnection()) {
             con.setCatalog("idscan");
             RG rg = new RG();
-            // Busca no banco de dados os registros que atendem aos critérios
             List<RG> usuarios = rg.pullFromDataBase(con, criterios);
             if (!usuarios.isEmpty()) {
             exibirResultados(usuarios); // Renderiza os resultados encontrados
