@@ -150,7 +150,8 @@ public class RGConsulta extends Application {
             Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
             try {
                 System.out.println("numero do rg:"+ rgobject.getRg());
-                rgobject.saveToDatabase(dbConnection);
+                rgobject.checkDuplicatesInDatabase(dbConnection);
+                // rgobject.saveToDatabase(dbConnection);
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }

@@ -70,6 +70,76 @@ public class RG {
         }
     }
 
+    public void checkDuplicatesInDatabase(Connection connection) throws SQLException {
+        // Verifica se a entrada já existe no banco de dados
+        String checkQuery = "SELECT COUNT(*) FROM RG WHERE registroGeral = ?";
+        try (PreparedStatement checkStmt = connection.prepareStatement(checkQuery)) {
+            checkStmt.setString(1, this.rg);
+            ResultSet rs = checkStmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                // Entrada existe, realizar atualização
+                String updateQuery = "UPDATE RG SET " +
+                    "nome = ?, dataNascimento = ?, naturalidade = ?, cpf = ?, nomePai = ?, nomeMae = ?, " +
+                    "orgaoExpedidor = ?, estado = ?, dataExpedicao = ?, via = ?, uf = ?, cnh = ?, " +
+                    "fatorRh = ?, nisPisPasep = ?, ctps = ?, tEleitor = ?, certMilitar = ?, " +
+                    "identidadeProfissional = ?, registroCivil = ? WHERE registroGeral = ?";
+                try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
+                    updateStmt.setString(1, this.nome);
+                    updateStmt.setString(2, this.dNasc);
+                    updateStmt.setString(3, this.naturalidade);
+                    updateStmt.setString(4, this.cpf);
+                    updateStmt.setString(5, this.pai);
+                    updateStmt.setString(6, this.mae);
+                    updateStmt.setString(7, this.oExp);
+                    updateStmt.setString(8, this.estado);
+                    updateStmt.setString(9, this.dExp);
+                    updateStmt.setString(10, this.via);
+                    updateStmt.setString(11, this.uf);
+                    updateStmt.setString(12, this.cnh);
+                    updateStmt.setString(13, this.fatorRh);
+                    updateStmt.setString(14, this.nisPisPasep);
+                    updateStmt.setString(15, this.ctps);
+                    updateStmt.setString(16, this.tEleitor);
+                    updateStmt.setString(17, this.certMiliar);
+                    updateStmt.setString(18, this.idProf);
+                    updateStmt.setString(19, this.regCivil);
+                    updateStmt.setString(20, this.rg); 
+                    updateStmt.executeUpdate();
+                }
+            } else {
+                // Entrada não existe, realizar inserção
+                String insertQuery = "INSERT INTO RG (registroGeral, nome, dataNascimento, naturalidade, cpf, nomePai, nomeMae, " +
+                    "orgaoExpedidor, estado, dataExpedicao, via, uf, cnh, fatorRh, nisPisPasep, ctps, tEleitor, certMilitar, " +
+                    "identidadeProfissional, registroCivil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                try (PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
+                    insertStmt.setString(1, this.rg);
+                    insertStmt.setString(2, this.nome);
+                    insertStmt.setString(3, this.dNasc);
+                    insertStmt.setString(4, this.naturalidade);
+                    insertStmt.setString(5, this.cpf);
+                    insertStmt.setString(6, this.pai);
+                    insertStmt.setString(7, this.mae);
+                    insertStmt.setString(8, this.oExp);
+                    insertStmt.setString(9, this.estado);
+                    insertStmt.setString(10, this.dExp);
+                    insertStmt.setString(11, this.via);
+                    insertStmt.setString(12, this.uf);
+                    insertStmt.setString(13, this.cnh);
+                    insertStmt.setString(14, this.fatorRh);
+                    insertStmt.setString(15, this.nisPisPasep);
+                    insertStmt.setString(16, this.ctps);
+                    insertStmt.setString(17, this.tEleitor);
+                    insertStmt.setString(18, this.certMiliar);
+                    insertStmt.setString(19, this.idProf);
+                    insertStmt.setString(20, this.regCivil);
+                    insertStmt.executeUpdate();
+                }
+            }
+        }
+    }
+    
+
+
     public void checkForDuplicates(Connection con) throws SQLException {
         if (this.cpf != null && !this.cpf.equals("null")) {
             try (PreparedStatement query = con.prepareStatement("SELECT cpf FROM RG WHERE cpf=?")) {
@@ -121,116 +191,6 @@ public class RG {
             stmt.executeUpdate();
         }
     }
-
-    /*
-     * public void checkForDuplicates(Connection con) throws SQLException {
-     * if (this.cpf != null && !this.cpf.equals("null")) {
-     * PreparedStatement query =
-     * con.prepareStatement("SELECT cpf FROM RG WHERE cpf=?");
-     * query.setString(1, this.cpf);
-     * 
-     * try {
-     * ResultSet result = query.executeQuery();
-     * query.close();
-     * 
-     * if (result.getString("cpf").equals(this.cpf)) {
-     * HashMap<String, String> attributes = this.getAllAttributes();
-     * StringBuilder sql = new StringBuilder("INSERT INTO RG (");
-     * StringBuilder placeholders = new StringBuilder("VALUES (");
-     * 
-     * int count = 0;
-     * 
-     * for (Map.Entry<String, String> entry : attributes.entrySet()) {
-     * if (count > 0) {
-     * sql.append(", ");
-     * placeholders.append(", ");
-     * }
-     * 
-     * sql.append(entry.getKey());
-     * placeholders.append("?");
-     * 
-     * count++;
-     * }
-     * 
-     * sql.append(") ");
-     * placeholders.append(") WHERE cpf=?");
-     * sql.append(placeholders);
-     * 
-     * PreparedStatement stmt = con.prepareStatement(sql.toString());
-     * 
-     * int index = 1;
-     * for (Map.Entry<String, String> entry : attributes.entrySet()) {
-     * stmt.setString(index, entry.getValue());
-     * index++;
-     * }
-     * 
-     * stmt.setString(index, this.cpf);
-     * 
-     * try {
-     * stmt.executeUpdate();
-     * stmt.close();
-     * } catch (SQLException exception) {
-     * throw new RuntimeException(exception);
-     * }
-     * }
-     * } catch (SQLException e) {
-     * throw new RuntimeException(e);
-     * }
-     * } else if (this.rg != null && !this.rg.equals("null")) {
-     * PreparedStatement query =
-     * con.prepareStatement("SELECT registroGeral FROM RG WHERE registroGeral=?");
-     * query.setString(1, this.rg);
-     * 
-     * try {
-     * ResultSet result = query.executeQuery();
-     * query.close();
-     * 
-     * if (result.getString("registroGeral").equals(this.rg)) {
-     * HashMap<String, String> attributes = this.getAllAttributes();
-     * StringBuilder sql = new StringBuilder("INSERT INTO RG (");
-     * StringBuilder placeholders = new StringBuilder("VALUES (");
-     * 
-     * int count = 0;
-     * 
-     * for (Map.Entry<String, String> entry : attributes.entrySet()) {
-     * if (count > 0) {
-     * sql.append(", ");
-     * placeholders.append(", ");
-     * }
-     * 
-     * sql.append(entry.getKey());
-     * placeholders.append("?");
-     * 
-     * count++;
-     * }
-     * 
-     * sql.append(") ");
-     * placeholders.append(") WHERE registroGeral=?");
-     * sql.append(placeholders);
-     * 
-     * PreparedStatement stmt = con.prepareStatement(sql.toString());
-     * 
-     * int index = 1;
-     * for (Map.Entry<String, String> entry : attributes.entrySet()) {
-     * stmt.setString(index, entry.getValue());
-     * index++;
-     * }
-     * 
-     * stmt.setString(index, this.rg);
-     * 
-     * try {
-     * stmt.executeUpdate();
-     * stmt.close();
-     * } catch (SQLException exception) {
-     * throw new RuntimeException(exception);
-     * }
-     * }
-     * } catch (SQLException e) {
-     * throw new RuntimeException(e);
-     * }
-     * }
-     * }
-     */
     
     public void saveToDatabase(Connection con) throws SQLException {
         HashMap<String, String> attributes = this.getAllAttributes();
