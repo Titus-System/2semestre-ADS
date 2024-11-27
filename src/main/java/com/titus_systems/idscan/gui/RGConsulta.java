@@ -18,11 +18,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class RgFormApp extends Application {
+public class RGConsulta extends Application {
 
     RG rgobject;
 
-    public RgFormApp(RG rgobject){
+    public RGConsulta(RG rgobject){
         this.rgobject = rgobject;
     }
 
@@ -113,9 +113,9 @@ public class RgFormApp extends Application {
         //this.preencherCampos();
 
         // Botões para salvar ou cancelar
-        Button saveButton = new Button("Salvar");
+        Button saveButton = new Button("Salvar Alterações");
         saveButton.setStyle("-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;");
-        Button cancelButton = new Button("Limpar");
+        Button cancelButton = new Button("Excluir");
         cancelButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold;");
 
 
@@ -150,7 +150,7 @@ public class RgFormApp extends Application {
             Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
             try {
                 System.out.println("numero do rg:"+ rgobject.getRg());
-                this.rgobject.checkDuplicatesInDatabase(dbConnection);
+                rgobject.checkDuplicatesInDatabase(dbConnection);
                 // rgobject.saveToDatabase(dbConnection);
             } catch (SQLException e1) {
                 e1.printStackTrace();
@@ -159,28 +159,15 @@ public class RgFormApp extends Application {
             stage.close();
         });
 
-        // Ação para cancelar
+        // Ação para excluir
         cancelButton.setOnAction(e -> {
-            rgNumberField.clear();
-            fatorRhField.clear();
-            orgaoExpedidorField.clear();
-            estadoField.clear();
-            nisPisPasepField.clear();
-            ctpsField.clear();
-            tEleitorField.clear();
-            dataExpedicaoPicker.clear();
-            certMilitarField.clear();
-            viaField.clear();
-            identidadeProfissionalField.clear();
-            ufField.clear();
-            registroCivilField.clear();
-            nomeField.clear();
-            dataNascimentoPicker.clear();
-            naturalidadeField.clear();
-            cpfField.clear();
-            nomePaiField.clear();
-            nomeMaeField.clear();
-            cnhField.clear();
+            Connection con = new DatabaseConnection().getConnectionToDatabase("idScan");
+            try {
+                this.rgobject.removeFromDatabase(con, rgobject);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            cancelButton.getScene().getWindow().hide();
         });
 
         // Layout do formulário usando GridPane
@@ -273,3 +260,4 @@ public class RgFormApp extends Application {
         launch(args);
     }
 }
+

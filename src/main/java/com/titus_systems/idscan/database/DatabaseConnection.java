@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DatabaseConnection { //Conexão com o banco de dados MySQL 
-    private String URL = "jdbc:mysql://127.0.0.1:3306/";
-    private String USER = "root"; // Digite seu usuário MySQL
-    private String PASSWORD = "karininha16$Dask"; // Digite sua senha do MySQL 
+public class DatabaseConnection {
+    private String URL = "jdbc:mysql://127.0.0.1:3306/"; // não faça nada aqui
+    private String USER = "root"; //digite seu usuário
+    private String PASSWORD = "password"; //digite sua senha
     private Connection connection;
 
     public DatabaseConnection(String url, String user, String password){
@@ -39,13 +39,12 @@ public class DatabaseConnection { //Conexão com o banco de dados MySQL
         try {
             return DriverManager.getConnection(fullUrl, USER, PASSWORD);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
     }
 
-    public void  closeConnection() {
+    public void closeConnection() {
         if (connection != null) {
             try {
                 connection.close();
@@ -56,12 +55,10 @@ public class DatabaseConnection { //Conexão com o banco de dados MySQL
             }
         } 
     }
- 
-
 
     // Verificar a existência do banco de dados
     public boolean checkIfDatabaseExists(String dbName) throws SQLException {
-        this.connection = this.getConnectionToDatabase(dbName);
+        this.connection = getConnection();  // Conectar ao servidor MySQL, não a um banco específico
         String query = "SHOW DATABASES LIKE '" + dbName + "'";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -69,9 +66,9 @@ public class DatabaseConnection { //Conexão com o banco de dados MySQL
         }
     }
 
-
     // Criar o banco de dados caso esse não exista
     public void createDatabase(String dbName) throws SQLException {
+        connection = getConnection();  // Conectar ao servidor MySQL
         String query = "CREATE DATABASE IF NOT EXISTS " + dbName;
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
@@ -79,9 +76,8 @@ public class DatabaseConnection { //Conexão com o banco de dados MySQL
         }
     }
 
-    //Criar a tabela caso não exista
+    // Criar a tabela caso não exista
     public void createTableIfNotExists() throws SQLException {
-        System.out.println("inicia criação da tabela");
         String createTableQuery = "CREATE TABLE IF NOT EXISTS RG (" + 
             "idRG int primary key auto_increment not null," +
             "naturalidade varchar(45)," +
@@ -105,7 +101,13 @@ public class DatabaseConnection { //Conexão com o banco de dados MySQL
             "registroCivil varchar(45)," +
             "registroGeral varchar(45)" +
             ");";
+        
+        // Criar banco de dados caso não exista
+        createDatabase("idScan");
+
+        // Conectar ao banco de dados após criação
         connection = getConnectionToDatabase("idScan");
+
         try(Statement stmt = connection.createStatement()){
             stmt.executeUpdate(createTableQuery);
             System.out.println("Tabela 'RG' criada ou já existe.");
