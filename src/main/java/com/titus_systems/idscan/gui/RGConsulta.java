@@ -2,7 +2,6 @@ package com.titus_systems.idscan.gui;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 
 import com.titus_systems.idscan.database.DatabaseConnection;
@@ -156,7 +155,7 @@ public class RGConsulta extends Application {
                 rgobject.checkDuplicatesInDatabase(dbConnection);
                 showSuccessMessage("Informações atualizadas com sucesso!");
                 // rgobject.saveToDatabase(dbConnection);
-            } catch (SQLException e1) {
+            } catch (Exception e1) {
                 e1.printStackTrace();
                 showFailureMessage("Erro ao atualizar informações no banco de dados");
             }
@@ -170,7 +169,7 @@ public class RGConsulta extends Application {
             try {
                 this.rgobject.removeFromDatabase(con, rgobject);
                 showSuccessMessage("RG excluído com sucesso!");
-            } catch (SQLException e1) {
+            } catch (Exception e1) {
                 e1.printStackTrace();
                 showFailureMessage("Erro ao excluir RG do banco de dados");
             }

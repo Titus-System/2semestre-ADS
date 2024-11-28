@@ -1,13 +1,13 @@
 package com.titus_systems.idscan.gui;
 
-import com.titus_systems.idscan.database.DatabaseConnection;
-import com.titus_systems.idscan.database.RG;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+
+import com.titus_systems.idscan.database.DatabaseConnection;
+import com.titus_systems.idscan.database.RG;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,7 +63,7 @@ public class ResultadosPesquisaController {
         // Método para buscar os registros com base nos critérios do usuário e carregar no ListView
         public void buscarERenderizarResultados(HashMap<String, String> criterios) {
             try (Connection con = new DatabaseConnection().getConnection()) {
-            con.setCatalog("idscan");
+            con.setCatalog("idScan");
             RG rg = new RG();
             List<RG> usuarios = rg.pullFromDataBase(con, criterios);
             if (!usuarios.isEmpty()) {
