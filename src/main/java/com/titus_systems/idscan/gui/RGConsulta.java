@@ -1,5 +1,6 @@
 package com.titus_systems.idscan.gui;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -8,8 +9,10 @@ import com.titus_systems.idscan.database.DatabaseConnection;
 import com.titus_systems.idscan.database.RG;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -151,9 +154,11 @@ public class RGConsulta extends Application {
             try {
                 System.out.println("numero do rg:"+ rgobject.getRg());
                 rgobject.checkDuplicatesInDatabase(dbConnection);
+                showSuccessMessage("Informações atualizadas com sucesso!");
                 // rgobject.saveToDatabase(dbConnection);
             } catch (SQLException e1) {
                 e1.printStackTrace();
+                showFailureMessage("Erro ao atualizar informações no banco de dados");
             }
             Stage stage = (Stage) saveButton.getScene().getWindow();
             stage.close();
@@ -164,8 +169,10 @@ public class RGConsulta extends Application {
             Connection con = new DatabaseConnection().getConnectionToDatabase("idScan");
             try {
                 this.rgobject.removeFromDatabase(con, rgobject);
+                showSuccessMessage("RG excluído com sucesso!");
             } catch (SQLException e1) {
                 e1.printStackTrace();
+                showFailureMessage("Erro ao excluir RG do banco de dados");
             }
             cancelButton.getScene().getWindow().hide();
         });
@@ -256,8 +263,43 @@ public class RGConsulta extends Application {
 
     }
 
+    public void showFailureMessage(String mensagemErro) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/falha.fxml"));
+            Parent failureRoot = loader.load();
+            FalhaController falhaController = loader.getController();
+            falhaController.setDetalhes(mensagemErro);
+
+            Stage failureStage = new Stage();
+            failureStage.setScene(new Scene(failureRoot));
+            failureStage.setTitle("Erro na operação de banco de dados");
+            failureStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao mostrar a tela de falha: " + e.getMessage());
+        }
+    }
+
+    public void showSuccessMessage(String successMessage){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucessoEdicao.fxml"));
+            Parent failureRoot = loader.load();
+            SucessoEdicaoController sucessoController = loader.getController();
+            sucessoController.setDetalhes(successMessage);
+
+            Stage failureStage = new Stage();
+            failureStage.setScene(new Scene(failureRoot));
+            failureStage.setTitle("Operação bem sucedida!");
+            failureStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao mostrar a tela de falha: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
 }
-
