@@ -89,7 +89,7 @@ public class ResultadosPesquisaController {
             try {
                 Stage currentStage = (Stage) resultadosListView.getScene().getWindow();
                 currentStage.close();
-                RgFormApp rgFormApp = new RgFormApp(selectedRG);
+                RGConsulta rgFormApp = new RGConsulta(selectedRG);
                 Stage newStage = new Stage();
                 rgFormApp.start(newStage);  
             } catch (Exception e) {
