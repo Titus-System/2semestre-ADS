@@ -91,6 +91,7 @@ public class ResultadosPesquisaController {
                 currentStage.close();
                 RGConsulta rgFormApp = new RGConsulta(selectedRG);
                 Stage newStage = new Stage();
+                newStage.setAlwaysOnTop(true);
                 rgFormApp.start(newStage);  
             } catch (Exception e) {
                 e.printStackTrace();
