@@ -123,26 +123,26 @@ public class RgFormApp extends Application {
         saveButton.setOnAction(e -> {
             // Coleta dos dados dos campos
             HashMap<String, String> rgData = new HashMap<>();
-            rgData.put("nome", nomeField.getText());
-            rgData.put("dataNascimento", dataNascimentoPicker.getText());
-            rgData.put("naturalidade", naturalidadeField.getText());
-            rgData.put("cpf", cpfField.getText());
-            rgData.put("nomePai", nomePaiField.getText());
-            rgData.put("nomeMae", nomeMaeField.getText());
-            rgData.put("registroGeral", rgNumberField.getText());
-            rgData.put("orgaoExpedidor", orgaoExpedidorField.getText());
-            rgData.put("estado", estadoField.getText());
-            rgData.put("dataExpedicao", dataExpedicaoPicker.getText());
-            rgData.put("via", viaField.getText());
-            rgData.put("uf", ufField.getText());
-            rgData.put("cnh", cnhField.getText());
-            rgData.put("fatorRh", fatorRhField.getText());
-            rgData.put("nisPisPasep", nisPisPasepField.getText());
-            rgData.put("ctps", ctpsField.getText());
-            rgData.put("tEleitor", tEleitorField.getText());
-            rgData.put("certMilitar", certMilitarField.getText());
-            rgData.put("identidadeProfissional", identidadeProfissionalField.getText());
-            rgData.put("registroCivil", registroCivilField.getText());
+            rgData.put("nome", nomeField.getText().toLowerCase());
+            rgData.put("dataNascimento", dataNascimentoPicker.getText().toLowerCase());
+            rgData.put("naturalidade", naturalidadeField.getText().toLowerCase());
+            rgData.put("cpf", cpfField.getText().toLowerCase().replace("/", ""));
+            rgData.put("nomePai", nomePaiField.getText().toLowerCase());
+            rgData.put("nomeMae", nomeMaeField.getText().toLowerCase());
+            rgData.put("registroGeral", rgNumberField.getText().toLowerCase().replace("-", ""));
+            rgData.put("orgaoExpedidor", orgaoExpedidorField.getText().toLowerCase());
+            rgData.put("estado", estadoField.getText().toLowerCase());
+            rgData.put("dataExpedicao", dataExpedicaoPicker.getText().toLowerCase());
+            rgData.put("via", viaField.getText().toLowerCase());
+            rgData.put("uf", ufField.getText().toLowerCase());
+            rgData.put("cnh", cnhField.getText().toLowerCase());
+            rgData.put("fatorRh", fatorRhField.getText().toLowerCase());
+            rgData.put("nisPisPasep", nisPisPasepField.getText().toLowerCase());
+            rgData.put("ctps", ctpsField.getText().toLowerCase());
+            rgData.put("tEleitor", tEleitorField.getText().toLowerCase());
+            rgData.put("certMilitar", certMilitarField.getText().toLowerCase());
+            rgData.put("identidadeProfissional", identidadeProfissionalField.getText().toLowerCase());
+            rgData.put("registroCivil", registroCivilField.getText().toLowerCase());
 
             // Exibir os dados ou processar conforme necessário
             System.out.println("Dados salvos: " + rgData);
