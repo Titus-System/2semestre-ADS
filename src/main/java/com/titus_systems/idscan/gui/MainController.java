@@ -157,6 +157,7 @@ public class MainController {
             falhaController.setDetalhes(mensagemErro);
 
             Stage failureStage = new Stage();
+            failureStage.setAlwaysOnTop(true);
             failureStage.setScene(new Scene(failureRoot));
             failureStage.setTitle("Erro no processamento");
             failureStage.show();
@@ -244,7 +245,9 @@ public class MainController {
 
                     RG rgObject = new RG(mappedResponse);
                     RgFormApp rgForm = new RgFormApp(rgObject);
-                    rgForm.start(new Stage());
+                    Stage newStage = new Stage();
+                    newStage.setAlwaysOnTop(true);
+                    rgForm.start(newStage);
 
                 } catch (Exception e) {
                     e.printStackTrace();
