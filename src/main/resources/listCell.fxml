@@ -7,23 +7,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.ListCellController">
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/21.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.titus_systems.idscan.gui.ListCellController">
    <children>
-      <Label fx:id="nomeResultadoLabel" text="Julia Soares Pereira" textFill="#4d607a">
-         <font>
-            <Font size="25.0" />
-         </font>
-         <HBox.margin>
-            <Insets left="45.0" top="11.0" />
-         </HBox.margin>
-      </Label>
-      <VBox alignment="CENTER" prefHeight="55.0" prefWidth="158.0">
+      <VBox alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="214.0">
          <children>
-            <Label fx:id="cpfResultadoLabel" alignment="CENTER" contentDisplay="CENTER" text="CPF: XXX.XXX.XXX-XX" textFill="#4d607c" />
-            <Label fx:id="rgResultadoLabel" alignment="CENTER" contentDisplay="CENTER" text="RG: XX.XXX.XXX-X" textFill="#4d607c" />
+            <Label fx:id="nomeResultadoLabel" text="Julia Soares Pereira" textFill="#4d607a">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
          </children>
          <HBox.margin>
-            <Insets left="85.0" />
+            <Insets left="32.0" top="2.0" />
+         </HBox.margin>
+      </VBox>
+      <VBox alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="158.0">
+         <children>
+            <Label fx:id="cpfResultadoLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="143.0" text="CPF: XXX.XXX.XXX-XX" textFill="#4d607c" />
+            <Label fx:id="rgResultadoLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="140.0" text="RG: XX.XXX.XXX-X" textFill="#4d607c" />
+         </children>
+         <HBox.margin>
+            <Insets left="40.0" />
          </HBox.margin>
       </VBox>
    </children>

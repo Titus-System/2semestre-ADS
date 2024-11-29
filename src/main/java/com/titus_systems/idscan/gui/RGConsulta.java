@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -272,6 +273,7 @@ public class RGConsulta extends Application {
             Stage failureStage = new Stage();
             failureStage.setScene(new Scene(failureRoot));
             failureStage.setTitle("Erro na operação de banco de dados");
+            failureStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
             failureStage.show();
 
         } catch (IOException e) {
@@ -287,10 +289,11 @@ public class RGConsulta extends Application {
             SucessoEdicaoController sucessoController = loader.getController();
             sucessoController.setDetalhes(successMessage);
 
-            Stage failureStage = new Stage();
-            failureStage.setScene(new Scene(failureRoot));
-            failureStage.setTitle("Operação bem sucedida!");
-            failureStage.show();
+            Stage successStage = new Stage();
+            successStage.setScene(new Scene(failureRoot));
+            successStage.setTitle("Operação bem sucedida!");
+            successStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
+            successStage.show();
 
         } catch (IOException e) {
             e.printStackTrace();

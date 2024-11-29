@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -92,6 +93,7 @@ public class ResultadosPesquisaController {
                 RGConsulta rgFormApp = new RGConsulta(selectedRG);
                 Stage newStage = new Stage();
                 newStage.setAlwaysOnTop(true);
+                newStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
                 rgFormApp.start(newStage);  
             } catch (Exception e) {
                 e.printStackTrace();

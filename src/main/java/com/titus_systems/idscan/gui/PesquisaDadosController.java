@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class PesquisaDadosController {
@@ -141,6 +142,7 @@ public class PesquisaDadosController {
         Stage resultadosStage = new Stage();
         resultadosStage.setTitle("Resultados da Pesquisa");
         resultadosStage.setScene(new Scene(resultadosRoot)); 
+        resultadosStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
         resultadosStage.show();
 
     } catch (IOException e) {

@@ -69,6 +69,7 @@ public class MainController {
             Parent consultaRoot = loader.load();
             PesquisaDadosController pesquisa = new PesquisaDadosController();
             Stage stage = (Stage) ((Node) dataSearchButton).getScene().getWindow();
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
             stage.getScene().setRoot(consultaRoot);
             dataSearchButton.setOnAction(e -> {
                 HashMap<String,String> find =  pesquisa.pesquisarDados();
@@ -102,7 +103,6 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/confirmacao.fxml"));
             Parent confirmationRoot = loader.load();
-
             ConfirmacaoController confirmacaoController = loader.getController();
             Image image = new Image(selectedImageFile.toURI().toString());
             confirmacaoController.setImage(image);
@@ -112,6 +112,7 @@ public class MainController {
             Stage confirmationStage = new Stage();
             confirmationStage.setScene(new Scene(confirmationRoot));
             confirmationStage.setTitle("Confirme a imagem");
+            confirmationStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
             confirmationStage.showAndWait(); // Espera o usuário confirmar
 
         } catch (IOException e) {
@@ -160,6 +161,7 @@ public class MainController {
             failureStage.setAlwaysOnTop(true);
             failureStage.setScene(new Scene(failureRoot));
             failureStage.setTitle("Erro no processamento");
+            failureStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
             failureStage.show();
 
         } catch (IOException e) {
@@ -176,6 +178,7 @@ public class MainController {
             Stage successStage = new Stage();
             successStage.setScene(new Scene(successRoot));
             successStage.setTitle("Processamento em andamento");
+            successStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
             successStage.show();
             return successStage;
 
@@ -247,6 +250,7 @@ public class MainController {
                     RgFormApp rgForm = new RgFormApp(rgObject);
                     Stage newStage = new Stage();
                     newStage.setAlwaysOnTop(true);
+                    newStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
                     rgForm.start(newStage);
 
                 } catch (Exception e) {

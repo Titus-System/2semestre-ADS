@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -19,6 +20,14 @@
          <children>
             <StackPane prefHeight="752.0" prefWidth="233.0" style="-fx-background-color: #6a6e73;" VBox.vgrow="ALWAYS">
                <children>
+                  <ImageView fitHeight="195.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
+                     <StackPane.margin>
+                        <Insets bottom="550.0" />
+                     </StackPane.margin>
+                     <image>
+                        <Image url="@images/logosemfundo_IDScan.png" />
+                     </image>
+                  </ImageView>
                   <Button fx:id="uploadButton" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: rgba(17, 140, 99, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="180.0" />
