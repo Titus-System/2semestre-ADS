@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class DatabaseConnection {
     private String URL = "jdbc:mysql://127.0.0.1:3306/"; // não faça nada aqui
     private String USER = "root"; //digite seu usuário
-    private String PASSWORD = "password"; //digite sua senha
+    private String PASSWORD = "guih0412"; //digite sua senha
     private Connection connection;
 
     public DatabaseConnection(String url, String user, String password){

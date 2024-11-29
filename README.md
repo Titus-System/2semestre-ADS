@@ -55,3 +55,5 @@ Desenvolvimento de um aplicativo Java Desktop, utilizando modelos de Inteligênc
 | Karina Rodrigues Ribeiro  |Dev Team     | <https://github.com/karinaribeiro2> |<https://www.linkedin.com/in/karina-rodrigues-ribeiro-327562216>|
 | Eduardo Fonseca Ribeiro   |Dev Team     | <https://github.com/eduardo-Rib>    |<https://www.linkedin.com/in/eduardo-ribeiro-4b78002b2>         |
 | Guilherme Henrique Cassula|Dev Team     | <https://github.com/Guih0412>       |<https://www.linkedin.com/in/guilherme-henrique-36b3a0220>      |
+
+
