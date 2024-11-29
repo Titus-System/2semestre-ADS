@@ -144,7 +144,7 @@ Ao abrir o aplicativo, você terá as seguintes opções:
  - Após o upload, o usuário deve aguardar enquanto o **Tesseract** processa as informações do RG (dados pessoais do usuário). Durante esse processo, será exibida uma tela de carregamento no **IDScan**.
 - O progresso também pode ser acompanhado no terminal, onde é possível ver as informações sendo processadas pela máquina virtual.
 
- <img alt="processamento" src="docs/Tela de processamento.png">
+ <img alt="processamento" src="/docs/Tela de processamento.png">
 
  ## 3. Tela de Formulário do RG
   - Após o processamento, será exibida uma tela com um formulário contendo os dados extraídos do RG. Contudo, é possível que nem todos os dados sejam identificados corretamente, deixando algumas lacunas vazias ou com informações incorretas.
