@@ -7,6 +7,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
@@ -20,6 +22,18 @@
          <children>
             <StackPane prefHeight="752.0" prefWidth="233.0" style="-fx-background-color: #6a6e73;" VBox.vgrow="ALWAYS">
                <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" />
+                  <Button fx:id="dataSearchButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#getDadosPesquisados" prefHeight="43.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: rgba(144, 144, 144, 1);" text="Consulta de Dados" textAlignment="CENTER">
+                     <StackPane.margin>
+                        <Insets bottom="300.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
                   <Button fx:id="uploadButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#voltarParaUpload" prefHeight="36.0" prefWidth="188.0" style="-fx-background-color: rgba(16, 185, 129, 1); -fx-text-fill: white;" text="Upload" textAlignment="CENTER">
                      <StackPane.margin>
                         <Insets bottom="180.0" />
@@ -31,17 +45,14 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="dataSearchButton" onAction="#getDadosPesquisados" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="188.0" style="-fx-text-fill: black; -fx-background-color: rgba(144, 144, 144, 1);" text="Consulta de Dados" textAlignment="CENTER">
+                  <ImageView fitHeight="195.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/logosemfundo_IDScan.png" />
+                     </image>
                      <StackPane.margin>
-                        <Insets bottom="300.0" />
+                        <Insets bottom="550.0" />
                      </StackPane.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
+                  </ImageView>
                </children>
             </StackPane>
          </children>

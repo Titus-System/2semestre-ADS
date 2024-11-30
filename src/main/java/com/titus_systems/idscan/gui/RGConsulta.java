@@ -1,28 +1,31 @@
 package com.titus_systems.idscan.gui;
 
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 
 import com.titus_systems.idscan.database.DatabaseConnection;
 import com.titus_systems.idscan.database.RG;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class RgFormApp extends Application {
+public class RGConsulta extends Application {
 
     RG rgobject;
 
-    public RgFormApp(RG rgobject){
+    public RGConsulta(RG rgobject){
         this.rgobject = rgobject;
     }
 
@@ -113,9 +116,9 @@ public class RgFormApp extends Application {
         //this.preencherCampos();
 
         // Botões para salvar ou cancelar
-        Button saveButton = new Button("Salvar");
+        Button saveButton = new Button("Salvar Alterações");
         saveButton.setStyle("-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;");
-        Button cancelButton = new Button("Limpar");
+        Button cancelButton = new Button("Excluir");
         cancelButton.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold;");
 
 
@@ -150,37 +153,28 @@ public class RgFormApp extends Application {
             Connection dbConnection = new DatabaseConnection().getConnectionToDatabase("idScan");
             try {
                 System.out.println("numero do rg:"+ rgobject.getRg());
-                this.rgobject.checkDuplicatesInDatabase(dbConnection);
+                rgobject.checkDuplicatesInDatabase(dbConnection);
+                showSuccessMessage("Informações atualizadas com sucesso!");
                 // rgobject.saveToDatabase(dbConnection);
-            } catch (SQLException e1) {
+            } catch (Exception e1) {
                 e1.printStackTrace();
+                showFailureMessage("Erro ao atualizar informações no banco de dados");
             }
             Stage stage = (Stage) saveButton.getScene().getWindow();
             stage.close();
         });
 
-        // Ação para cancelar
+        // Ação para excluir
         cancelButton.setOnAction(e -> {
-            rgNumberField.clear();
-            fatorRhField.clear();
-            orgaoExpedidorField.clear();
-            estadoField.clear();
-            nisPisPasepField.clear();
-            ctpsField.clear();
-            tEleitorField.clear();
-            dataExpedicaoPicker.clear();
-            certMilitarField.clear();
-            viaField.clear();
-            identidadeProfissionalField.clear();
-            ufField.clear();
-            registroCivilField.clear();
-            nomeField.clear();
-            dataNascimentoPicker.clear();
-            naturalidadeField.clear();
-            cpfField.clear();
-            nomePaiField.clear();
-            nomeMaeField.clear();
-            cnhField.clear();
+            Connection con = new DatabaseConnection().getConnectionToDatabase("idScan");
+            try {
+                this.rgobject.removeFromDatabase(con, rgobject);
+                showSuccessMessage("RG excluído com sucesso!");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                showFailureMessage("Erro ao excluir RG do banco de dados");
+            }
+            cancelButton.getScene().getWindow().hide();
         });
 
         // Layout do formulário usando GridPane
@@ -267,6 +261,44 @@ public class RgFormApp extends Application {
         primaryStage.requestFocus();
         primaryStage.show();
 
+    }
+
+    public void showFailureMessage(String mensagemErro) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/falha.fxml"));
+            Parent failureRoot = loader.load();
+            FalhaController falhaController = loader.getController();
+            falhaController.setDetalhes(mensagemErro);
+
+            Stage failureStage = new Stage();
+            failureStage.setScene(new Scene(failureRoot));
+            failureStage.setTitle("Erro na operação de banco de dados");
+            failureStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
+            failureStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao mostrar a tela de falha: " + e.getMessage());
+        }
+    }
+
+    public void showSuccessMessage(String successMessage){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucessoEdicao.fxml"));
+            Parent failureRoot = loader.load();
+            SucessoEdicaoController sucessoController = loader.getController();
+            sucessoController.setDetalhes(successMessage);
+
+            Stage successStage = new Stage();
+            successStage.setScene(new Scene(failureRoot));
+            successStage.setTitle("Operação bem sucedida!");
+            successStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
+            successStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao mostrar a tela de falha: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
