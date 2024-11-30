@@ -110,6 +110,7 @@ public class MainController {
 
             // Exibe a tela de confirmação
             Stage confirmationStage = new Stage();
+            confirmationStage.setAlwaysOnTop(true);
             confirmationStage.setScene(new Scene(confirmationRoot));
             confirmationStage.setTitle("Confirme a imagem");
             confirmationStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logosemfundoetexto_IDScan.png")));
