@@ -99,7 +99,7 @@ public class IdPrompt {
 
     public void askFormat(){
         prompt.addLine("the information asked should be returned in json format, composed by the attribute and its value found in the document.");
-        prompt.addLine("The keys in the json are: ESTADO, NOME, DATA NASCIMENTO, NATURALIDADE, CPF, REGISTRO GERAL, NOME PAI, NOME MAE, VIA, DATA DE EXPEDICAO, REGISTRO CIVIL, TELEITOR, NIS/PIS/PASEP, IDENTIDADE PROFISSIONAL, CNH, FILIACAO, DATA NASCIMENTO, ORGAO EXPEDIDOR, CERT MILITAR, CTPS, RH.");
+        prompt.addLine("The keys in the json are: ESTADO, NOME, DATA NASCIMENTO, NATURALIDADE, CPF, REGISTRO GERAL, NOME PAI, NOME MAE, VIA, DATA DE EXPEDICAO, REGISTRO CIVIL, TELEITOR, NIS/PIS/PASEP, IDENTIDADE PROFISSIONAL, CNH, FILIACAO, ORGAO EXPEDIDOR, CERT MILITAR, CTPS, RH.");
         prompt.addLine("the answer must contain all the keys as described. In case the information requested is not found, the value should be stated as 'null'.");
         prompt.addLine("return only the json answer. Do not make comments of any kind or give any explanations or descriptions.");
     }

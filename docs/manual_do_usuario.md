@@ -139,12 +139,12 @@ Ao abrir o aplicativo, você terá as seguintes opções:
  - Na tela de upload, o usuário pode inserir o arquivo do seu documento de **RG** (legível), que deve estar nos formatos **jpeg**, **png** ou **jpg**. *Documentos em formato **pdf** não são aceitos*.
  - O arquivo também pode ser arrastado diretamente para a tela de upload.
 
- <img alt="upload" src="/docs/Tela de Upload.png">
+ <img alt="upload" src="Tela de Upload.png">
 
  - Após o upload, o usuário deve aguardar enquanto o **Tesseract** processa as informações do RG (dados pessoais do usuário). Durante esse processo, será exibida uma tela de carregamento no **IDScan**.
 - O progresso também pode ser acompanhado no terminal, onde é possível ver as informações sendo processadas pela máquina virtual.
 
- <img alt="processamento" src="/docs/Tela de processamento.png">
+ <img alt="processamento" src="Tela de processamento.png">
 
  ## 3. Tela de Formulário do RG
   - Após o processamento, será exibida uma tela com um formulário contendo os dados extraídos do RG. Contudo, é possível que nem todos os dados sejam identificados corretamente, deixando algumas lacunas vazias ou com informações incorretas.
@@ -153,25 +153,25 @@ Ao abrir o aplicativo, você terá as seguintes opções:
   - **Limpar** todas as lacunas clicando no botão **Limpar**.
   - **Salvar** os dados preenchidos, clicando no botão **Salvar**, para registrar as informações no programa.
 
- <img alt="formulário" src="/docs/Tela de formulário.jpg">
+ <img alt="formulário" src="Tela de formulário.jpg">
 
  ## 4. Tela de Consulta de Dados
   - O usuário pode acessar a tela de **Consulta de Dados**. Nela, ele poderá digitar as informações que foram registradas no **IDScan** para buscar os dados desejados.
   - Após inserir as informações, o usuário deve clicar no botão **Buscar** para ser direcionado a outra tela.
 
-  <img alt="consulta" src="/docs/Tela de Consulta.jpg">
+  <img alt="consulta" src="Tela de Consulta.jpg">
 
  ## 5. Tela de Resultado da pesquisa
 
 - Após realizar a consulta, os resultados serão exibidos na tela de **Resultados de Pesquisa**. Por exemplo, se o usuário digitar o nome "pedro cruz silva", a tela retornará todas as entradas que contêm esse nome.
 
-<img alt="pesquisa" src="/docs/Tela de Pesquisa.jpg">
+<img alt="pesquisa" src="Tela de Pesquisa.jpg">
 
 - Ao clicar em uma das entradas, o usuário poderá visualizar o nome e os dados completos do documento correspondente.
 - O usuário também poderá **editar manualmente** as lacunas que contêm informações incorretas sobre o documento, caso necessário.
 - Após isso, ele poderá **salvar alterações** ou até mesmo **excluir** os dados registrados.
 
-<img alt="edição" src="/docs/Tela de edição.jpg">
+<img alt="edição" src="Tela de edição.jpg">
 
 
 
