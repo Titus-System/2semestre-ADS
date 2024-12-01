@@ -6,9 +6,6 @@
 
 Desenvolvimento de um aplicativo Java Desktop, utilizando modelos de Inteligência Artificial para a extração de informações de documentos de identidade (RG) e postrior armazenamneto e edição em um banco de dados relacional (MySQL). **Todas** as operações do aplicativos acontecem localmente, desde o processamento com IA até as operações com o banco de dados.
 
-## Demonstração
-Breve vídeo demonstrativo do aplicativo:
-
 
 ### Manual do usuário:
 [Clique para a cessar o manual de instalção e de uso](/docs/manual_do_usuario.md)
